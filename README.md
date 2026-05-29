@@ -66,12 +66,6 @@
 
 </p>
 
-<p align="center">
-  <a href="https://github.com/jasonwong1025">
-    <img height="180em" src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=jasonwong1025&langs_count=8&layout=compact&theme=gruvbox&border_radius=10" alt="Top Languages" />
-  </a>
-</p>
-
 ![Top language](https://stats.pphat.top/languages?username=jasonwong1025)
 <br/>
 
