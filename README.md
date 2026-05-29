@@ -11,9 +11,9 @@
     <img src="https://img.shields.io/badge/GitHub-jasonwong1025-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
   </a>
 </td>
-<td align="left" valign="middle">
+<td align="left" valign="middle" width="75%">
 
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=800&color=A371F7&center=false&vCenter=true&width=540&lines=Hey!+I'm+Jason+Wong+%F0%9F%91%8B;Software+Engineering+Student+%40+APU;Building+full-stack+projects+%26+learning;Exploring+languages%2C+tools+%26+techniques" alt="Typing intro" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&duration=3000&pause=800&color=A371F7&center=false&vCenter=true&width=800&lines=Hey!+I'm+Jason+Wong+%F0%9F%91%8B;Software+Engineering+Student+%40+APU;Building+full-stack+projects+%26+learning;Exploring+languages%2C+tools+%26+techniques" alt="Typing intro" width="100%" />
 
   <br/>
 
