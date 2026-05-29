@@ -10,13 +10,43 @@
   </a>
 </p>
 
+## 👋 About Me
+
+<table align="center">
+<tr>
+<td width="55%" valign="middle">
+
+Hi, I'm **Jason Wong** — a **Software Engineer** based in **Kuala Lumpur, Malaysia**.
+
+I enjoy turning ideas into clean, maintainable software across the stack — from polished frontends to solid APIs and databases.
+
+- 🔭 Currently exploring new skills like languages, tools, techniques, etc.
+- 🌱 Always learning better patterns and architecture
+- 🤝 Open to **collaboration**, **freelance**, and **open-source**
+
+</td>
+<td width="45%" valign="middle" align="center">
+  <img src="https://user-images.githubusercontent.com/74038190/212748830-4c709398-a386-4761-84d7-9e10b98fbe6e.gif" width="100%" alt="Night chill animation" />
+</td>
+</tr>
+</table>
+
 ## 📊 GitHub Stats & Trophies
-<p align="center">
+
+<table align="center">
+<tr>
+<td valign="middle" align="center">
   <a href="https://github.com/jasonwong1025">
-    <img height="180em" src="https://github-readme-stats-eight-theta.vercel.app/api?username=jasonwong1025&cache_seconds=7200&layout=compact&theme=gruvbox&border_radius=10" alt="jasonwong1025's GitHub Stats" />
+    <img src="https://github-readme-stats-eight-theta.vercel.app/api?username=jasonwong1025&cache_seconds=7200&layout=compact&theme=gruvbox&border_radius=10" alt="jasonwong1025's GitHub Stats" />
   </a>
-  <img src="https://streak-stats.demolab.com/?user=jasonwong1025&theme=gruvbox&hide_border=true&cache_seconds=86400" alt="jasonwong1025's GitHub Streak" width="49%" />
-</p>
+  <br/><br/>
+  <img src="https://streak-stats.demolab.com/?user=jasonwong1025&theme=gruvbox&hide_border=true&cache_seconds=86400" alt="jasonwong1025's GitHub Streak" />
+</td>
+<td valign="middle" align="center">
+  <img src="https://github.com/Anmol-Baranwal/Cool-GIFs-For-GitHub/assets/74038190/0db32290-c193-4b32-95dc-413ce9e446a5" width="450" alt="Developer animation" />
+</td>
+</tr>
+</table>
 <p align="center">
   <img src="https://trophy.ryglcloud.net/?username=jasonwong1025&theme=gruvbox&no-frame=true&no-bg=true&margin-w=4&cache_seconds=86400" alt="Jason Wong's GitHub Trophies" />
 </p>
@@ -57,7 +87,4 @@
   <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white" />
 </p>
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=jasonwong1025&layout=donut&theme=gruvbox&hide_border=true&bg_color=1d2021&title_color=a371f7&text_color=ebdbb2&langs_count=6&border_radius=12" alt="Most used languages" height="180"/>
-</p>
 
