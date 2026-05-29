@@ -1,11 +1,11 @@
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0a0a0a,50:4c1d95,100:a371f7&height=200&section=header&text=Jason%20Wong&fontSize=55&fontColor=ffffff&animation=scaleIn&fontAlignY=40&desc=Software%20Engineering%20Student%20%40%20APU&descSize=18&descColor=e9d5ff&descAlignY=68" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0a0a0a,50:4c1d95,100:a371f7&height=200&section=header&text=Wong%20Jia%20Sen&fontSize=55&fontColor=ffffff&animation=scaleIn&fontAlignY=40&desc=Software%20Engineering%20Student%20%40%20APU&descSize=18&descColor=e9d5ff&descAlignY=68" width="100%"/>
 
 <br/>
 
 <table align="center">
 <tr>
 <td align="center" width="140">
-  <img src="https://avatars.githubusercontent.com/u/130027382?v=4&s=200" width="120" alt="Jason Wong" />
+  <img src="https://avatars.githubusercontent.com/u/130027382?v=4&s=200" width="120" alt="Wong Jia Sen" />
   <br/><br/>
   <a href="https://github.com/jasonwong1025">
     <img src="https://img.shields.io/badge/GitHub-jasonwong1025-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
@@ -13,7 +13,7 @@
 </td>
 <td align="left" valign="middle" width="75%">
 
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&duration=3000&pause=800&color=A371F7&center=false&vCenter=true&width=800&lines=Hey!+I'm+Jason+Wong+%F0%9F%91%8B;Software+Engineering+Student+%40+APU;Building+full-stack+projects+%26+learning;Exploring+languages%2C+tools+%26+techniques" alt="Typing intro" width="100%" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&duration=3000&pause=800&color=A371F7&center=false&vCenter=true&width=800&lines=Hey!+I'm+Jia+Sen+%F0%9F%91%8B;Software+Engineering+Student+%40+APU;Building+full-stack+projects+%26+learning;Exploring+languages%2C+tools+%26+techniques" alt="Typing intro" width="100%" />
 
   <br/>
 
@@ -38,7 +38,7 @@
 <tr>
 <td width="55%" valign="middle">
 
-Hi, I'm **Jason Wong** — a **Software Engineering** student at **Asia Pacific University (APU)** in **Kuala Lumpur, Malaysia**.
+Hi, I'm **Jia Sen** — a **Software Engineering** student at **Asia Pacific University (APU)** in **Kuala Lumpur, Malaysia**.
 
 I'm passionate about building clean, maintainable software across the stack — from polished frontends to solid APIs and databases.
 
@@ -102,7 +102,7 @@ I'm passionate about building clean, maintainable software across the stack — 
 </tr>
 </table>
 <p align="center">
-  <img src="https://trophy.ryglcloud.net/?username=jasonwong1025&theme=gruvbox&no-frame=true&no-bg=true&margin-w=4&cache_seconds=86400" alt="Jason Wong's GitHub Trophies" />
+  <img src="https://trophy.ryglcloud.net/?username=jasonwong1025&theme=gruvbox&no-frame=true&no-bg=true&margin-w=4&cache_seconds=86400" alt="Wong Jia Sen's GitHub Trophies" />
 </p>
 <p align="center">
   <img height="280em" src="https://github-readme-activity-graph.vercel.app/graph?username=jasonwong1025&theme=gruvbox&radius=10" alt="jasonwong1025's Activity Graph" />
