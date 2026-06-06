@@ -252,6 +252,7 @@ function renderStack() {
 
 async function boot() {
   mountChrome();
+  initContactForm();
   renderFeaturedProjects();
   renderWorkList();
   renderAboutTimeline();
@@ -290,7 +291,6 @@ async function boot() {
       initWorkHover();
       initWorkFilter();
       initContactLinks();
-      initContactForm();
       initToolbox();
       initStack();
       ScrollTrigger.refresh();

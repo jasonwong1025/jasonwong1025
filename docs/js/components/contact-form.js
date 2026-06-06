@@ -6,22 +6,32 @@ export function initContactForm() {
 
   const submitBtn = form.querySelector("[data-contact-submit]");
   const widgetHost = form.querySelector("[data-turnstile]");
+  const statusEl = form.querySelector("[data-turnstile-status]");
   if (!submitBtn || !widgetHost) return;
 
   let verified = false;
   let widgetId = null;
+  let mounted = false;
+
+  function setStatus(message) {
+    if (statusEl) statusEl.textContent = message;
+  }
 
   function setSubmitEnabled(enabled) {
     verified = enabled;
     submitBtn.disabled = !enabled;
     submitBtn.setAttribute("aria-disabled", String(!enabled));
+    if (enabled) setStatus("");
   }
 
   setSubmitEnabled(false);
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    if (!verified) return;
+    if (!verified) {
+      setStatus("Complete the security check above before sending.");
+      return;
+    }
 
     const name = form.elements.namedItem("name")?.value?.trim();
     const email = form.elements.namedItem("email")?.value?.trim();
@@ -34,26 +44,49 @@ export function initContactForm() {
   });
 
   function mountWidget() {
-    if (!window.turnstile || widgetId !== null) return;
+    if (mounted || !window.turnstile) return;
 
+    mounted = true;
     widgetId = window.turnstile.render(widgetHost, {
       sitekey: TURNSTILE.siteKey,
       theme: "dark",
       callback: () => setSubmitEnabled(true),
-      "error-callback": () => setSubmitEnabled(false),
+      "error-callback": () => {
+        setSubmitEnabled(false);
+        setStatus("Verification failed to load. Refresh the page or email directly.");
+      },
       "expired-callback": () => {
         setSubmitEnabled(false);
+        setStatus("Verification expired. Please complete the check again.");
         if (widgetId !== null) window.turnstile.reset(widgetId);
       },
     });
   }
 
-  if (window.turnstile) {
-    window.turnstile.ready(mountWidget);
-    return;
+  function bootTurnstile() {
+    if (window.turnstile) {
+      window.turnstile.ready(mountWidget);
+      return;
+    }
+
+    let attempts = 0;
+    const poll = window.setInterval(() => {
+      attempts += 1;
+
+      if (window.turnstile) {
+        window.clearInterval(poll);
+        window.turnstile.ready(mountWidget);
+        return;
+      }
+
+      if (attempts >= 100) {
+        window.clearInterval(poll);
+        setStatus(
+          `Verification could not load. Refresh the page or email ${SITE.email} directly.`
+        );
+      }
+    }, 100);
   }
 
-  document
-    .querySelector('script[src*="challenges.cloudflare.com/turnstile"]')
-    ?.addEventListener("load", () => window.turnstile?.ready(mountWidget));
+  bootTurnstile();
 }

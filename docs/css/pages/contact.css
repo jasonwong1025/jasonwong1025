@@ -145,6 +145,20 @@
   min-height: 65px;
 }
 
+.contact-form__turnstile:empty::before {
+  content: "Loading security check…";
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.contact-form__turnstile-status {
+  min-height: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+}
+
 .contact-form [data-contact-submit]:disabled {
   opacity: 0.45;
   cursor: not-allowed;
