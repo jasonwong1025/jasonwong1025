@@ -19,28 +19,14 @@ export const PROJECTS = [
     name: "OODJ APUASC",
     year: "2026",
     description:
-      "Object-oriented design project built for APU coursework — Java application with structured architecture and clean separation of concerns.",
+      "Java program for an Automobile Service Centre System — developed as an object-oriented coursework project at APU, emphasizing structured architecture and clear separation of concerns.",
     language: "Java",
-    stars: 1,
-    topics: ["java", "ood", "university"],
+    stars: 2,
+    topics: ["java", "automobile-service", "assignment", "apu"],
     links: {
       repo: "https://github.com/jasonwong1025/oodj-apuasc",
     },
     featured: true,
-  },
-  {
-    id: "profile",
-    name: "Dev Profile",
-    year: "2026",
-    description:
-      "Dynamic GitHub profile README with stats, streaks, and animated visuals — a living snapshot of my open-source presence.",
-    language: "Markdown",
-    stars: 0,
-    topics: ["github", "profile"],
-    links: {
-      repo: "https://github.com/jasonwong1025/jasonwong1025",
-    },
-    featured: false,
   },
 ];
 
