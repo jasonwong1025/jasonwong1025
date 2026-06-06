@@ -72,14 +72,14 @@ export const CREDENTIALS = [
 export const WORK_TIMELINE = [
   {
     year: "Oct 2025 — Present",
-    title: "Part-time @ Codespace AI Technology",
+    title: "Part-time Software Engineer @ Codespace AI Technology",
     description:
-      "Working part-time at Codespace AI Technology Sdn Bhd, continuing hands-on development after the internship.",
+      "Working part-time at Codespace AI Technology Sdn Bhd as a software engineer, building AI-powered solutions and continuing hands-on development after the internship.",
   },
   {
     year: "Sep — Oct 2025",
-    title: "Internship @ Codespace AI Technology",
+    title: "Software Engineering Intern @ Codespace AI Technology",
     description:
-      "Completed an internship at Codespace AI Technology Sdn Bhd, gaining practical industry experience in software development.",
+      "Completed an internship at Codespace AI Technology Sdn Bhd as a software engineering intern, working on AI features and real-world software development.",
   },
 ];
