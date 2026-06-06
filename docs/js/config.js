@@ -26,6 +26,11 @@ export const TURNSTILE = {
   siteKey: "0x4AAAAAADf6GSXHdOAcmuuH",
 };
 
+/** Get your free access key at https://web3forms.com (enter SITE.email) */
+export const WEB3FORMS = {
+  accessKey: "1a23a0e7-9e4b-4318-aaef-8869bd256a32",
+};
+
 export const GSAP_CDN = {
   gsap: "https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js",
   scrollTrigger: "https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js",

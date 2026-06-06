@@ -96,13 +96,21 @@
               <label class="contact-form__label" for="message">Message</label>
               <textarea class="contact-form__textarea" id="message" name="message" required></textarea>
             </div>
+            <input
+              class="contact-form__honeypot"
+              type="checkbox"
+              name="botcheck"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+            />
             <div class="contact-form__turnstile" data-turnstile aria-label="Security verification"></div>
             <p class="contact-form__turnstile-status" data-turnstile-status role="status"></p>
             <button class="btn btn--fill" type="submit" data-contact-submit disabled aria-disabled="true">
               Send message <span class="btn__arrow">→</span>
             </button>
             <p class="contact-form__note">
-              Protected by Cloudflare Turnstile. Complete the check, then send — opens your default mail client.
+              Protected by Cloudflare Turnstile. Complete the check, then send — delivered straight to my inbox.
             </p>
           </form>
         </div>

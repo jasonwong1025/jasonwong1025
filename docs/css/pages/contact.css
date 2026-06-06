@@ -152,11 +152,28 @@
   color: var(--text-dim);
 }
 
+.contact-form__honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
 .contact-form__turnstile-status {
   min-height: 1rem;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--accent);
+}
+
+.contact-form__status--success {
+  color: var(--accent-code);
+}
+
+.contact-form__status--error {
+  color: var(--accent-bright);
 }
 
 .contact-form [data-contact-submit]:disabled {
