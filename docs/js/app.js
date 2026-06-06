@@ -1,4 +1,5 @@
 import { loadGSAP, waitForFonts } from "./core/boot.js";
+import { renderCta } from "./components/cta.js";
 import { renderNav, initNav } from "./components/nav.js";
 import { renderStatusBar, initCursorGlow } from "./components/status-bar.js";
 import { initAllMascots } from "./components/mascot-3d.js";
@@ -29,8 +30,10 @@ const PAGE = document.body.dataset.page || "home";
 
 function mountChrome() {
   const navSlot = document.querySelector("[data-nav-slot]");
+  const ctaSlot = document.querySelector("[data-cta-slot]");
   const statusSlot = document.querySelector("[data-status-slot]");
   if (navSlot) navSlot.innerHTML = renderNav(PAGE);
+  if (ctaSlot) ctaSlot.innerHTML = renderCta(PAGE);
   if (statusSlot) statusSlot.innerHTML = renderStatusBar();
   initNav(PAGE);
 }
