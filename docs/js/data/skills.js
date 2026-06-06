@@ -56,6 +56,19 @@ export const EDUCATION_TIMELINE = [
   },
 ];
 
+export const CREDENTIALS = [
+  {
+    title: "Google IT Automation with Python",
+    issuer: "Google",
+    platform: "Coursera",
+    type: "Specialization",
+    year: "May 2025",
+    url: "https://coursera.org/share/f97cdd6da5f886f4dcfb544ec2e22c84",
+    description:
+      "Six-course specialization covering Python, Git, GitHub, troubleshooting, and IT automation for systems administration.",
+  },
+];
+
 export const WORK_TIMELINE = [
   {
     year: "Oct 2025 — Present",

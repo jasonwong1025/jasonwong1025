@@ -15,6 +15,7 @@ import {
 import { initToolbox } from "./animations/toolbox.js";
 import { getFeaturedProjects, PROJECTS } from "./data/projects.js";
 import {
+  CREDENTIALS,
   EDUCATION_TIMELINE,
   SKILL_CATEGORIES,
   SKILLS,
@@ -158,6 +159,28 @@ function renderValues() {
   ).join("");
 }
 
+function renderCredentials() {
+  const container = document.querySelector("[data-credentials]");
+  if (!container) return;
+
+  container.innerHTML = CREDENTIALS.map(
+    (c) => `
+    <a class="credential-card" href="${c.url}" target="_blank" rel="noopener noreferrer">
+      <div class="credential-card__body">
+        <div class="credential-card__meta">
+          <span class="credential-card__type">${c.type} · ${c.platform}</span>
+          <span class="credential-card__year">${c.year}</span>
+        </div>
+        <h3 class="credential-card__title">${c.title}</h3>
+        <p class="credential-card__issuer">${c.issuer}</p>
+        <p class="credential-card__desc">${c.description}</p>
+      </div>
+      <span class="credential-card__arrow" aria-hidden="true">↗</span>
+    </a>
+  `
+  ).join("");
+}
+
 function renderToolbox() {
   const filterBar = document.querySelector("[data-toolbox-filter]");
   const grid = document.querySelector("[data-toolbox-grid]");
@@ -219,6 +242,7 @@ async function boot() {
   renderWorkList();
   renderAboutTimeline();
   renderValues();
+  renderCredentials();
   renderToolbox();
   renderSkillsMarquee();
   renderSkillsGrid();
