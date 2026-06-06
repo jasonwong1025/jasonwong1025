@@ -1,0 +1,48 @@
+:root {
+  /* Surfaces — charcoal desk / monitor dark */
+  --bg: #0a0b0e;
+  --bg-elevated: #111318;
+  --bg-panel: #161920;
+  --line: rgba(232, 228, 220, 0.1);
+  --line-strong: rgba(232, 228, 220, 0.22);
+
+  /* Text — warm off-white from scene lighting */
+  --text: #e8e4dc;
+  --text-muted: #8a8f9a;
+  --text-dim: #555b66;
+
+  /* Accents — copper mug, monitor cyan, syntax green */
+  --accent: #c9a66b;
+  --accent-bright: #e8c98a;
+  --accent-cool: #6eb5ff;
+  --accent-code: #7ee787;
+
+  /* Typography */
+  --font-display: "Syne", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+
+  /* Layout */
+  --nav-height: 4.5rem;
+  --content-max: 72rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 0.25s;
+  --duration-med: 0.5s;
+  --duration-slow: 0.9s;
+
+  /* 3D stage */
+  --perspective: 1200px;
+  --mascot-width: clamp(260px, 38vw, 480px);
+}

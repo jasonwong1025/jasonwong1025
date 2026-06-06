@@ -1,0 +1,119 @@
+/* Editorial panels — flat, bordered, no radius/shadow */
+
+.panel {
+  border: 1px solid var(--line);
+  background: var(--bg-panel);
+  padding: var(--space-lg);
+}
+
+.panel--flush {
+  padding: 0;
+}
+
+.panel__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--line);
+}
+
+.panel__title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.panel__body {
+  padding: var(--space-lg);
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  border-top: 1px solid var(--line);
+}
+
+.stat-row__item {
+  padding: var(--space-lg);
+  border-right: 1px solid var(--line);
+}
+
+.stat-row__item:last-child {
+  border-right: none;
+}
+
+.stat-row__value {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+}
+
+.stat-row__label {
+  margin-top: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.timeline {
+  position: relative;
+  padding-left: var(--space-lg);
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line-strong);
+}
+
+.timeline__item {
+  position: relative;
+  padding-bottom: var(--space-xl);
+}
+
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--space-lg) - 3px);
+  top: 0.4rem;
+  width: 7px;
+  height: 7px;
+  background: var(--bg);
+  border: 1px solid var(--accent);
+}
+
+.timeline__year {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+}
+
+.timeline__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: var(--space-xs);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.timeline__desc {
+  margin-top: var(--space-xs);
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 50ch;
+}

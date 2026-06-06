@@ -1,0 +1,108 @@
+.shell {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+.shell__main {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  width: 100%;
+}
+
+.container {
+  width: min(var(--content-max), calc(100% - var(--gutter) * 2));
+  margin-inline: auto;
+}
+
+.container--wide {
+  width: min(90rem, calc(100% - var(--gutter) * 2));
+  margin-inline: auto;
+}
+
+.container--full {
+  width: 100%;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: clamp(4rem, 10vh, 7rem);
+}
+
+.section__header {
+  display: grid;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+.section__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.section__subtitle {
+  max-width: 36ch;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.grid-2 {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.split-layout {
+  display: grid;
+  gap: var(--space-xl);
+  min-height: calc(100vh - var(--nav-height));
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .split-layout {
+    grid-template-columns: 1fr minmax(280px, 42%);
+  }
+}
+
+.page-head {
+  padding-block: calc(var(--nav-height) + var(--space-xl)) var(--space-xl);
+  border-bottom: 1px solid var(--line);
+}
+
+.page-head__label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: var(--space-md);
+}
+
+.page-head__title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.page-head__desc {
+  margin-top: var(--space-md);
+  max-width: 48ch;
+  color: var(--text-muted);
+  font-size: 1.125rem;
+  line-height: 1.65;
+}

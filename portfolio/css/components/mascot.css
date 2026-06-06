@@ -1,0 +1,152 @@
+/* Pseudo-3D mascot — layered planes, no WebGL model required */
+
+.mascot-stage {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  perspective: var(--perspective);
+  perspective-origin: 50% 40%;
+  margin-inline: auto;
+}
+
+.mascot-stage--hero {
+  width: min(400px, 100%);
+  max-width: 100%;
+}
+
+.mascot-stage--compact {
+  width: clamp(120px, 18vw, 180px);
+}
+
+.mascot-stage--sidebar {
+  width: min(320px, 100%);
+  max-width: 100%;
+  position: sticky;
+  top: calc(var(--nav-height) + var(--space-lg));
+}
+
+.mascot {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.mascot__layer {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.mascot__glow {
+  inset: 10%;
+  background: radial-gradient(
+    ellipse at 50% 60%,
+    rgba(110, 181, 255, 0.25) 0%,
+    rgba(201, 166, 107, 0.15) 40%,
+    transparent 70%
+  );
+  transform: translateZ(-80px) scale(1.2);
+  filter: blur(20px);
+  opacity: 0.8;
+}
+
+.mascot__shadow {
+  bottom: -5%;
+  left: 10%;
+  right: 10%;
+  top: auto;
+  height: 8%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.5) 0%, transparent 70%);
+  transform: translateZ(-40px) rotateX(90deg);
+  opacity: 0.6;
+}
+
+.mascot__frame {
+  inset: 0;
+  border: 1px solid var(--line);
+  transform: translateZ(-20px);
+  pointer-events: none;
+}
+
+.mascot__frame::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--line);
+}
+
+.mascot__image-wrap {
+  inset: 0;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.mascot__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  transform: scale(1.05);
+}
+
+.mascot__highlight {
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    transparent 40%,
+    transparent 60%,
+    rgba(110, 181, 255, 0.05) 100%
+  );
+  transform: translateZ(20px);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.mascot__code-float {
+  position: absolute;
+  top: 15%;
+  right: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-code);
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  transform: translateZ(60px);
+  white-space: nowrap;
+}
+
+.mascot-stage--compact .mascot__code-float,
+.mascot-stage--compact .mascot__frame {
+  display: none;
+}
+
+.mascot-stage--compact .mascot__glow {
+  transform: translateZ(-40px) scale(1.1);
+}
+
+/* Floating nav mascot */
+.nav-mascot {
+  width: 36px;
+  height: 36px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.nav-mascot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+@media (max-width: 767px) {
+  .mascot-stage--sidebar {
+    position: relative;
+    top: auto;
+    margin-bottom: var(--space-lg);
+  }
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Jia Sen — Software Engineering student and full-stack developer based in Kuala Lumpur." />
+    <title>Jia Sen · Software Engineer</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/effects.css" />
+    <link rel="stylesheet" href="css/components/nav.css" />
+    <link rel="stylesheet" href="css/components/btn.css" />
+    <link rel="stylesheet" href="css/components/shell.css" />
+    <link rel="stylesheet" href="css/components/panel.css" />
+    <link rel="stylesheet" href="css/components/marquee.css" />
+    <link rel="stylesheet" href="css/components/mascot.css" />
+    <link rel="stylesheet" href="css/pages/home.css" />
+  </head>
+  <body class="shell" data-page="home">
+    <div class="noise" aria-hidden="true"></div>
+    <div class="grid-bg" aria-hidden="true"></div>
+    <div class="glow-orb glow-orb--warm" aria-hidden="true"></div>
+    <div class="glow-orb glow-orb--cool" aria-hidden="true"></div>
+    <div class="scanline" aria-hidden="true"></div>
+
+    <div class="intro" data-intro aria-hidden="true">
+      <div class="intro__inner">
+        <div class="intro__code" data-intro-code="boot.init()"></div>
+        <div class="intro__bar" data-intro-bar></div>
+      </div>
+    </div>
+
+    <div data-nav-slot></div>
+
+    <div class="shell__main">
+      <section class="hero container" data-hero>
+        <div class="hero__grid">
+          <div class="hero__content">
+            <div class="hero__eyebrow" data-hero-eyebrow>
+              <span class="tag">Available for work</span>
+              <span class="hero__status">KL · MY</span>
+            </div>
+
+            <h1 class="hero__title" data-hero-title>
+              <span class="hero__title-line">Wong</span>
+              <span class="hero__title-line hero__title-accent">Jia Sen</span>
+              <span class="hero__title-line hero__title-outline">Developer</span>
+            </h1>
+
+            <p class="hero__desc" data-hero-desc>
+              Software Engineering student at APU building intentional software —
+              from privacy-first Chrome extensions to full-stack web apps.
+              <span class="mono" data-typewriter>full-stack developer</span>
+            </p>
+
+            <div class="hero__actions btn-group" data-hero-actions>
+              <a class="btn btn--fill" href="work.html">
+                View Work <span class="btn__arrow">→</span>
+              </a>
+              <a class="btn btn--ghost" href="contact.html">Get in touch</a>
+            </div>
+
+            <div class="hero__meta" data-hero-meta>
+              <div class="hero__meta-item">
+                Role
+                <strong>Software Engineer</strong>
+              </div>
+              <div class="hero__meta-item">
+                Stack
+                <strong>TS · React · Node</strong>
+              </div>
+              <div class="hero__meta-item">
+                GitHub
+                <strong>@jasonwong1025</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero__visual">
+            <div data-mascot="hero"></div>
+          </div>
+        </div>
+
+        <div class="hero__scroll" data-hero-scroll>
+          <span class="hero__scroll-line" style="transform: scaleX(0.6)"></span>
+          Scroll
+        </div>
+      </section>
+
+      <section class="marquee marquee--skills" aria-hidden="true">
+        <div data-marquee>
+          <div class="marquee__track" data-skills-marquee></div>
+        </div>
+      </section>
+
+      <section class="featured section container--wide">
+        <header class="section__header container" data-home-reveal>
+          <span class="tag">Selected work</span>
+          <h2 class="section__title">Projects</h2>
+          <p class="section__subtitle">Open-source work — shipped, maintained, and documented in public.</p>
+        </header>
+        <div data-featured-projects></div>
+      </section>
+
+      <section class="section container">
+        <header class="section__header" data-reveal>
+          <span class="tag">Capabilities</span>
+          <h2 class="section__title">Stack</h2>
+        </header>
+        <div class="skills-block">
+          <div class="skills-block__grid" data-skills-grid></div>
+        </div>
+      </section>
+
+      <section class="cta-strip">
+        <div class="container" data-home-reveal>
+          <h2 class="cta-strip__title">Let's build something</h2>
+          <p class="cta-strip__desc">Open to collaboration, freelance, and open-source.</p>
+          <div class="cta-strip__actions">
+            <a class="btn btn--fill" href="contact.html">Start a conversation <span class="btn__arrow">→</span></a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div data-status-slot></div>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
