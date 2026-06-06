@@ -141,6 +141,16 @@
   resize: vertical;
 }
 
+.contact-form__turnstile {
+  min-height: 65px;
+}
+
+.contact-form [data-contact-submit]:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .contact-form__note {
   font-family: var(--font-mono);
   font-size: 0.65rem;

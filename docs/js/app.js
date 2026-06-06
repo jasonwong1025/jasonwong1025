@@ -1,4 +1,5 @@
 import { loadGSAP, waitForFonts } from "./core/boot.js";
+import { initContactForm } from "./components/contact-form.js";
 import { renderCta } from "./components/cta.js";
 import { renderNav, initNav } from "./components/nav.js";
 import { renderStatusBar, initCursorGlow } from "./components/status-bar.js";
@@ -289,6 +290,7 @@ async function boot() {
       initWorkHover();
       initWorkFilter();
       initContactLinks();
+      initContactForm();
       initToolbox();
       initStack();
       ScrollTrigger.refresh();

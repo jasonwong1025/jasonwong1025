@@ -22,6 +22,10 @@ export const NAV_LINKS = [
   { href: "contact.html", label: "Contact", page: "contact" },
 ];
 
+export const TURNSTILE = {
+  siteKey: "0x4AAAAAADf6GSXHdOAcmuuH",
+};
+
 export const GSAP_CDN = {
   gsap: "https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js",
   scrollTrigger: "https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js",
