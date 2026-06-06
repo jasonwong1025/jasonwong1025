@@ -12,6 +12,7 @@ import {
   initWorkHover,
   initContactLinks,
 } from "./animations/scroll-reveal.js";
+import { initStack } from "./animations/stack.js";
 import { initToolbox } from "./animations/toolbox.js";
 import { getFeaturedProjects, PROJECTS } from "./data/projects.js";
 import {
@@ -210,30 +211,39 @@ function renderToolbox() {
   ).join("");
 }
 
-function renderSkillsGrid() {
-  const container = document.querySelector("[data-skills-grid]");
-  if (!container) return;
+function renderStack() {
+  const nav = document.querySelector("[data-stack-nav]");
+  const bento = document.querySelector("[data-stack-bento]");
+  if (!nav || !bento) return;
 
-  const groups = [
-    { label: "Languages", items: SKILLS.languages },
-    { label: "Frontend", items: SKILLS.frontend },
-    { label: "Backend", items: SKILLS.backend },
-    { label: "Data", items: SKILLS.data },
-    { label: "Tools", items: SKILLS.tools },
-  ];
+  const filters = [{ id: "all", label: "All" }, ...SKILL_CATEGORIES];
 
-  container.innerHTML = groups
+  nav.innerHTML = filters
     .map(
-      (g) => `
-      <div class="skills-block__cell" data-reveal>
-        <div class="skills-block__label">${g.label}</div>
-        <ul class="skills-block__list">
-          ${g.items.map((item) => `<li>${item}</li>`).join("")}
-        </ul>
-      </div>
-    `
+      ({ id, label }) =>
+        `<button class="stack__filter${id === "all" ? " is-active" : ""}" type="button" data-stack-filter="${id}">${label}</button>`
     )
     .join("");
+
+  bento.innerHTML = SKILL_CATEGORIES.map(({ id, label }) => {
+    const count = SKILLS[id].length;
+    const layoutClass = id === "languages" || id === "frontend" ? " stack__card--lg" : "";
+
+    return `
+      <article class="stack__card${layoutClass}" data-stack-card data-category="${id}" data-reveal-item>
+        <div class="stack__card-head">
+          <span class="stack__card-dot" aria-hidden="true"></span>
+          <h3 class="stack__card-title">${label}</h3>
+          <span class="stack__card-count">${count}</span>
+        </div>
+        <div class="stack__chips">
+          ${SKILLS[id]
+            .map((skill) => `<span class="stack__chip" data-stack-chip>${skill}</span>`)
+            .join("")}
+        </div>
+      </article>
+    `;
+  }).join("");
 }
 
 async function boot() {
@@ -245,7 +255,7 @@ async function boot() {
   renderCredentials();
   renderToolbox();
   renderSkillsMarquee();
-  renderSkillsGrid();
+  renderStack();
 
   // Show content immediately — never wait for GSAP to see the page
   clearHiddenStyles();
@@ -277,6 +287,7 @@ async function boot() {
       initWorkFilter();
       initContactLinks();
       initToolbox();
+      initStack();
       ScrollTrigger.refresh();
     });
 
