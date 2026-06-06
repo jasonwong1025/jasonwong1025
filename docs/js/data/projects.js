@@ -15,6 +15,20 @@ export const PROJECTS = [
     featured: true,
   },
   {
+    id: "capstone",
+    name: "NextGen Fitness",
+    year: "2025",
+    description:
+      "Team capstone mobile app — AI-powered fitness with personalized workout plans, meal scanning, and a nutrition chatbot. Built with Flutter, Dart, and Android Studio.",
+    language: "Dart",
+    stars: 4,
+    topics: ["flutter", "dart", "mobile", "ai", "capstone"],
+    links: {
+      repo: "https://github.com/jasonwong1025/capstone",
+    },
+    featured: true,
+  },
+  {
     id: "oodj-apuasc",
     name: "OODJ APUASC",
     year: "2026",
