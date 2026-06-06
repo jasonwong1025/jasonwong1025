@@ -1,10 +1,18 @@
 export const SKILLS = {
   languages: ["JavaScript", "TypeScript", "Python", "Java", "PHP"],
   frontend: ["React", "HTML/CSS", "Tailwind", "Flutter"],
-  backend: ["Node.js", "Laravel", "REST APIs"],
+  backend: ["Node.js", "Laravel"],
   data: ["MySQL", "PostgreSQL", "Redis"],
   tools: ["Git", "Docker", "Linux", "VS Code"],
 };
+
+export const SKILL_CATEGORIES = [
+  { id: "languages", label: "Languages" },
+  { id: "frontend", label: "Frontend" },
+  { id: "backend", label: "Backend" },
+  { id: "data", label: "Data" },
+  { id: "tools", label: "Tools" },
+];
 
 export const SKILLS_FLAT = [
   ...SKILLS.languages,
@@ -33,23 +41,32 @@ export const VALUES = [
   },
 ];
 
-export const TIMELINE = [
+export const EDUCATION_TIMELINE = [
   {
-    year: "2023 — Present",
-    title: "Software Engineering @ APU",
+    year: "Feb 2026 — Present",
+    title: "BSc (Hons.) Software Engineering @ APU",
     description:
-      "Pursuing a degree in Software Engineering at Asia Pacific University, Kuala Lumpur. Coursework spans OOD, web development, and full-stack projects.",
+      "Pursuing a Bachelor's in Software Engineering at Asia Pacific University, Kuala Lumpur.",
   },
   {
-    year: "2026",
-    title: "Beacon — Chrome Extension",
+    year: "Aug 2023 — Oct 2025",
+    title: "Diploma in ICT @ APU",
     description:
-      "Shipped a privacy-first productivity extension with focus sessions, site rules, and local analytics. React + TypeScript + Manifest V3.",
+      "Completed a Diploma in Information and Communication Technology at Asia Pacific University. Graduated with CGPA 3.63.",
+  },
+];
+
+export const WORK_TIMELINE = [
+  {
+    year: "Oct 2025 — Present",
+    title: "Part-time @ Codespace AI Technology",
+    description:
+      "Working part-time at Codespace AI Technology Sdn Bhd, continuing hands-on development after the internship.",
   },
   {
-    year: "Ongoing",
-    title: "Open Source & Learning",
+    year: "Sep — Oct 2025",
+    title: "Internship @ Codespace AI Technology",
     description:
-      "Building in public on GitHub — experimenting with TypeScript, React, Laravel, Flutter, and whatever solves the problem at hand.",
+      "Completed an internship at Codespace AI Technology Sdn Bhd, gaining practical industry experience in software development.",
   },
 ];

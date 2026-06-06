@@ -93,7 +93,16 @@
           <span class="tag">Journey</span>
           <h2 class="section__title">Timeline</h2>
         </header>
-        <div class="timeline" data-timeline></div>
+        <div class="journey">
+          <div class="journey__group" data-reveal>
+            <h3 class="journey__label">Education</h3>
+            <div class="timeline" data-timeline-education></div>
+          </div>
+          <div class="journey__group" data-reveal>
+            <h3 class="journey__label">Experience</h3>
+            <div class="timeline" data-timeline-work></div>
+          </div>
+        </div>
       </section>
 
       <section class="section container">
@@ -101,7 +110,11 @@
           <span class="tag">Toolbox</span>
           <h2 class="section__title">Technologies</h2>
         </header>
-        <div class="tool-grid" data-tool-grid></div>
+        <div class="toolbox" data-toolbox>
+          <div class="toolbox__filters" data-toolbox-filter data-reveal></div>
+          <div class="toolbox__grid" data-toolbox-grid data-reveal-stagger></div>
+          <p class="toolbox__count" data-toolbox-count data-reveal></p>
+        </div>
       </section>
     </div>
 

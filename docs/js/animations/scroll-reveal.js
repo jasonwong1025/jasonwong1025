@@ -21,11 +21,12 @@ export function initScrollReveal() {
   gsap.utils.toArray("[data-reveal-stagger]").forEach((group) => {
     const items = group.querySelectorAll("[data-reveal-item]");
     gsap.from(items, {
-      y: 32,
+      y: 28,
       opacity: 0,
-      duration: 0.7,
-      stagger: 0.08,
-      ease: "power3.out",
+      scale: 0.88,
+      duration: 0.65,
+      stagger: { amount: 0.45, from: "random" },
+      ease: "back.out(1.4)",
       immediateRender: false,
       scrollTrigger: {
         trigger: group,

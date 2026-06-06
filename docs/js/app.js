@@ -12,8 +12,16 @@ import {
   initWorkHover,
   initContactLinks,
 } from "./animations/scroll-reveal.js";
+import { initToolbox } from "./animations/toolbox.js";
 import { getFeaturedProjects, PROJECTS } from "./data/projects.js";
-import { SKILLS, SKILLS_FLAT, TIMELINE, VALUES } from "./data/skills.js";
+import {
+  EDUCATION_TIMELINE,
+  SKILL_CATEGORIES,
+  SKILLS,
+  SKILLS_FLAT,
+  VALUES,
+  WORK_TIMELINE,
+} from "./data/skills.js";
 
 const PAGE = document.body.dataset.page || "home";
 
@@ -114,19 +122,26 @@ function initWorkFilter() {
   });
 }
 
-function renderAboutTimeline() {
-  const container = document.querySelector("[data-timeline]");
-  if (!container) return;
-
-  container.innerHTML = TIMELINE.map(
-    (item) => `
+function renderTimelineItems(items) {
+  return items
+    .map(
+      (item) => `
     <div class="timeline__item" data-reveal>
       <div class="timeline__year">${item.year}</div>
       <h3 class="timeline__title">${item.title}</h3>
       <p class="timeline__desc">${item.description}</p>
     </div>
   `
-  ).join("");
+    )
+    .join("");
+}
+
+function renderAboutTimeline() {
+  const education = document.querySelector("[data-timeline-education]");
+  const work = document.querySelector("[data-timeline-work]");
+
+  if (education) education.innerHTML = renderTimelineItems(EDUCATION_TIMELINE);
+  if (work) work.innerHTML = renderTimelineItems(WORK_TIMELINE);
 }
 
 function renderValues() {
@@ -143,12 +158,32 @@ function renderValues() {
   ).join("");
 }
 
-function renderToolGrid() {
-  const container = document.querySelector("[data-tool-grid]");
-  if (!container) return;
+function renderToolbox() {
+  const filterBar = document.querySelector("[data-toolbox-filter]");
+  const grid = document.querySelector("[data-toolbox-grid]");
+  if (!filterBar || !grid) return;
 
-  container.innerHTML = SKILLS_FLAT.map(
-    (tool) => `<span class="tool-grid__item" data-reveal>${tool}</span>`
+  const filters = [
+    { id: "all", label: "All" },
+    ...SKILL_CATEGORIES.map(({ id, label }) => ({ id, label })),
+  ];
+
+  filterBar.innerHTML = filters
+    .map(
+      ({ id, label }) =>
+        `<button class="toolbox__filter${id === "all" ? " is-active" : ""}" type="button" data-filter="${id}">${label}</button>`
+    )
+    .join("");
+
+  grid.innerHTML = SKILL_CATEGORIES.flatMap(({ id }) =>
+    SKILLS[id].map(
+      (tool) => `
+      <button class="toolbox__chip" type="button" data-toolbox-chip data-category="${id}" data-reveal-item>
+        <span class="toolbox__chip-dot" aria-hidden="true"></span>
+        <span class="toolbox__chip-label">${tool}</span>
+      </button>
+    `
+    )
   ).join("");
 }
 
@@ -184,7 +219,7 @@ async function boot() {
   renderWorkList();
   renderAboutTimeline();
   renderValues();
-  renderToolGrid();
+  renderToolbox();
   renderSkillsMarquee();
   renderSkillsGrid();
 
@@ -217,6 +252,7 @@ async function boot() {
       initWorkHover();
       initWorkFilter();
       initContactLinks();
+      initToolbox();
       ScrollTrigger.refresh();
     });
 
