@@ -104,21 +104,6 @@
   mix-blend-mode: overlay;
 }
 
-.mascot__code-float {
-  position: absolute;
-  top: 15%;
-  right: 0;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--accent-code);
-  padding: 0.35rem 0.6rem;
-  border: 1px solid var(--line-strong);
-  background: var(--bg);
-  transform: translateZ(60px);
-  white-space: nowrap;
-}
-
-.mascot-stage--compact .mascot__code-float,
 .mascot-stage--compact .mascot__frame {
   display: none;
 }

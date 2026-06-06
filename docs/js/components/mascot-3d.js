@@ -18,7 +18,6 @@ const MASCOT_TEMPLATE = `
       />
     </div>
     <div class="mascot__layer mascot__highlight" data-mascot-layer="highlight"></div>
-    <span class="mascot__code-float" data-mascot-layer="badge">&lt;code/&gt;</span>
   </div>
 `;
 
@@ -58,7 +57,6 @@ export function initMascot(container, options = {}) {
     shadow: stage.querySelector('[data-mascot-layer="shadow"]'),
     image: stage.querySelector('[data-mascot-layer="image"]'),
     highlight: stage.querySelector('[data-mascot-layer="highlight"]'),
-    badge: stage.querySelector('[data-mascot-layer="badge"]'),
   };
 
   if (reduced || typeof gsap === "undefined") {
@@ -87,24 +85,6 @@ export function initMascot(container, options = {}) {
       });
     }
 
-    if (layers.badge) {
-      gsap.from(layers.badge, {
-        y: -8,
-        opacity: 0,
-        duration: 0.8,
-        delay: 0.4,
-        ease: "back.out(1.7)",
-        immediateRender: false,
-      });
-      gsap.to(layers.badge, {
-        y: -6,
-        duration: 2,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-        delay: 0.3,
-      });
-    }
   }, stage);
 
   let rafId = null;
@@ -148,14 +128,6 @@ export function initMascot(container, options = {}) {
         y: currentRotX * 2,
       });
     }
-    if (layers.badge) {
-      gsap.set(layers.badge, {
-        x: currentRotY * 3,
-        y: currentRotX * 2,
-        z: 60 + Math.abs(currentRotY),
-      });
-    }
-
     rafId = requestAnimationFrame(animateTilt);
   }
 
