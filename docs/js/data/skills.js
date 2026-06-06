@@ -50,6 +50,6 @@ export const TIMELINE = [
     year: "Ongoing",
     title: "Open Source & Learning",
     description:
-      "Building in public on GitHub — experimenting with React, Node, Flutter, and whatever solves the problem at hand.",
+      "Building in public on GitHub — experimenting with TypeScript, React, Laravel, Flutter, and whatever solves the problem at hand.",
   },
 ];

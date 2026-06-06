@@ -200,10 +200,10 @@ async function boot() {
     initPixelCanvas(document.querySelector("[data-pixel-canvas]"));
 
     initTypewriter("[data-typewriter]", [
-      "full-stack developer",
-      "software engineer",
-      "open-source builder",
-      "APU student",
+      "building full-stack projects",
+      "exploring languages & tools",
+      "learning new techniques",
+      "Software Engineering @ APU",
     ]);
 
     runIntro(() => {

@@ -1,8 +1,8 @@
 export const SITE = {
-  name: "Jia Sen",
+  name: "Wong Jia Sen",
   handle: "jasonwong1025",
   title: "Software Engineer",
-  tagline: "Building full-stack software with intention.",
+  tagline: "Building full-stack projects and learning.",
   location: "Kuala Lumpur, Malaysia",
   company: "Asia Pacific University",
   degree: "Software Engineering",

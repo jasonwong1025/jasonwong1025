@@ -51,7 +51,7 @@ export function renderNav(currentPage) {
           <span class="nav-mascot" aria-hidden="true">
             <img src="${SITE.mascot}" alt="" width="36" height="36" />
           </span>
-          <span class="nav__brand-mark">&lt;</span>${SITE.handle}<span class="nav__brand-mark">/&gt;</span>
+          <span class="nav__brand-mark">&lt;</span>${SITE.name}<span class="nav__brand-mark">/&gt;</span>
         </a>
         <nav class="nav__links" aria-label="Primary">${desktopLinks}</nav>
         <button class="nav__toggle" type="button" data-nav-toggle aria-label="Toggle menu" aria-expanded="false">

@@ -137,6 +137,14 @@
   letter-spacing: -0.02em;
 }
 
+.hero__meta-item a {
+  transition: color var(--duration-fast);
+}
+
+.hero__meta-item a:hover strong {
+  color: var(--accent-cool);
+}
+
 .hero__visual {
   position: relative;
   display: flex;
