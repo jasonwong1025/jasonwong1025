@@ -145,6 +145,18 @@
   color: var(--accent-cool);
 }
 
+.hero__meta-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+  margin-top: 0.25rem;
+}
+
+.hero__meta-links a strong {
+  display: inline;
+  margin-top: 0;
+}
+
 .hero__visual {
   position: relative;
   display: flex;
@@ -284,6 +296,33 @@
   margin-bottom: var(--space-xl);
   padding-bottom: var(--space-lg);
   border-bottom: 1px solid var(--line);
+}
+
+.home-intro {
+  max-width: 68ch;
+}
+
+.home-intro__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-md);
+}
+
+.home-intro p {
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin-bottom: var(--space-md);
+}
+
+.home-intro p strong {
+  color: var(--text);
+}
+
+.home-intro .link-line {
+  margin-inline: 0.15rem;
 }
 
 .stack__filter {

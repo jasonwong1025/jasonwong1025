@@ -6,10 +6,11 @@ export const SITE = {
   location: "Kuala Lumpur, Malaysia",
   company: "Asia Pacific University",
   degree: "Software Engineering",
-  email: "hello@jasonwong.top",
+  email: "jiasen27826@gmail.com",
   site: "https://jasonwong.top",
   github: "https://github.com/jasonwong1025",
-  linkedin: "https://linkedin.com/in/jasonwong1025",
+  linkedin: "https://www.linkedin.com/in/wong-jia-sen/",
+  instagram: "https://www.instagram.com/wjs.1025/",
   mascot: "Chibi_programmer_using_laptop_code_202605291548.jpeg",
   hireable: true,
 };
