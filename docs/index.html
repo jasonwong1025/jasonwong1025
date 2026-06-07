@@ -114,7 +114,9 @@
               Wong Jia Sen is a software engineer and developer based in Kuala Lumpur, Malaysia.
               Software Engineering student at Asia Pacific University (APU), passionate about building
               clean, maintainable software across the stack — from polished frontends to solid APIs and databases.
-              <span class="mono" data-typewriter>building full-stack projects</span>
+              <span class="hero__typewriter" data-no-split>
+                <span class="mono" data-typewriter aria-live="polite">building full-stack projects</span>
+              </span>
             </p>
 
             <div class="hero__actions btn-group" data-hero-actions>
@@ -159,42 +161,42 @@
         </div>
 
         <div class="hero__scroll" data-hero-scroll>
-          <span class="hero__scroll-line" style="transform: scaleX(0.6)"></span>
+          <span class="hero__scroll-line" data-hero-scroll-line style="transform: scaleX(0.6)"></span>
           Scroll
         </div>
       </section>
 
-      <section class="home-intro section container" data-reveal>
-        <h2 class="home-intro__title">Developer in Kuala Lumpur</h2>
-        <p>
+      <section class="home-intro section container" data-home-intro>
+        <h2 class="home-intro__title" data-home-intro-item>Developer in Kuala Lumpur</h2>
+        <p data-home-intro-item>
           I am <strong>Wong Jia Sen</strong>, a developer focused on full-stack web development, mobile apps with
           Flutter or React Native, and AI-powered software. 
         </p>
-        <p>
+        <p data-home-intro-item>
           I build with TypeScript, React, Laravel, Dart, and modern tooling — always learning better patterns,
           architecture, and best practices. Explore my
           <a class="link-line" href="work.html">project portfolio</a>,
           read my <a class="link-line" href="about.html">background and timeline</a>, or
           <a class="link-line" href="contact.html">reach out for collaboration</a>, freelance work, or open-source.
         </p>
-        <p>
+        <p data-home-intro-item>
           Based in <strong>Kuala Lumpur, Malaysia</strong> and studying Software Engineering at
           <strong>Asia Pacific University (APU)</strong>. Open to opportunities across the Klang Valley and remote
           teams in Southeast Asia.
         </p>
       </section>
 
-      <section class="marquee marquee--skills" aria-hidden="true">
+      <section class="marquee marquee--skills" data-scroll-marquee aria-hidden="true">
         <div data-marquee>
           <div class="marquee__track" data-skills-marquee></div>
         </div>
       </section>
 
-      <section class="featured section container--wide">
-        <header class="section__header container" data-home-reveal>
-          <span class="tag">Selected work</span>
-          <h2 class="section__title">Projects</h2>
-          <p class="section__subtitle">
+      <section class="featured section container--wide" data-scroll-line>
+        <header class="section__header container" data-home-header>
+          <span class="tag" data-home-header-item>Selected work</span>
+          <h2 class="section__title" data-home-header-item>Projects</h2>
+          <p class="section__subtitle" data-home-header-item>
             Open-source work — shipped, maintained, and documented in public.
             <a class="link-line" href="work.html">View all projects →</a>
           </p>
@@ -203,14 +205,14 @@
       </section>
 
       <section class="section container">
-        <header class="section__header" data-reveal>
-          <span class="tag">Capabilities</span>
-          <h2 class="section__title">Stack</h2>
-          <p class="section__subtitle">Languages, frameworks, and tools I build with across the stack.</p>
+        <header class="section__header" data-home-header>
+          <span class="tag" data-home-header-item>Capabilities</span>
+          <h2 class="section__title" data-home-header-item>Stack</h2>
+          <p class="section__subtitle" data-home-header-item>Languages, frameworks, and tools I build with across the stack.</p>
         </header>
         <div class="stack" data-stack>
-          <nav class="stack__nav" data-stack-nav data-reveal aria-label="Stack categories"></nav>
-          <div class="stack__bento" data-stack-bento data-reveal-stagger></div>
+          <nav class="stack__nav" data-stack-nav aria-label="Stack categories"></nav>
+          <div class="stack__bento" data-stack-bento data-reveal-stagger="scale"></div>
         </div>
       </section>
 

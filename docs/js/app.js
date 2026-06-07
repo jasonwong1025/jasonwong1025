@@ -8,12 +8,9 @@ import { initTypewriter } from "./components/typewriter.js";
 import { initPixelCanvas } from "./components/pixel-canvas.js";
 import { runIntro } from "./animations/intro.js";
 import { initHero, initMarquees, initHomeSections, ensureVisible, clearHiddenStyles } from "./animations/hero.js";
-import {
-  initScrollReveal,
-  initPageHead,
-  initWorkHover,
-  initContactLinks,
-} from "./animations/scroll-reveal.js";
+import { prepareHomeText, initHomeInteractions } from "./animations/home-interactions.js";
+import { initScrollReveal, initPageHead, initWorkHover, initContactLinks } from "./animations/scroll-reveal.js";
+import { initScrollRevealVariants, initHomeScrollTransitions } from "./animations/scroll-transitions.js";
 import { initStack } from "./animations/stack.js";
 import { initToolbox } from "./animations/toolbox.js";
 import { getFeaturedProjects, PROJECTS } from "./data/projects.js";
@@ -46,7 +43,7 @@ function renderFeaturedProjects() {
   container.innerHTML = getFeaturedProjects()
     .map(
       (p, i) => `
-      <a class="featured__row" href="${p.links.repo}" target="_blank" rel="noopener noreferrer" data-home-reveal>
+      <a class="featured__row" href="${p.links.repo}" target="_blank" rel="noopener noreferrer">
         <span class="featured__index">${String(i + 1).padStart(2, "0")}</span>
         <div class="featured__body">
           <h3 class="featured__name">${p.name}</h3>
@@ -262,6 +259,8 @@ async function boot() {
   renderSkillsMarquee();
   renderStack();
 
+  if (PAGE === "home") prepareHomeText();
+
   // Show content immediately — never wait for GSAP to see the page
   clearHiddenStyles();
 
@@ -284,10 +283,14 @@ async function boot() {
       if (PAGE === "home") {
         initHero();
         initHomeSections();
+        initHomeInteractions();
+        initHomeScrollTransitions();
+        initScrollRevealVariants();
+      } else {
+        initScrollReveal();
       }
       initPageHead();
       initMarquees();
-      initScrollReveal();
       initWorkHover();
       initWorkFilter();
       initContactLinks();

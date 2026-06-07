@@ -34,46 +34,76 @@ export function initHero() {
   }
 
   const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+  const descWords = hero.querySelectorAll("[data-hero-desc] .split-word");
 
   tl.from("[data-hero] [data-hero-eyebrow]", {
-    y: 24,
+    y: 40,
     opacity: 0,
-    duration: 0.7,
+    scale: 0.9,
+    duration: 0.65,
+    ease: "back.out(1.7)",
     immediateRender: false,
   })
     .from(
       "[data-hero] .hero__title-line",
-      { yPercent: 100, duration: 0.9, stagger: 0.1, immediateRender: false },
-      "-=0.35"
-    )
-    .from(
-      "[data-hero] [data-hero-desc]",
-      { y: 20, opacity: 0, duration: 0.6, immediateRender: false },
-      "-=0.4"
-    )
-    .from(
-      "[data-hero] [data-hero-actions] > *",
-      { y: 16, opacity: 0, duration: 0.45, stagger: 0.08, immediateRender: false },
-      "-=0.35"
-    )
-    .from(
-      "[data-hero] [data-hero-meta] > *",
-      { y: 12, opacity: 0, duration: 0.45, stagger: 0.06, immediateRender: false },
+      {
+        yPercent: 130,
+        rotationX: -28,
+        transformOrigin: "50% 100%",
+        duration: 0.85,
+        stagger: 0.14,
+        ease: "power4.out",
+        immediateRender: false,
+      },
       "-=0.3"
     )
     .from(
+      "[data-hero] .hero__title-accent",
+      { scale: 0.75, duration: 0.7, ease: "back.out(2)", immediateRender: false },
+      "-=0.5"
+    );
+
+  if (descWords.length) {
+    tl.from(
+      descWords,
+      { y: 36, opacity: 0, rotation: 3, duration: 0.4, stagger: 0.012, ease: "power4.out", immediateRender: false },
+      "-=0.4"
+    ).from(
+      "[data-hero] .hero__typewriter",
+      { y: 16, opacity: 0, duration: 0.45, ease: "power3.out", immediateRender: false },
+      "-=0.15"
+    );
+  } else {
+    tl.from(
+      "[data-hero] [data-hero-desc]",
+      { y: 36, opacity: 0, duration: 0.55, immediateRender: false },
+      "-=0.4"
+    );
+  }
+
+  tl.from(
+    "[data-hero] [data-hero-actions] > *",
+    { y: 32, opacity: 0, scale: 0.85, duration: 0.55, stagger: 0.1, ease: "back.out(1.8)", immediateRender: false },
+    "-=0.25"
+  )
+    .from(
+      "[data-hero] [data-hero-meta] > *",
+      { y: 24, opacity: 0, x: -12, duration: 0.5, stagger: 0.08, ease: "power4.out", immediateRender: false },
+      "-=0.22"
+    )
+    .from(
       "[data-hero] [data-hero-scroll]",
-      { opacity: 0, duration: 0.5, immediateRender: false },
-      "-=0.2"
+      { opacity: 0, y: 20, duration: 0.45, immediateRender: false },
+      "-=0.15"
     )
     .call(() => hero.classList.add("hero--ready"));
 
   const scrollLine = hero.querySelector("[data-hero-scroll-line]");
   if (scrollLine) {
     gsap.to(scrollLine, {
-      scaleX: 1.4,
-      duration: 1.5,
-      ease: "sine.inOut",
+      scaleX: 2,
+      duration: 1,
+      ease: "power2.inOut",
       yoyo: true,
       repeat: -1,
       transformOrigin: "left center",
@@ -105,16 +135,5 @@ export function initMarquees() {
 }
 
 export function initHomeSections() {
-  if (prefersReducedMotion()) return;
-
-  gsap.utils.toArray("[data-home-reveal]").forEach((el, i) => {
-    gsap.from(el, {
-      y: 28,
-      opacity: 0,
-      duration: 0.7,
-      delay: 0.2 + i * 0.06,
-      ease: "power3.out",
-      immediateRender: false,
-    });
-  });
+  /* Scroll-triggered home section motion lives in home-interactions.js */
 }

@@ -1,5 +1,6 @@
 import { prefersReducedMotion } from "../core/reduced-motion.js";
 
+/** @deprecated Use initScrollRevealVariants for richer presets; kept for non-home pages. */
 export function initScrollReveal() {
   if (prefersReducedMotion()) return;
 
@@ -52,7 +53,7 @@ export function initPageHead() {
 export function initWorkHover() {
   if (prefersReducedMotion()) return;
 
-  document.querySelectorAll(".work-item, .featured__row").forEach((row) => {
+  document.querySelectorAll(".work-item").forEach((row) => {
     row.addEventListener("mouseenter", () => {
       gsap.to(row, { x: 4, duration: 0.4, ease: "power2.out" });
     });
