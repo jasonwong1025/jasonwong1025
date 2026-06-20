@@ -39,6 +39,9 @@
   display: grid;
   gap: 0;
   border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-panel);
 }
 
 .values-list__item {
@@ -84,7 +87,9 @@
   gap: var(--space-md);
   padding: var(--space-lg);
   background: var(--bg-elevated);
-  border: 1px solid var(--line-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
   transition:
     padding-left var(--duration-med) var(--ease-out-expo),
     border-color var(--duration-fast),
@@ -127,16 +132,15 @@
 
 .credential-card__title {
   font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
   color: var(--text);
   transition: color var(--duration-fast);
 }
 
 .credential-card:hover .credential-card__title {
-  color: var(--accent-cool);
+  color: var(--accent);
 }
 
 .credential-card__issuer {

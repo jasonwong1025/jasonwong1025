@@ -108,7 +108,7 @@ export function initContactForm() {
     mounted = true;
     widgetId = window.turnstile.render(widgetHost, {
       sitekey: TURNSTILE.siteKey,
-      theme: "dark",
+      theme: "auto",
       callback: () => setSubmitEnabled(true),
       "error-callback": () => {
         setSubmitEnabled(false);

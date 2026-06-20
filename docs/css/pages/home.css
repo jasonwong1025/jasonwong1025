@@ -53,11 +53,10 @@
 
 .hero__title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 10cqi, 4rem);
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
+  font-size: clamp(2.1rem, 10.5cqi, 4.4rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
   perspective: 800px;
 }
 
@@ -77,13 +76,15 @@
 
 .hero__title-accent {
   color: var(--accent);
+  font-style: italic;
+  font-weight: 500;
   -webkit-text-stroke: 0;
 }
 
 .hero__title-outline {
   color: transparent;
-  -webkit-text-stroke: 1px var(--line-strong);
-  font-size: 0.92em;
+  -webkit-text-stroke: 1.2px var(--accent-cool);
+  font-size: 0.94em;
 }
 
 .hero__eyebrow {
@@ -288,15 +289,14 @@
 
 .featured__name {
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
   transition: color var(--duration-fast);
 }
 
 .featured__row:hover .featured__name {
-  color: var(--accent-cool);
+  color: var(--accent);
 }
 
 .featured__desc {
@@ -357,9 +357,8 @@
 
 .home-intro__title {
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 700;
-  text-transform: uppercase;
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  font-weight: 600;
   letter-spacing: -0.02em;
   margin-bottom: var(--space-md);
 }
@@ -430,10 +429,12 @@
   padding: var(--space-lg);
   background: var(--bg-elevated);
   border: 1px solid var(--line);
+  border-radius: var(--radius-md);
   cursor: pointer;
   will-change: transform, opacity;
   transition:
     border-color var(--duration-fast),
+    transform var(--duration-fast),
     box-shadow var(--duration-fast);
 }
 
@@ -480,10 +481,9 @@
 
 .stack__card-title {
   font-family: var(--font-display);
-  font-size: 1.125rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   flex: 1;
 }
 
