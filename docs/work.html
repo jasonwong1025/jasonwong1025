@@ -3,6 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          if (t !== "dark" && t !== "light") {
+            t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          }
+          document.documentElement.dataset.theme = t;
+        } catch (e) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
     <link rel="icon" href="Chibi_programmer_using_laptop_code_202605291548.jpeg" type="image/jpeg" />
     <link rel="apple-touch-icon" href="Chibi_programmer_using_laptop_code_202605291548.jpeg" />
     <meta name="description" content="Projects by Jia Sen — Beacon, NextGen Fitness capstone, OODJ, and open-source work." />
@@ -22,12 +35,12 @@
     <div class="noise" aria-hidden="true"></div>
     <div class="grid-bg" aria-hidden="true"></div>
     <div class="glow-orb glow-orb--cool" aria-hidden="true"></div>
-    <div class="scanline" aria-hidden="true"></div>
 
     <div class="intro" data-intro aria-hidden="true">
       <div class="intro__inner">
-        <div class="intro__code" data-intro-code="work.fetch()"></div>
-        <div class="intro__bar" data-intro-bar></div>
+        <span class="intro__name" data-intro-name>Wong <em>Jia Sen</em></span>
+        <span class="intro__bar" data-intro-bar></span>
+        <span class="intro__tag" data-intro-tag>Work</span>
       </div>
     </div>
 

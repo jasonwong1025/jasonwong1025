@@ -2,6 +2,7 @@ import { loadGSAP, waitForFonts } from "./core/boot.js";
 import { initContactForm } from "./components/contact-form.js";
 import { renderCta } from "./components/cta.js";
 import { renderNav, initNav } from "./components/nav.js";
+import { initThemeToggle } from "./components/theme-toggle.js";
 import { renderStatusBar, initCursorGlow } from "./components/status-bar.js";
 import { initAllMascots } from "./components/mascot-3d.js";
 import { initTypewriter } from "./components/typewriter.js";
@@ -10,7 +11,12 @@ import { runIntro } from "./animations/intro.js";
 import { initHero, initMarquees, initHomeSections, ensureVisible, clearHiddenStyles } from "./animations/hero.js";
 import { prepareHomeText, initHomeInteractions } from "./animations/home-interactions.js";
 import { initScrollReveal, initPageHead, initWorkHover, initContactLinks } from "./animations/scroll-reveal.js";
-import { initScrollRevealVariants, initHomeScrollTransitions } from "./animations/scroll-transitions.js";
+import {
+  initScrollRevealVariants,
+  initHomeScrollTransitions,
+  initScrollProgress,
+  initMascotParallax,
+} from "./animations/scroll-transitions.js";
 import { initStack } from "./animations/stack.js";
 import { initToolbox } from "./animations/toolbox.js";
 import { getFeaturedProjects, PROJECTS } from "./data/projects.js";
@@ -34,6 +40,7 @@ function mountChrome() {
   if (ctaSlot) ctaSlot.innerHTML = renderCta(PAGE);
   if (statusSlot) statusSlot.innerHTML = renderStatusBar();
   initNav(PAGE);
+  initThemeToggle();
 }
 
 function renderFeaturedProjects() {
@@ -296,6 +303,8 @@ async function boot() {
       initContactLinks();
       initToolbox();
       initStack();
+      initScrollProgress();
+      initMascotParallax();
       ScrollTrigger.refresh();
     });
 

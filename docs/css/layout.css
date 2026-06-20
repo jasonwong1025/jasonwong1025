@@ -39,10 +39,9 @@
 .section__title {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
 }
 
 .section__subtitle {
@@ -93,10 +92,9 @@
 .page-head__title {
   font-family: var(--font-display);
   font-size: clamp(3rem, 8vw, 6rem);
-  font-weight: 800;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
 }
 
 .page-head__desc {
@@ -116,9 +114,8 @@
 .cta-strip__title {
   font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: -0.03em;
+  font-weight: 600;
+  letter-spacing: -0.025em;
 }
 
 .cta-strip__desc {

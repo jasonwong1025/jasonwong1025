@@ -381,6 +381,56 @@ function initCtaScrub() {
   }
 }
 
+/** Top scroll-progress bar — runs on every page. */
+export function initScrollProgress() {
+  if (prefersReducedMotion()) return;
+
+  let bar = document.querySelector(".scroll-progress");
+  if (!bar) {
+    bar = document.createElement("div");
+    bar.className = "scroll-progress";
+    bar.setAttribute("aria-hidden", "true");
+    document.body.appendChild(bar);
+  }
+
+  gsap.to(bar, {
+    scaleX: 1,
+    ease: "none",
+    scrollTrigger: {
+      trigger: document.documentElement,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: 0.3,
+    },
+  });
+}
+
+/** Gentle parallax drift on mascots that aren't the home hero exit. */
+export function initMascotParallax() {
+  if (prefersReducedMotion()) return;
+
+  document.querySelectorAll("[data-mascot]").forEach((host) => {
+    if (host.closest("[data-hero]")) return; // home hero handles its own exit
+    const stage = host.classList.contains("mascot-stage") ? host : host.querySelector(".mascot-stage");
+    if (!stage || stage.classList.contains("mascot-stage--sidebar")) return; // don't fight sticky
+
+    gsap.fromTo(
+      stage,
+      { y: 40 },
+      {
+        y: -40,
+        ease: "none",
+        scrollTrigger: {
+          trigger: stage,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.8,
+        },
+      }
+    );
+  });
+}
+
 export function initHomeScrollTransitions() {
   if (prefersReducedMotion()) return;
 

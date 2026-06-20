@@ -1,26 +1,43 @@
+/* ============================================================
+   Design tokens — "Warm & Organic"
+   Light is the default (:root). Dark is opt-in via [data-theme="dark"].
+   Variable *names* are kept stable so all JS/CSS animation hooks
+   (--accent, --bg, --line, …) keep working across the redesign.
+   ============================================================ */
+
 :root {
-  /* Surfaces — charcoal desk / monitor dark */
-  --bg: #0a0b0e;
-  --bg-elevated: #111318;
-  --bg-panel: #161920;
-  --line: rgba(232, 228, 220, 0.1);
-  --line-strong: rgba(232, 228, 220, 0.22);
+  color-scheme: light;
 
-  /* Text — warm off-white from scene lighting */
-  --text: #e8e4dc;
-  --text-muted: #8a8f9a;
-  --text-dim: #555b66;
+  /* Surfaces — warm paper / sand */
+  --bg: #f4ede1;
+  --bg-elevated: #fbf6ec;
+  --bg-panel: #fffdf8;
+  --bg-glass: rgba(244, 237, 225, 0.78);
+  --line: rgba(64, 46, 30, 0.12);
+  --line-strong: rgba(64, 46, 30, 0.24);
 
-  /* Accents — copper mug, monitor cyan, syntax green */
-  --accent: #c9a66b;
-  --accent-bright: #e8c98a;
-  --accent-cool: #6eb5ff;
-  --accent-code: #7ee787;
+  /* Ink — warm espresso text */
+  --text: #2c241c;
+  --text-muted: #6c5e50;
+  --text-dim: #9d8e7d;
+
+  /* Accents — terracotta, honey, sage, olive (no neon, no "code" green) */
+  --accent: #c2552f;
+  --accent-bright: #d3823c;
+  --accent-cool: #5d8a6e;
+  --accent-code: #7d8b3e;
+
+  /* Soft tints for blobs / washes */
+  --wash-warm: rgba(194, 85, 47, 0.14);
+  --wash-honey: rgba(211, 130, 60, 0.16);
+  --wash-sage: rgba(93, 138, 110, 0.14);
+  --shadow-soft: 0 24px 60px -24px rgba(64, 46, 30, 0.28);
+  --shadow-card: 0 12px 36px -18px rgba(64, 46, 30, 0.22);
 
   /* Typography */
-  --font-display: "Syne", system-ui, sans-serif;
-  --font-body: "DM Sans", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 
   /* Spacing */
   --space-xs: 0.5rem;
@@ -29,15 +46,24 @@
   --space-lg: 2.5rem;
   --space-xl: 4rem;
   --space-2xl: 6rem;
+  --space-3xl: 8rem;
 
   /* Layout */
   --nav-height: 4.5rem;
   --content-max: 72rem;
   --gutter: clamp(1.25rem, 4vw, 3rem);
 
+  /* Organic radii */
+  --radius-sm: 0.6rem;
+  --radius-md: 1.1rem;
+  --radius-lg: 1.8rem;
+  --radius-pill: 999px;
+  --radius-blob: 47% 53% 58% 42% / 52% 46% 54% 48%;
+
   /* Motion */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --duration-fast: 0.25s;
   --duration-med: 0.5s;
   --duration-slow: 0.9s;
@@ -45,4 +71,33 @@
   /* 3D stage */
   --perspective: 1200px;
   --mascot-width: clamp(260px, 38vw, 480px);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Surfaces — warm espresso / roasted */
+  --bg: #1b1612;
+  --bg-elevated: #241d17;
+  --bg-panel: #2b2219;
+  --bg-glass: rgba(27, 22, 18, 0.78);
+  --line: rgba(236, 222, 201, 0.12);
+  --line-strong: rgba(236, 222, 201, 0.22);
+
+  /* Ink — warm cream text */
+  --text: #ede2d1;
+  --text-muted: #ab9c8a;
+  --text-dim: #7b6e5e;
+
+  /* Accents — lifted so they glow on dark */
+  --accent: #e27a4d;
+  --accent-bright: #efa869;
+  --accent-cool: #86b89a;
+  --accent-code: #bcc77f;
+
+  --wash-warm: rgba(226, 122, 77, 0.16);
+  --wash-honey: rgba(239, 168, 105, 0.16);
+  --wash-sage: rgba(134, 184, 154, 0.14);
+  --shadow-soft: 0 28px 70px -28px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 16px 40px -20px rgba(0, 0, 0, 0.55);
 }

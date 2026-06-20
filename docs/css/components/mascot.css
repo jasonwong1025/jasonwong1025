@@ -1,4 +1,4 @@
-/* Pseudo-3D mascot — layered planes, no WebGL model required */
+/* Mascot — soft, rounded, "sticker" character with a warm offset blob */
 
 .mascot-stage {
   position: relative;
@@ -38,47 +38,51 @@
   transform-style: preserve-3d;
 }
 
+/* Soft warm glow behind the character */
 .mascot__glow {
-  inset: 10%;
-  background: radial-gradient(
-    ellipse at 50% 60%,
-    rgba(110, 181, 255, 0.25) 0%,
-    rgba(201, 166, 107, 0.15) 40%,
-    transparent 70%
-  );
-  transform: translateZ(-80px) scale(1.2);
-  filter: blur(20px);
-  opacity: 0.8;
+  inset: 6%;
+  background: radial-gradient(ellipse at 50% 55%, var(--wash-honey) 0%, var(--wash-sage) 45%, transparent 72%);
+  transform: translateZ(-80px) scale(1.25);
+  filter: blur(26px);
+  opacity: 0.9;
 }
 
+/* Grounding shadow */
 .mascot__shadow {
-  bottom: -5%;
-  left: 10%;
-  right: 10%;
+  bottom: -4%;
+  left: 14%;
+  right: 14%;
   top: auto;
-  height: 8%;
-  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.5) 0%, transparent 70%);
-  transform: translateZ(-40px) rotateX(90deg);
-  opacity: 0.6;
+  height: 9%;
+  background: radial-gradient(ellipse, rgba(64, 46, 30, 0.35) 0%, transparent 70%);
+  transform: translateZ(-40px) rotateX(82deg);
+  opacity: 0.55;
+  filter: blur(6px);
 }
 
+/* Playful colour blob offset behind the photo */
 .mascot__frame {
-  inset: 0;
-  border: 1px solid var(--line);
-  transform: translateZ(-20px);
+  inset: 6% 4% 4% 6%;
+  border: none;
+  border-radius: 56% 44% 52% 48% / 50% 52% 48% 50%;
+  background: linear-gradient(150deg, var(--accent), var(--accent-bright));
+  transform: translateZ(-24px) rotate(-5deg);
+  opacity: 0.92;
   pointer-events: none;
 }
 
 .mascot__frame::before {
-  content: "";
-  position: absolute;
-  inset: 8px;
-  border: 1px solid var(--line);
+  content: none;
 }
 
+/* The photo card */
 .mascot__image-wrap {
   inset: 0;
   overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line-strong);
+  background: var(--bg-panel);
+  box-shadow: var(--shadow-soft);
   transform: translateZ(0);
 }
 
@@ -90,18 +94,20 @@
   transform: scale(1.05);
 }
 
+/* Gentle warm sheen */
 .mascot__highlight {
   inset: 0;
+  border-radius: var(--radius-lg);
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.08) 0%,
-    transparent 40%,
-    transparent 60%,
-    rgba(110, 181, 255, 0.05) 100%
+    rgba(255, 255, 255, 0.16) 0%,
+    transparent 38%,
+    transparent 64%,
+    var(--wash-warm) 100%
   );
-  transform: translateZ(20px);
+  transform: translateZ(18px);
   pointer-events: none;
-  mix-blend-mode: overlay;
+  mix-blend-mode: soft-light;
 }
 
 .mascot-stage--compact .mascot__frame {
@@ -112,12 +118,13 @@
   transform: translateZ(-40px) scale(1.1);
 }
 
-/* Floating nav mascot */
+/* Brand avatar in the nav */
 .nav-mascot {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   overflow: hidden;
-  border: 1px solid var(--line);
+  border-radius: 50%;
+  border: 1.5px solid var(--line-strong);
   flex-shrink: 0;
 }
 
