@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://challenges.cloudflare.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/arcade.css?v=8" />
+    <link rel="stylesheet" href="css/arcade.css?v=10" />
     <script>
       if ("scrollRestoration" in history) history.scrollRestoration = "manual";
       scrollTo(0, 0);
@@ -270,23 +270,52 @@
         <h2 class="sec__title" data-title><span class="sec__lvl">FINAL</span>Insert coin</h2>
         <p class="sec__sub" data-reveal>New quest? Collaboration, freelance, or open-source — send a message.</p>
 
-        <div class="contact">
-          <div class="panel contact__links">
-            <div class="panel__bar" data-bar="connect.sh"></div>
-            <div class="chan" data-contact-links></div>
-          </div>
-
-          <form class="panel form" data-contact-form novalidate>
-            <div class="panel__bar" data-bar="message.txt"></div>
-            <div class="form__pad">
-              <label class="field"><span>Player name</span><input name="name" type="text" required autocomplete="name" /></label>
-              <label class="field"><span>Email</span><input name="email" type="email" required autocomplete="email" /></label>
-              <label class="field"><span>Message</span><textarea name="message" rows="4" required></textarea></label>
-              <div class="form__turnstile" data-turnstile aria-label="Security verification"></div>
-              <button class="btn btn--gold btn--block" type="submit" data-contact-submit disabled aria-disabled="true" data-blip>▶ Send message</button>
-              <p class="form__note" data-form-status role="status">Protected by Cloudflare Turnstile — clear the check, then send. Lands in my inbox.</p>
+        <div class="contact__scene" data-contact-scene data-reveal>
+          <aside class="contact__wingman" aria-label="Contact mascot">
+            <div class="contact__booth panel">
+              <div class="panel__bar" data-bar="incoming.mail"></div>
+              <div class="contact__booth-pad">
+                <p class="contact__booth-kicker">Mail terminal</p>
+                <ul class="contact__booth-feed" aria-label="Inbox status">
+                  <li><span class="contact__booth-tag">STATUS</span><span>Online · accepting quests</span></li>
+                  <li><span class="contact__booth-tag">REPLY</span><span>Usually within 24 hours</span></li>
+                  <li><span class="contact__booth-tag">BASE</span><span>Kuala Lumpur, MY</span></li>
+                </ul>
+                <p class="contact__booth-prompt" data-contact-prompt aria-live="polite">Awaiting transmission…</p>
+              </div>
             </div>
-          </form>
+            <div class="contact__desk">
+              <div class="contact__desk-surface" aria-hidden="true"></div>
+              <div class="contact__desk-edge" aria-hidden="true"></div>
+              <div class="contact__mascot-wrap">
+                <span class="contact__mascot-bubble" data-contact-bubble aria-hidden="true">Got mail?</span>
+                <button class="contact__mascot" type="button" data-contact-mascot data-blip aria-label="Tap the envelope to write a message">
+                  <span class="contact__mascot-shadow" aria-hidden="true"></span>
+                  <img class="contact__mascot-img" src="char-hold-envelope.png" alt="" width="512" height="512" decoding="async" />
+                </button>
+              </div>
+              <p class="contact__mascot-hint">Tap the envelope</p>
+            </div>
+          </aside>
+
+          <div class="contact contact__panels">
+            <div class="panel contact__links">
+              <div class="panel__bar" data-bar="connect.sh"></div>
+              <div class="chan" data-contact-links></div>
+            </div>
+
+            <form class="panel form" data-contact-form novalidate>
+              <div class="panel__bar" data-bar="message.txt"></div>
+              <div class="form__pad">
+                <label class="field"><span>Player name</span><input name="name" type="text" required autocomplete="name" /></label>
+                <label class="field"><span>Email</span><input name="email" type="email" required autocomplete="email" /></label>
+                <label class="field"><span>Message</span><textarea name="message" rows="4" required></textarea></label>
+                <div class="form__turnstile" data-turnstile aria-label="Security verification"></div>
+                <button class="btn btn--gold btn--block" type="submit" data-contact-submit disabled aria-disabled="true" data-blip>▶ Send message</button>
+                <p class="form__note" data-form-status role="status">Protected by Cloudflare Turnstile — clear the check, then send. Lands in my inbox.</p>
+              </div>
+            </form>
+          </div>
         </div>
       </section>
 

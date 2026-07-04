@@ -669,8 +669,9 @@ function scrollFx() {
   if (!REDUCED) {
     gsap.from(".about__fact", { x: -16, opacity: 0, duration: .45, stagger: .05, ease: "power2.out", scrollTrigger: { trigger: ".about__facts", start: "top 88%" } });
     gsap.from(".about__edu-card", { y: 16, opacity: 0, duration: .5, stagger: .1, ease: "power2.out", scrollTrigger: { trigger: ".about__edu", start: "top 86%" } });
-    gsap.from(".contact__links", { x: -44, opacity: 0, duration: .7, ease: "power3.out", scrollTrigger: { trigger: ".contact", start: "top 82%" } });
-    gsap.from(".form", { x: 44, opacity: 0, duration: .7, ease: "power3.out", scrollTrigger: { trigger: ".contact", start: "top 82%" } });
+    gsap.from(".contact__booth", { x: -28, opacity: 0, duration: .6, ease: "power3.out", scrollTrigger: { trigger: ".contact__scene", start: "top 82%" } });
+    gsap.from(".contact__panels .contact__links", { x: -44, opacity: 0, duration: .7, ease: "power3.out", scrollTrigger: { trigger: ".contact__scene", start: "top 82%" } });
+    gsap.from(".contact__panels .form", { x: 44, opacity: 0, duration: .7, ease: "power3.out", scrollTrigger: { trigger: ".contact__scene", start: "top 82%" } });
     const lg = $(".about__lang-list");
     if (lg) ScrollTrigger.create({ trigger: lg, start: "top 85%", once: true,
       onEnter: () => gsap.from(".about__lang-pip.on", { scale: 0, transformOrigin: "center", duration: .3, stagger: .015, ease: "back.out(2)" }) });
@@ -1002,6 +1003,51 @@ function campaignLog() {
 
 /* --------------------------------------------------------------- FORM */
 const TS_KEY = "0x4AAAAAADf6GSXHdOAcmuuH", W3_KEY = "1a23a0e7-9e4b-4318-aaef-8869bd256a32", EMAIL = "jiasen27826@gmail.com";
+
+function contactMascot() {
+  const scene = $("[data-contact-scene]");
+  const mascot = $("[data-contact-mascot]");
+  const bubble = $("[data-contact-bubble]");
+  const prompt = $("[data-contact-prompt]");
+  const form = $("[data-contact-form]");
+  if (!scene || !mascot) return;
+
+  const setPrompt = (t) => { if (prompt) prompt.textContent = t; };
+
+  const reveal = () => scene.classList.add("is-ready");
+  if (REDUCED) reveal();
+  else if (gsap && ScrollTrigger) {
+    ScrollTrigger.create({ trigger: scene, start: "top 86%", once: true, onEnter: reveal });
+  } else reveal();
+
+  const focusForm = () => {
+    if (!form) return;
+    const name = form.querySelector("[name=name]");
+    const email = form.querySelector("[name=email]");
+    const message = form.querySelector("[name=message]");
+    const target = !name?.value?.trim() ? name : !email?.value?.trim() ? email : message;
+    target?.focus({ preventScroll: false });
+    form.classList.add("is-highlight");
+    setTimeout(() => form.classList.remove("is-highlight"), 1400);
+    if (bubble) bubble.textContent = "Your turn!";
+    setPrompt("Incoming message detected…");
+  };
+
+  mascot.addEventListener("click", focusForm);
+
+  form?.addEventListener("focusin", () => {
+    scene.classList.add("is-typing");
+    if (bubble && !scene.classList.contains("is-sent")) bubble.textContent = "Writing...";
+    setPrompt("Composing transmission…");
+  });
+  form?.addEventListener("focusout", (e) => {
+    if (form.contains(e.relatedTarget)) return;
+    scene.classList.remove("is-typing");
+    if (bubble && !scene.classList.contains("is-sent")) bubble.textContent = "Got mail?";
+    if (!scene.classList.contains("is-sent")) setPrompt("Awaiting transmission…");
+  });
+}
+
 function contactForm() {
   const form = $("[data-contact-form]"); if (!form) return;
   const btn = $("[data-contact-submit]", form), host = $("[data-turnstile]", form), status = $("[data-form-status]");
@@ -1021,6 +1067,11 @@ function contactForm() {
       const data = await res.json(); if (!res.ok || !data.success) throw new Error();
       form.reset(); setEnabled(false); if (wid !== null && window.turnstile) window.turnstile.reset(wid);
       setStatus("Message sent — quest received! +5 coins. I'll reply soon.", "is-ok"); Coins.add(5); rain(26);
+      const scene = $("[data-contact-scene]"), bubble = $("[data-contact-bubble]");
+      const prompt = $("[data-contact-prompt]");
+      if (scene) { scene.classList.add("is-sent"); scene.classList.remove("is-typing"); }
+      if (bubble) bubble.textContent = "Sent!";
+      if (prompt) prompt.textContent = "Quest received — mail delivered.";
     } catch { setStatus(`Could not send. Email ${EMAIL} directly.`, "is-err"); btn.disabled = false; btn.setAttribute("aria-disabled", "false"); }
     finally { sending = false; btn.innerHTML = LABEL; if (!verified) { btn.disabled = true; btn.setAttribute("aria-disabled", "true"); } }
   });
@@ -1039,7 +1090,7 @@ function init() {
   loadout(); shipReveal(); campaignLog();
   flipCard(); chrome(); introEnter(); introAmbience();
   scrollFx(); ticker();
-  bugHunt(); memory(); konami(); contactForm();
+  bugHunt(); memory(); konami(); contactMascot(); contactForm();
   ScrollTrigger?.refresh();
   resetToIntro();
   requestAnimationFrame(() => introPinST?.scroll(0));
