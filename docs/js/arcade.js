@@ -209,10 +209,138 @@ function starfield() {
   draw();
 }
 function skyline() {
-  const sky = $("[data-sky]"); if (!sky) return;
-  let html = "";
-  for (let i = 0; i < 26; i++) { const hgt = rand(30, 100); html += `<span class="building" style="height:${hgt}%"></span>`; }
-  sky.innerHTML = html;
+  const wrap = $("[data-hero-bg]"), cv = $("[data-hero-canvas]");
+  if (!wrap || !cv) return;
+
+  const ctx = cv.getContext("2d");
+  const img = new Image();
+  img.decoding = "async";
+  img.src = "hero%20background.png";
+
+  let cover = null, windows = [], stars = [], raf = 0, dpr = 1;
+
+  const isWindowPx = (r, g, b, a) => {
+    if (a < 128) return false;
+    const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+    if (lum < 95) return false;
+    const warm = r > 95 && g > 55 && b < 150 && r >= b - 20;
+    const neonPink = r > 150 && b > 90 && g < 130;
+    const neonCyan = g > 130 && b > 130 && r < 130;
+    return lum > 120 && (warm || neonPink || neonCyan);
+  };
+
+  const isStarPx = (r, g, b, a) => {
+    if (a < 180) return false;
+    const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+    return lum > 98 && lum < 215;
+  };
+
+  const seedStars = (W, H) => {
+    const skyH = H * 0.4;
+    for (let i = 0; i < 60; i++) {
+      stars.push({
+        x: Math.random() * W, y: Math.random() * skyH,
+        phase: Math.random() * 6.28, speed: 0.014 + Math.random() * 0.038,
+        tint: Math.random() > 0.75 ? "#9BE7FF" : "#E8E4FF", proc: true,
+      });
+    }
+  };
+
+  const coverRect = (w, h) => {
+    const ir = img.width / img.height, cr = w / h;
+    if (cr > ir) return { dx: 0, dy: (h - w / ir) / 2, dw: w, dh: w / ir };
+    return { dx: (w - h * ir) / 2, dy: 0, dw: h * ir, dh: h };
+  };
+
+  const parse = () => {
+    const off = document.createElement("canvas");
+    off.width = img.width; off.height = img.height;
+    const octx = off.getContext("2d");
+    octx.drawImage(img, 0, 0);
+    const data = octx.getImageData(0, 0, img.width, img.height).data;
+    const W = img.width, H = img.height, skyH = H * 0.43;
+    windows = []; stars = [];
+
+    for (let y = skyH | 0; y < H; y += 3) {
+      for (let x = 0; x < W; x += 3) {
+        const i = (y * W + x) * 4;
+        if (isWindowPx(data[i], data[i + 1], data[i + 2], data[i + 3])) {
+          windows.push({ x, y, on: true, next: performance.now() + rand(0, 3500), s: 3 });
+        }
+      }
+    }
+    for (let y = 0; y < skyH; y += 2) {
+      for (let x = 0; x < W; x += 2) {
+        const i = (y * W + x) * 4;
+        if (isStarPx(data[i], data[i + 1], data[i + 2], data[i + 3])) {
+          stars.push({ x, y, phase: Math.random() * 6.28, speed: 0.016 + Math.random() * 0.042, tint: data[i + 2] > data[i] + 20 ? "#9BE7FF" : "#E8E4FF" });
+        }
+      }
+    }
+    seedStars(W, H);
+    if (windows.length > 420) windows.sort(() => Math.random() - 0.5).length = 420;
+    if (stars.length > 130) stars.sort(() => Math.random() - 0.5).length = 130;
+  };
+
+  const resize = () => {
+    const { width, height } = wrap.getBoundingClientRect();
+    if (!width || !height) return;
+    dpr = Math.min(2, devicePixelRatio || 1);
+    cv.width = Math.round(width * dpr);
+    cv.height = Math.round(height * dpr);
+    if (img.naturalWidth) cover = coverRect(cv.width, cv.height);
+  };
+
+  const draw = () => {
+    if (!img.naturalWidth || !cover) return;
+    const now = performance.now();
+    const px = cover.dw / img.width;
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.drawImage(img, cover.dx, cover.dy, cover.dw, cover.dh);
+
+    if (!REDUCED) {
+      stars.forEach((st) => {
+        st.phase += st.speed;
+        const wave = 0.5 + 0.5 * Math.sin(st.phase);
+        const size = Math.max(px * (st.proc ? 2.4 : 2), dpr * (st.proc ? 1.6 : 1.2));
+        const sx = cover.dx + st.x * px, sy = cover.dy + st.y * px;
+        if (st.proc) {
+          ctx.globalAlpha = 0.15 + wave * 0.85;
+          ctx.fillStyle = st.tint;
+          ctx.fillRect(sx, sy, size, size);
+        } else if (wave > 0.62) {
+          ctx.globalAlpha = (wave - 0.5) * 0.9;
+          ctx.fillStyle = st.tint;
+          ctx.fillRect(sx, sy, size, size);
+        } else if (wave < 0.32) {
+          ctx.globalAlpha = (0.35 - wave) * 0.75;
+          ctx.fillStyle = "rgba(8, 5, 22, 0.8)";
+          ctx.fillRect(sx, sy, size, size);
+        }
+      });
+      ctx.globalAlpha = 1;
+
+      windows.forEach((w) => {
+        if (now > w.next) {
+          w.on = Math.random() > 0.28;
+          w.next = now + rand(500, 4200);
+        }
+        if (!w.on) {
+          const size = Math.max(px * w.s, px * 2.5);
+          ctx.fillStyle = "rgba(14, 8, 32, 0.94)";
+          ctx.fillRect(cover.dx + w.x * px, cover.dy + w.y * px, size, size);
+        }
+      });
+      raf = requestAnimationFrame(draw);
+    }
+  };
+
+  const boot = () => { parse(); resize(); cancelAnimationFrame(raf); draw(); };
+  img.onload = boot;
+  img.onerror = () => { ctx.fillStyle = "#0B0A1A"; ctx.fillRect(0, 0, cv.width, cv.height); };
+  resize();
+  addEventListener("resize", () => { resize(); if (img.naturalWidth) boot(); });
+  document.fonts?.ready?.then(() => ScrollTrigger?.refresh());
 }
 
 /* --------------------------------------------------------------- BOOT + TITLE */
@@ -361,8 +489,7 @@ function scrollFx() {
   if (!gsap || !ScrollTrigger) return;
   // parallax title
   if (!REDUCED) {
-    gsap.to("[data-sky]", { yPercent: -40, ease: "none", scrollTrigger: { trigger: "#start", start: "top top", end: "bottom top", scrub: true } });
-    gsap.to("[data-ground]", { yPercent: 60, ease: "none", scrollTrigger: { trigger: "#start", start: "top top", end: "bottom top", scrub: true } });
+    gsap.to("[data-hero-bg]", { yPercent: 10, ease: "none", scrollTrigger: { trigger: "#start", start: "top top", end: "bottom top", scrub: true } });
     gsap.to("[data-pcard]", { y: -60, ease: "none", scrollTrigger: { trigger: "#start", start: "top top", end: "bottom top", scrub: true } });
     // section titles slide in
     $$("[data-title]").forEach((t) => gsap.from(t, { x: -40, opacity: 0, duration: .7, ease: "power3.out", scrollTrigger: { trigger: t, start: "top 85%" } }));

@@ -175,10 +175,9 @@ body.js-intro .title { margin-top: -100svh; position: relative; z-index: 0; }
 body.js-intro:not(.is-entered) .title { visibility: hidden; }
 
 .title { min-height: 100svh; position: relative; display: flex; align-items: center; justify-content: center; padding: clamp(5rem, 10vh, 7rem) var(--pad) 4rem; overflow: hidden; }
-.parallax { position: absolute; left: 0; right: 0; bottom: 90px; height: 260px; z-index: 0; display: flex; align-items: flex-end; gap: 4px; padding: 0 2%; opacity: .5; }
-.building { flex: 1 1 auto; background: linear-gradient(var(--panel2), var(--panel)); border-top: 2px solid var(--line); position: relative; }
-.building::after { content: ""; position: absolute; inset: 8px 4px auto 4px; height: 60%; background-image: radial-gradient(circle 1.4px, rgba(52,225,232,.5) 60%, transparent 62%); background-size: 9px 12px; opacity: .55; }
-.ground { position: absolute; left: 0; right: 0; bottom: 0; height: 90px; z-index: 0; background: repeating-linear-gradient(90deg, #12102A 0 22px, #171633 22px 44px); border-top: 3px solid var(--cyan); box-shadow: 0 -10px 30px rgba(52,225,232,.12); }
+.title__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.title__bg::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(11,10,26,.25) 0%, rgba(11,10,26,.05) 38%, rgba(11,10,26,.5) 100%); }
+.title__bg-canvas { width: 100%; height: 100%; display: block; }
 
 .title__stage { position: relative; z-index: 2; text-align: center; max-width: 780px; }
 .title__eyebrow { font-family: var(--f-pixel); font-size: .56rem; color: var(--cyan); text-transform: uppercase; letter-spacing: .1em; }
