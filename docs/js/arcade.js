@@ -241,6 +241,48 @@ function titleIntro() {
   if (hs && gsap && !REDUCED) { const o = { v: 0 }; gsap.to(o, { v: 3630, duration: 1.6, delay: .4, ease: "power1.out", onUpdate() { hs.textContent = String(Math.floor(o.v)).padStart(6, "0"); } }); }
 }
 
+/* --------------------------------------------------------------- INTRO — arcade cabinet entrance */
+function introEnter() {
+  const intro = $("[data-intro]");
+  const cab = $(".intro__cab");
+  const screen = $(".intro__screen");
+  if (!intro || !cab || !screen || !gsap || !ScrollTrigger || REDUCED) { titleIntro(); return; }
+
+  document.body.classList.add("js-intro");
+  const mobile = matchMedia("(max-width: 700px)").matches;
+  let entered = false;
+  const enter = () => { if (entered) return; entered = true; document.body.classList.add("is-entered"); titleIntro(); };
+
+  // scale the whole cabinet (not just the screen) toward the viewport size, pivoting on the
+  // screen's own center (set via .intro__cab's transform-origin) — the machine walks toward you
+  // and the bezel/joystick scroll off-frame naturally as the screen fills the view
+  const rect = screen.getBoundingClientRect();
+  const scaleTarget = Math.max(innerWidth / rect.width, innerHeight / rect.height) * 1.15;
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: intro,
+      start: "top top",
+      end: "+=" + (mobile ? "110%" : "170%"),
+      pin: true,
+      scrub: 1,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      onLeave: enter,
+    },
+  });
+
+  tl.to(".intro__hint", { opacity: 0, y: 14, duration: .12 }, 0)
+    .to(cab, { scale: scaleTarget, duration: .8, ease: "power1.in", force3D: true }, .08)
+    .to(".intro__preview", { opacity: 0, duration: .15 }, .6)
+    .to(intro, { opacity: 0, duration: .2 }, .78);
+
+  $("[data-intro-hint]")?.addEventListener("click", () => {
+    const st = tl.scrollTrigger;
+    if (st) scrollTo({ top: st.end, behavior: REDUCED ? "auto" : "smooth" });
+  });
+}
+
 /* --------------------------------------------------------------- FLIP CARD */
 function flipCard() {
   const card = $("[data-pcard]"), btn = $("[data-pcard-flip]");
@@ -649,11 +691,11 @@ function contactForm() {
 function init() {
   inject(); paintIcons();
   loadout(); shipReveal(); campaignLog(); buildRadar();
-  flipCard(); chrome(); scrollFx(); ticker();
+  flipCard(); chrome(); scrollFx(); ticker(); introEnter();
   bugHunt(); memory(); konami(); contactForm();
   ScrollTrigger?.refresh();
   addEventListener("load", () => ScrollTrigger?.refresh());
 }
 
 starfield(); skyline();
-boot(() => { titleIntro(); init(); });
+boot(init);
