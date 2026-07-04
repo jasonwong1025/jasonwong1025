@@ -18,8 +18,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://challenges.cloudflare.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/arcade.css?v=3" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/arcade.css?v=5" />
   </head>
 
   <body>
@@ -130,32 +130,49 @@
         <div class="ticker__track" data-ticker-track></div>
       </div>
 
-      <!-- ░ CHARACTER ░ -->
-      <section class="sec" id="character" data-section="Character" data-zone="Character">
+      <!-- ░ CHARACTER — about ░ -->
+      <section class="sec char-sec" id="character" data-section="Character" data-zone="Character">
         <h2 class="sec__title" data-title><span class="sec__lvl">LEVEL 1</span>Character</h2>
+        <p class="sec__sub" data-reveal>Who's behind the joystick — hover a stat row for the full readout.</p>
 
-        <div class="char">
-          <div class="panel char__bio">
-            <div class="panel__bar" data-bar="bio.md"></div>
-            <div class="panel__pad">
-              <p>I'm a Software Engineering student at <b>Asia Pacific University</b> and a part-time software engineer at <b>Codespace AI Technology</b>, where I ship AI-powered features on real products.</p>
-              <p>I care about clean, maintainable code over clever one-liners, and understanding systems end to end — from a polished interface down to the API and the data beneath it. Student mindset, builder energy. Open to collaboration, freelance, and open-source.</p>
+        <div class="about" data-dossier>
+          <aside class="about__side" data-reveal>
+            <div class="about__card">
+              <div class="about__avatar">
+                <img src="pic_pixel.jpeg" alt="Pixel-art avatar of Wong Jia Sen" width="1024" height="1024" loading="lazy" decoding="async" />
+                <span class="about__scan" aria-hidden="true"></span>
+              </div>
+              <h3 class="about__name">Wong Jia Sen</h3>
+              <p class="about__role">Software Engineer · Full-Stack</p>
+              <span class="about__badge">◆ Available for work</span>
+              <div class="about__xp" aria-hidden="true"><span style="--pct:78%"></span></div>
+              <p class="about__lv">LV.<b>05</b> · Year 2</p>
+            </div>
+          </aside>
+
+          <div class="about__main">
+            <div class="about__facts-wrap" data-reveal>
+              <div class="about__facts" data-char-slots role="list"></div>
+              <p class="about__readout" data-char-readout aria-live="polite"></p>
+            </div>
+
+            <article class="about__bio" data-reveal>
+              <h4 class="about__lbl"><span class="about__lbl-ic" data-icon="terminal" aria-hidden="true"></span>Bio</h4>
+              <p class="about__text" data-char-hook></p>
+              <ul class="about__tags" data-char-traits></ul>
+            </article>
+
+            <div class="about__cols">
+              <div class="about__edu" data-reveal>
+                <h4 class="about__lbl"><span class="about__lbl-ic" data-icon="cap" aria-hidden="true"></span>Education</h4>
+                <div data-char-edu></div>
+              </div>
+              <div class="about__langs" data-reveal>
+                <h4 class="about__lbl"><span class="about__lbl-ic" data-icon="globe" aria-hidden="true"></span>Languages</h4>
+                <div class="about__lang-list" data-langs></div>
+              </div>
             </div>
           </div>
-
-          <div class="panel char__radar">
-            <div class="panel__bar" data-bar="attributes.sys"></div>
-            <div class="panel__pad">
-              <div class="radar" data-radar></div>
-              <p class="radar__read" data-radar-read></p>
-              <p class="radar__hint">hover a point to inspect an attribute</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel char__lang" data-reveal>
-          <div class="panel__bar" data-bar="languages.lang"></div>
-          <div class="panel__pad"><div class="lang-grid" data-langs></div></div>
         </div>
       </section>
 
@@ -256,6 +273,7 @@
     </main>
 
     <!-- zone map (scroll-linked) -->
+    <div class="zone-hud" data-zone-hud hidden aria-live="polite"></div>
     <aside class="zmap" data-zmap aria-hidden="true"></aside>
 
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>

@@ -16,20 +16,27 @@ const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, 
 const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
 
 /* --------------------------------------------------------------- DATA */
-const CARD_STATS = [["Class", "Full-Stack Eng"], ["Guild", "APU"], ["Base", "KL, MY"], ["CGPA", "<b>3.63</b>"], ["Status", "<b>Available</b>"]];
-const RADAR = [
-  ["Craft", 92, "Clean, lasting code"],
-  ["Depth", 85, "Systems, end to end"],
-  ["Ship", 88, "Built & shipped in public"],
-  ["Open", 96, "Ready to collaborate"],
-  ["Focus", 86, "Maintainable by design"],
-  ["Growth", 90, "Always leveling up"],
+const CARD_STATS = [["Role", "Full-Stack Eng"], ["Education", "APU"], ["Location", "KL, MY"], ["CGPA", "<b>3.63</b>"], ["Status", "<b>Available</b>"]];
+const CHAR_BIO = "Motivated Software Engineering student at <b>Asia Pacific University</b> with a strong foundation in object-oriented programming, full-stack web development, and mobile engineering. Currently shipping AI features on live products at <b>Codespace AI</b> alongside degree work — passionate about clean, lasting code and always ready for the next build.";
+const CHAR_SLOTS = [
+  { key: "ROLE", val: "Full-Stack Engineer", detail: "Web, mobile &amp; AI — polished UI down to APIs and data.", icon: "braces" },
+  { key: "EDUCATION", val: "APU · BSc SE", detail: "BSc Software Engineering (current). Diploma ICT, CGPA <b>3.63</b>.", icon: "cap" },
+  { key: "CURRENT", val: "Part-time @ Codespace", detail: "Shipping AI features on live products alongside degree work.", icon: "bolt" },
+  { key: "LOCATION", val: "Kuala Lumpur", detail: "Based in KL — open to remote, freelance &amp; open-source.", icon: "globe" },
+  { key: "PROJECTS", val: "3 builds shipped", detail: "Beacon, NextGen Fitness &amp; OODJ APUASC — all on GitHub.", icon: "sword" },
+  { key: "EXPERIENCE", val: "Internship @ Codespace", detail: "12-week software eng internship @ Codespace AI — continued part-time.", icon: "trophy" },
+];
+const CHAR_TRAITS = [
+  { label: "Clean over clever", icon: "target" },
+  { label: "Ships in public", icon: "branch" },
+  { label: "Systems thinker", icon: "chip" },
+  { label: "Open to collab", icon: "globe" },
 ];
 const LANGS = [
-  ["English", "EN", "Fluent", 5],
-  ["Mandarin", "中文", "Native", 5],
-  ["Cantonese", "廣東話", "Fluent", 4],
-  ["Malay", "BM", "Conversational", 3],
+  ["🇬🇧", "English", "Fluent", 4],
+  ["🇨🇳", "Mandarin", "Native", 5],
+  ["🇭🇰", "Cantonese", "Conversational", 3],
+  ["🇲🇾", "Malay", "Conversational", 3],
 ];
 const SKILLS = [
   ["Languages", [["JavaScript", 85], ["TypeScript", 82], ["Python", 80], ["Java", 75], ["PHP", 70]]],
@@ -140,12 +147,17 @@ function inject() {
   if (cs) cs.innerHTML = CARD_STATS.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
 
   const lg = $("[data-langs]");
-  if (lg) lg.innerHTML = LANGS.map(([name, cjk, lvl, pips]) => `
-    <div class="lang">
-      <div class="lang__top"><span class="lang__name">${name}</span><span class="lang__cjk">${cjk}</span></div>
-      <span class="lang__lvl">${lvl}</span>
-      <div class="lang__pips">${Array.from({ length: 5 }, (_, i) => `<span class="lang__pip${i < pips ? " on" : ""}"></span>`).join("")}</div>
+  if (lg) lg.innerHTML = LANGS.map(([flag, name, lvl, pips]) => `
+    <div class="about__lang" tabindex="0">
+      <span class="about__lang-flag" aria-hidden="true">${flag}</span>
+      <div class="about__lang-body">
+        <span class="about__lang-name">${name}</span>
+        <span class="about__lang-lvl">${lvl}</span>
+      </div>
+      <div class="about__lang-pips" aria-label="${lvl}">${Array.from({ length: 5 }, (_, i) => `<span class="about__lang-pip${i < pips ? " on" : ""}"></span>`).join("")}</div>
     </div>`).join("");
+
+  buildCharacter();
 
   const sh = $("[data-ships]");
   if (sh) sh.innerHTML = PROJECTS.map((p, i) => {
@@ -500,29 +512,99 @@ function chrome() {
 }
 
 /* --------------------------------------------------------------- SCROLL FX */
+function sectionTransitions() {
+  if (!gsap || !ScrollTrigger) return;
+  const hud = $("[data-zone-hud]");
+  let hudT = 0;
+  const showZone = (name) => {
+    if (!hud || !name) return;
+    hud.textContent = name;
+    hud.hidden = false;
+    hud.classList.remove("is-on");
+    void hud.offsetWidth;
+    hud.classList.add("is-on");
+    clearTimeout(hudT);
+    hudT = setTimeout(() => {
+      hud.classList.remove("is-on");
+      setTimeout(() => { hud.hidden = true; }, 380);
+    }, 2100);
+  };
+
+  const mark = (sec, on) => sec.classList.toggle("is-inview", on);
+
+  $$("main [data-section]").forEach((sec) => {
+    const hero = sec.id === "start";
+    ScrollTrigger.create({
+      trigger: sec,
+      start: "top 62%",
+      end: "bottom 38%",
+      onEnter: () => { mark(sec, true); showZone(sec.dataset.zone); },
+      onLeave: () => mark(sec, false),
+      onEnterBack: () => { mark(sec, true); showZone(sec.dataset.zone); },
+      onLeaveBack: () => mark(sec, false),
+    });
+
+    if (REDUCED) return;
+
+    if (!hero) {
+      gsap.fromTo(sec, { autoAlpha: 0, y: 44 }, {
+        autoAlpha: 1, y: 0, ease: "none",
+        scrollTrigger: { trigger: sec, start: "top 94%", end: "top 58%", scrub: 0.55 },
+      });
+    }
+
+    const title = $(".sec__title", sec);
+    if (title) {
+      gsap.fromTo(title, { x: -28, opacity: 0.35 }, {
+        x: 0, opacity: 1, ease: "none",
+        scrollTrigger: { trigger: sec, start: "top 88%", end: "top 62%", scrub: 0.45 },
+      });
+    }
+
+    const kids = [...sec.children].filter((c) => !c.matches(".sec__title"));
+    if (kids.length && !hero) {
+      gsap.set(kids, { y: 22, opacity: 0 });
+      ScrollTrigger.create({
+        trigger: sec, start: "top 72%", once: true,
+        onEnter: () => gsap.to(kids, { y: 0, opacity: 1, duration: 0.6, stagger: 0.07, ease: "power3.out", overwrite: "auto" }),
+      });
+    }
+  });
+}
+
 function scrollFx() {
   if (!gsap || !ScrollTrigger) return;
+  if (REDUCED) gsap.set("[data-reveal]", { opacity: 1, y: 0 });
+  else gsap.set("[data-reveal]", { y: 22, opacity: 0 });
+
+  sectionTransitions();
   // parallax title
   if (!REDUCED) {
     gsap.to("[data-hero-bg]", { yPercent: 10, ease: "none", scrollTrigger: { trigger: "#start", start: "top top", end: "bottom top", scrub: true } });
     gsap.to("[data-pcard]", { y: -60, ease: "none", scrollTrigger: { trigger: "#start", start: "top top", end: "bottom top", scrub: true } });
-    // section titles slide in
-    $$("[data-title]").forEach((t) => gsap.from(t, { x: -40, opacity: 0, duration: .7, ease: "power3.out", scrollTrigger: { trigger: t, start: "top 85%" } }));
+    // section titles — handled by sectionTransitions scrub; keep subtle snap for late entries
+    $$("[data-title]").forEach((t) => {
+      if (t.closest("[data-section]")) return;
+      gsap.from(t, { x: -40, opacity: 0, duration: .7, ease: "power3.out", scrollTrigger: { trigger: t, start: "top 85%" } });
+    });
   }
-  // reveals
-  $$("[data-reveal]").forEach((el) => ScrollTrigger.create({ trigger: el, start: "top 88%", once: true, onEnter: () => REDUCED ? gsap.set(el, { opacity: 1, y: 0 }) : gsap.to(el, { y: 0, opacity: 1, duration: .7, ease: "power3.out" }) }));
+  // reveals (per-element polish on top of section pass)
+  $$("[data-reveal]").forEach((el) => ScrollTrigger.create({
+    trigger: el, start: "top 90%", once: true,
+    onEnter: () => REDUCED ? gsap.set(el, { opacity: 1, y: 0 }) : gsap.to(el, { y: 0, opacity: 1, duration: 0.55, ease: "power3.out", overwrite: "auto" }),
+  }));
   // bar fills (skills + attrs)
   $$("[data-bar-fill]").forEach((bar) => { const pct = bar.dataset.barFill + "%"; ScrollTrigger.create({ trigger: bar, start: "top 94%", once: true, onEnter: () => REDUCED ? (bar.style.width = pct) : gsap.fromTo(bar, { width: 0 }, { width: pct, duration: 1, ease: "steps(20)" }) }); });
 
-  // directional slide-ins for character + contact
+  // character — fact rows + edu cards
   if (!REDUCED) {
-    gsap.from(".char__bio", { x: -44, opacity: 0, duration: .7, ease: "power3.out", scrollTrigger: { trigger: ".char", start: "top 80%" } });
-    gsap.from(".char__radar", { x: 44, opacity: 0, duration: .7, ease: "power3.out", scrollTrigger: { trigger: ".char", start: "top 80%" } });
+    gsap.from(".about__fact", { x: -16, opacity: 0, duration: .45, stagger: .05, ease: "power2.out", scrollTrigger: { trigger: ".about__facts", start: "top 88%" } });
+    gsap.from(".about__edu-card", { y: 16, opacity: 0, duration: .5, stagger: .1, ease: "power2.out", scrollTrigger: { trigger: ".about__edu", start: "top 86%" } });
     gsap.from(".contact__links", { x: -44, opacity: 0, duration: .7, ease: "power3.out", scrollTrigger: { trigger: ".contact", start: "top 82%" } });
     gsap.from(".form", { x: 44, opacity: 0, duration: .7, ease: "power3.out", scrollTrigger: { trigger: ".contact", start: "top 82%" } });
-    const lg = $(".lang-grid");
+    const lg = $(".about__lang-list");
     if (lg) ScrollTrigger.create({ trigger: lg, start: "top 85%", once: true,
-      onEnter: () => gsap.from(".lang__pip.on", { scale: 0, transformOrigin: "center", duration: .3, stagger: .015, ease: "back.out(2)" }) });
+      onEnter: () => gsap.from(".about__lang-pip.on", { scale: 0, transformOrigin: "center", duration: .3, stagger: .015, ease: "back.out(2)" }) });
   }
 
   // loadout cartridges deal-in (immediateRender:false → never leaves cards hidden)
@@ -755,48 +837,51 @@ function loadout() {
   select(top);
 }
 
-/* --------------------------------------------------------------- ATTRIBUTE RADAR */
-function buildRadar() {
-  const host = $("[data-radar]"), read = $("[data-radar-read]");
-  if (!host) return;
-  const cx = 100, cy = 100, R = 74, N = RADAR.length;
-  const ang = (i) => (-90 + i * 360 / N) * Math.PI / 180;
-  const pt = (i, r) => [+(cx + Math.cos(ang(i)) * r).toFixed(1), +(cy + Math.sin(ang(i)) * r).toFixed(1)];
-  let rings = "";
-  [.25, .5, .75, 1].forEach((f) => { rings += `<polygon class="rd-ring" points="${RADAR.map((_, i) => pt(i, R * f).join(",")).join(" ")}"/>`; });
-  let axes = "";
-  RADAR.forEach((_, i) => { const [x, y] = pt(i, R); axes += `<line class="rd-axis" x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"/>`; });
-  const area = RADAR.map((s, i) => pt(i, R * s[1] / 100).join(",")).join(" ");
-  let dots = "", labels = "";
-  RADAR.forEach((s, i) => {
-    const [vx, vy] = pt(i, R * s[1] / 100);
-    dots += `<circle class="rd-dot" data-i="${i}" cx="${vx}" cy="${vy}" r="4"/>`;
-    const [lx, ly] = pt(i, R + 15); const c = Math.cos(ang(i));
-    const anchor = Math.abs(c) < .35 ? "middle" : (c > 0 ? "start" : "end");
-    labels += `<text class="rd-label" data-i="${i}" x="${lx}" y="${ly + 4}" text-anchor="${anchor}">${s[0]}</text>`;
-  });
-  host.innerHTML = `<svg viewBox="0 0 200 200" class="rd-svg" role="img" aria-label="Engineering attribute radar"><g>${rings}${axes}</g><polygon class="rd-area" points="${area}"/>${dots}${labels}</svg>`;
+/* --------------------------------------------------------------- CHARACTER / ABOUT */
+function buildCharacter() {
+  const slots = $("[data-char-slots]"), readout = $("[data-char-readout]");
+  const hook = $("[data-char-hook]"), traits = $("[data-char-traits]");
+  const edu = $("[data-char-edu]");
+  if (!slots) return;
 
-  const dotEls = $$(".rd-dot", host), labelEls = $$(".rd-label", host);
-  const setRead = (i) => {
-    const s = RADAR[i];
-    read.innerHTML = `<span class="rd-read-k">◆ ${s[0]}</span> <span class="rd-read-v">${s[1]}</span> — ${s[2]}`;
-    dotEls.forEach((d) => { const on = +d.dataset.i === i; d.classList.toggle("hot", on); d.setAttribute("r", on ? 6 : 4); });
-    labelEls.forEach((l) => l.classList.toggle("hot", +l.dataset.i === i));
-  };
-  [...dotEls, ...labelEls].forEach((el) => el.addEventListener("mouseenter", () => setRead(+el.dataset.i)));
-  let hi = 0; RADAR.forEach((s, i) => { if (s[1] > RADAR[hi][1]) hi = i; }); setRead(hi);
+  slots.innerHTML = CHAR_SLOTS.map((s, i) => `
+    <button class="about__fact" type="button" data-i="${i}" data-blip role="listitem">
+      <span class="about__fact-k">${s.key}</span>
+      <span class="about__fact-v">${s.val}</span>
+    </button>`).join("");
 
-  if (gsap && ScrollTrigger && !REDUCED) {
-    const areaEl = $(".rd-area", host);
-    gsap.set(areaEl, { svgOrigin: "100 100", scale: 0, opacity: 0 });
-    gsap.set(dotEls, { opacity: 0 });
-    ScrollTrigger.create({ trigger: host, start: "top 82%", once: true, onEnter: () => {
-      gsap.to(areaEl, { scale: 1, opacity: 1, duration: .9, ease: "back.out(1.5)" });
-      gsap.to(dotEls, { opacity: 1, duration: .3, stagger: .06, delay: .35 });
-      gsap.from($$(".rd-ring", host), { opacity: 0, duration: .5, stagger: .08 });
-    } });
+  if (hook) hook.innerHTML = CHAR_BIO;
+  if (traits) traits.innerHTML = CHAR_TRAITS.map((t) => `
+    <li class="about__tag"><span class="about__tag-ic" data-icon="${t.icon}" aria-hidden="true"></span>${t.label}</li>`).join("");
+
+  if (edu) {
+    const quests = STAGES.filter((s) => s.kind === "edu");
+    edu.innerHTML = quests.map((q) => `
+      <article class="about__edu-card" tabindex="0">
+        <div class="about__edu-head">
+          <span class="about__edu-badge about__edu-badge--${q.status}">${q.badge || (q.status === "in-progress" ? "In progress" : "Cleared")}</span>
+          <time class="about__edu-date">${q.date}</time>
+        </div>
+        <h4 class="about__edu-title">${q.title}</h4>
+        <p class="about__edu-org">${q.org}</p>
+        <p class="about__edu-detail">${q.detail}</p>
+      </article>`).join("");
   }
+
+  const factEls = $$(".about__fact", slots);
+  const setFact = (i) => {
+    const s = CHAR_SLOTS[i];
+    if (!s || !readout) return;
+    readout.innerHTML = `<span class="about__read-k">${s.key}</span><span class="about__read-v">${s.detail}</span>`;
+    readout.dataset.active = s.key;
+    factEls.forEach((el) => el.classList.toggle("is-hot", +el.dataset.i === i));
+  };
+  factEls.forEach((el) => {
+    el.addEventListener("mouseenter", () => setFact(+el.dataset.i));
+    el.addEventListener("focus", () => setFact(+el.dataset.i));
+    el.addEventListener("click", () => setFact(+el.dataset.i));
+  });
+  setFact(0);
 }
 
 /* --------------------------------------------------------------- CONFETTI */
@@ -880,7 +965,7 @@ function contactForm() {
 /* ================================================================== INIT */
 function init() {
   inject(); paintIcons();
-  loadout(); shipReveal(); campaignLog(); buildRadar();
+  loadout(); shipReveal(); campaignLog();
   flipCard(); chrome(); scrollFx(); ticker(); introEnter(); introAmbience();
   bugHunt(); memory(); konami(); contactForm();
   ScrollTrigger?.refresh();
