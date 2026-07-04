@@ -7,6 +7,7 @@ const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;
 const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const TOUCH = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 document.documentElement.classList.add("js");
 if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 
@@ -26,6 +27,7 @@ const CHAR_SLOTS = [
   { key: "PROJECTS", val: "3 builds shipped", detail: "Beacon, NextGen Fitness &amp; OODJ APUASC — all on GitHub.", icon: "sword" },
   { key: "EXPERIENCE", val: "Internship @ Codespace", detail: "12-week software eng internship @ Codespace AI — continued part-time.", icon: "trophy" },
 ];
+const CHAR_SOCIAL = new Set(["mail", "github", "linkedin"]);
 const CHAR_TRAITS = [
   { label: "Clean over clever", icon: "target" },
   { label: "Ships in public", icon: "branch" },
@@ -355,9 +357,18 @@ function skyline() {
   document.fonts?.ready?.then(() => ScrollTrigger?.refresh());
 }
 
+let introPinST = null;
+
+function resetToIntro() {
+  document.body.classList.remove("is-entered");
+  scrollTo(0, 0);
+  introPinST?.scroll(0);
+}
+
 /* --------------------------------------------------------------- BOOT + TITLE */
 function boot(done) {
   const b = $("[data-boot]"); document.body.classList.add("boot-lock");
+  resetToIntro();
   if (!b || REDUCED || !gsap) { if (b) b.classList.add("is-done"); document.body.classList.remove("boot-lock"); return done(); }
   const fill = $("[data-boot-fill]"), log = $("[data-boot-log]"), press = $("[data-boot-press]");
   const steps = ["loading cartridge…", "spawning player…", "linking modules…", "ready — insert coin"];
@@ -386,7 +397,12 @@ function introEnter() {
   const intro = $("[data-intro]");
   const cab = $(".intro__cab");
   const screen = $(".intro__screen");
-  if (!intro || !cab || !screen || !gsap || !ScrollTrigger || REDUCED) { titleIntro(); return; }
+  if (!intro || !cab || !screen || !gsap || !ScrollTrigger || REDUCED) {
+    document.body.classList.remove("js-intro");
+    document.body.classList.add("is-entered");
+    titleIntro();
+    return;
+  }
 
   document.body.classList.add("js-intro");
   const mobile = matchMedia("(max-width: 700px)").matches;
@@ -404,7 +420,9 @@ function introEnter() {
   const leave = () => {
     document.body.classList.remove("is-entered");
     intro.style.pointerEvents = "";
+    intro.style.visibility = "";
     if (intro.parentElement?.classList.contains("pin-spacer")) intro.parentElement.style.pointerEvents = "";
+    gsap.set(intro, { clearProps: "opacity" });
     if (gsap) gsap.set("#start [data-t-item], #start .title__stage", { clearProps: "opacity,transform" });
   };
 
@@ -433,13 +451,18 @@ function introEnter() {
       end: () => "+=" + Math.round(innerHeight * (mobile ? .28 : .34)),
       pin: true,
       scrub: 1,
-      anticipatePin: 1,
+      anticipatePin: 0,
       invalidateOnRefresh: true,
       onRefresh: syncCabPivot,
       onLeave: enter,
       onEnterBack: leave,
+      onUpdate: (self) => {
+        if (document.body.classList.contains("is-entered") && self.direction === -1 && self.progress < 1) leave();
+      },
     },
   });
+
+  introPinST = tl.scrollTrigger;
 
   tl.to(".intro__hint", { opacity: 0, y: 14, duration: .12 }, 0)
     .to(cab, { scale: scaleForScreen, duration: .8, ease: "power1.in", force3D: true }, .08)
@@ -451,7 +474,17 @@ function introEnter() {
     const st = tl.scrollTrigger;
     if (st) scrollTo({ top: st.end, behavior: REDUCED ? "auto" : "smooth" });
   });
+
+  ScrollTrigger.refresh();
+  resetToIntro();
 }
+
+addEventListener("pageshow", (e) => {
+  if (!e.persisted) return;
+  resetToIntro();
+  ScrollTrigger?.refresh();
+  introPinST?.scroll(0);
+});
 
 /* drifting light motes + a subtle mouse-tilt on the cabinet, while the intro is still at rest */
 function introAmbience() {
@@ -868,6 +901,17 @@ function buildCharacter() {
       </article>`).join("");
   }
 
+  const social = $("[data-char-links]");
+  if (social) {
+    social.innerHTML = CONTACTS.filter(([ic]) => CHAR_SOCIAL.has(ic)).map(([ic, k, v, href]) => {
+      const ext = href.startsWith("http") ? ' target="_blank" rel="noopener noreferrer"' : "";
+      return `<a class="about__link" href="${href}"${ext} data-blip aria-label="${k}: ${v}">
+        <span class="about__link-ic">${px(ic)}</span>
+        <span class="about__link-lbl">${k}</span>
+      </a>`;
+    }).join("");
+  }
+
   const factEls = $$(".about__fact", slots);
   const setFact = (i) => {
     const s = CHAR_SLOTS[i];
@@ -964,12 +1008,15 @@ function contactForm() {
 
 /* ================================================================== INIT */
 function init() {
+  resetToIntro();
   inject(); paintIcons();
   loadout(); shipReveal(); campaignLog();
-  flipCard(); chrome(); scrollFx(); ticker(); introEnter(); introAmbience();
+  flipCard(); chrome(); introEnter(); introAmbience();
+  scrollFx(); ticker();
   bugHunt(); memory(); konami(); contactForm();
   ScrollTrigger?.refresh();
-  addEventListener("load", () => ScrollTrigger?.refresh());
+  resetToIntro();
+  requestAnimationFrame(() => introPinST?.scroll(0));
 }
 
 starfield(); skyline();

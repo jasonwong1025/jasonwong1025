@@ -20,9 +20,21 @@
     <link rel="preconnect" href="https://challenges.cloudflare.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/arcade.css?v=5" />
+    <script>
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      scrollTo(0, 0);
+    </script>
+    <style>
+      /* Before arcade.css — keep hero hidden until cabinet intro completes */
+      body.js-intro:not(.is-entered) .title { visibility: hidden; margin-top: -100svh; position: relative; z-index: 0; }
+      body.js-intro.is-entered .title { z-index: 2; }
+      body.js-intro.is-entered .intro { visibility: hidden !important; opacity: 0 !important; pointer-events: none; }
+      body.js-intro .nav { visibility: hidden; opacity: 0; }
+      body.boot-lock { overflow: hidden; height: 100vh; }
+    </style>
   </head>
 
-  <body>
+  <body class="js-intro boot-lock">
     <canvas class="stars" data-stars aria-hidden="true"></canvas>
     <div class="crt" aria-hidden="true"></div>
     <div class="scanline" aria-hidden="true"></div>
@@ -147,6 +159,7 @@
               <span class="about__badge">◆ Available for work</span>
               <div class="about__xp" aria-hidden="true"><span style="--pct:78%"></span></div>
               <p class="about__lv">LV.<b>05</b> · Year 2</p>
+              <nav class="about__links" data-char-links aria-label="Email, GitHub, and LinkedIn"></nav>
             </div>
           </aside>
 
