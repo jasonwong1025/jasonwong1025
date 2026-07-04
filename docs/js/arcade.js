@@ -259,11 +259,15 @@ function introEnter() {
     entered = true;
     titleIntro();
   };
-  const leave = () => document.body.classList.remove("is-entered");
+  const leave = () => {
+    document.body.classList.remove("is-entered");
+    if (gsap) gsap.set("#start [data-t-item], #start .title__stage", { clearProps: "opacity,transform" });
+  };
 
   // scale the whole cabinet (not just the screen) toward the viewport size, pivoting on the
   // screen's own center (set via .intro__cab's transform-origin) — the machine walks toward you
-  // and the bezel/joystick scroll off-frame naturally as the screen fills the view
+  // and the bezel/joystick scroll off-frame naturally as the screen fills the view.
+  // Title sits underneath (.title margin-top: -100svh) so fading the intro reveals the hero in place.
   const rect = screen.getBoundingClientRect();
   const scaleTarget = Math.max(innerWidth / rect.width, innerHeight / rect.height) * 1.15;
 
@@ -271,11 +275,8 @@ function introEnter() {
     scrollTrigger: {
       trigger: intro,
       start: "top top",
-      // NOTE: ScrollTrigger's pin spacer reserves (trigger's own natural height) + (end - start),
-      // not just (end - start) — since .intro already costs ~1 viewport on its own (min-height:
-      // 100svh), keep this additional hold short or the two stack into a huge dead scroll gap
-      // before the hero appears
-      end: () => "+=" + Math.round(innerHeight * (mobile ? .35 : .45)),
+      // Scrub distance only — title is stacked under the intro, so we don't need a long pin hold.
+      end: () => "+=" + Math.round(innerHeight * (mobile ? .28 : .34)),
       pin: true,
       scrub: 1,
       anticipatePin: 1,
@@ -289,7 +290,7 @@ function introEnter() {
     .to(cab, { scale: scaleTarget, duration: .8, ease: "power1.in", force3D: true }, .08)
     .to(".intro__bg", { scale: 1.3, duration: .8, ease: "power1.in", force3D: true }, .08)
     .to(".intro__preview", { opacity: 0, duration: .15 }, .6)
-    .to(intro, { opacity: 0, duration: .2 }, .78);
+    .to(intro, { opacity: 0, duration: .2, onStart: enter }, .78);
 
   $("[data-intro-hint]")?.addEventListener("click", () => {
     const st = tl.scrollTrigger;
