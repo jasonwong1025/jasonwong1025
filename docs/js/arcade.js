@@ -72,10 +72,111 @@ function skillMeter(tier) {
     ${[1, 2, 3, 4, 5].map((i) => `<span class="kit__pip${i <= tier.pips ? " on" : ""}"></span>`).join("")}
   </div>`;
 }
-function skillMeterSm(tier) {
-  return `<span class="kit__meter kit__meter--sm" aria-hidden="true">
-    ${[1, 2, 3, 4, 5].map((i) => `<span class="kit__pip${i <= tier.pips ? " on" : ""}"></span>`).join("")}
-  </span>`;
+function renderKitPanel(label, skills, cat) {
+  const avg = Math.round(skills.reduce((a, [, l]) => a + l, 0) / skills.length);
+  const catTier = skillTier(avg);
+  return `
+    <header class="kit__panel-head" style="--c:${cat.c}">
+      <h3 class="kit__panel-title">${label}</h3>
+      <span class="kit__panel-meta">
+        <span class="kit__panel-count">${skills.length}</span>
+        <span class="kit__tier ${catTier.cls}" title="${catTier.label}">${catTier.g}</span>
+      </span>
+    </header>
+    <ul class="kit__grid">
+      ${skills.map(([name, lvl]) => {
+        const tier = skillTier(lvl);
+        const ic = SKILL_ICONS[name] || "chip";
+        return `
+        <li class="kit__slot" style="--c:${cat.c}" data-skill="${name}">
+          <div class="kit__slot-top">
+            <span class="kit__slot-ic" data-icon="${ic}" aria-hidden="true"></span>
+            <span class="kit__slot-n">${name}</span>
+          </div>
+          <div class="kit__slot-foot">
+            <span class="kit__rank">${tier.label}</span>
+            <span class="kit__tier ${tier.cls}">${tier.g}</span>
+          </div>
+          ${skillMeter(tier)}
+        </li>`;
+      }).join("")}
+    </ul>`;
+}
+
+function loadout() {
+  const tabs = $("[data-kit-tabs]");
+  const panel = $("[data-kit-panel]");
+  const combo = $("[data-kit-combo]");
+  if (!tabs || !panel) return;
+
+  const total = SKILLS.reduce((n, [, s]) => n + s.length, 0);
+  if (combo) combo.textContent = `${total} skills unlocked`;
+
+  tabs.innerHTML = SKILLS.map(([label], i) => {
+    const cat = KIT_CAT[label] || { c: "#34E1E8", ic: "chip" };
+    return `<button class="kit__tab${i === 0 ? " is-on" : ""}" type="button" role="tab"
+      aria-selected="${i === 0}" data-kit-tab="${i}" data-blip style="--c:${cat.c}">
+      <span class="kit__tab-ic" data-icon="${cat.ic}" aria-hidden="true"></span>${label}
+    </button>`;
+  }).join("");
+
+  let active = 0;
+  const show = (i, animateMeters = true) => {
+    active = i;
+    const [label, skills] = SKILLS[i];
+    const cat = KIT_CAT[label] || { c: "#34E1E8", ic: "chip" };
+    $$("[data-kit-tab]", tabs).forEach((t, j) => {
+      const on = j === i;
+      t.classList.toggle("is-on", on);
+      t.setAttribute("aria-selected", String(on));
+    });
+    panel.innerHTML = renderKitPanel(label, skills, cat);
+    panel.style.setProperty("--c", cat.c);
+    paintIcons();
+    if (animateMeters) animateKitMeters(panel);
+    const hint = $("[data-kit-hint]");
+    const arena = $("[data-kit-arena]");
+    if (hint) hint.textContent = `Juggling ${label.toLowerCase()}…`;
+    if (arena) {
+      arena.classList.add("is-juggle");
+      clearTimeout(arena._jT);
+      arena._jT = setTimeout(() => arena.classList.remove("is-juggle"), 3600);
+    }
+    if (!REDUCED && gsap) {
+      gsap.fromTo(panel, { opacity: .6, y: 10 }, { opacity: 1, y: 0, duration: .35, ease: "power2.out" });
+      gsap.from(".kit__slot", { opacity: 0, y: 12, duration: .32, stagger: .04, ease: "power2.out", immediateRender: false });
+    }
+  };
+
+  tabs.addEventListener("click", (e) => {
+    const tab = e.target.closest("[data-kit-tab]");
+    if (!tab) return;
+    const i = +tab.dataset.kitTab;
+    if (i === active) return;
+    show(i);
+  });
+
+  show(0, false);
+  paintIcons();
+}
+
+function animateKitMeters(root) {
+  if (!root) return;
+  root.querySelectorAll("[data-kit-meter]").forEach((meter) => {
+    const pips = meter.querySelectorAll(".kit__pip.on");
+    if (REDUCED || !gsap || !pips.length) return;
+    gsap.from(pips, { scaleY: 0, transformOrigin: "bottom center", duration: .22, stagger: .05, ease: "back.out(2)" });
+  });
+}
+
+function kitStage() {
+  const kit = $("[data-kit]");
+  if (!kit) return;
+  const reveal = () => kit.classList.add("is-ready");
+  if (REDUCED) reveal();
+  else if (gsap && ScrollTrigger) {
+    ScrollTrigger.create({ trigger: kit, start: "top 86%", once: true, onEnter: reveal });
+  } else reveal();
 }
 /** Set `img` on any entry once a real screenshot exists — the label falls back to a pixel-icon plate until then. */
 const PROJECTS = [
@@ -677,13 +778,10 @@ function scrollFx() {
       onEnter: () => gsap.from(".about__lang-pip.on", { scale: 0, transformOrigin: "center", duration: .3, stagger: .015, ease: "back.out(2)" }) });
   }
 
-  // loadout — strip + category cards stagger in
-  const kitStrip = $("[data-kit-strip]");
-  if (kitStrip && !REDUCED) ScrollTrigger.create({ trigger: kitStrip, start: "top 88%", once: true,
-    onEnter: () => gsap.from(".kit__chip", { opacity: 0, scale: .85, duration: .35, stagger: .04, ease: "back.out(1.6)", immediateRender: false }) });
-  const kitGroups = $(".kit__groups");
-  if (kitGroups && !REDUCED) ScrollTrigger.create({ trigger: kitGroups, start: "top 85%", once: true,
-    onEnter: () => gsap.from(".kit__group", { opacity: 0, y: 18, duration: .45, stagger: .07, ease: "power2.out", immediateRender: false }) });
+  // loadout — arena + inventory
+  const kit = $("[data-kit]");
+  if (kit && !REDUCED) ScrollTrigger.create({ trigger: kit, start: "top 84%", once: true,
+    onEnter: () => gsap.from(".kit__inv", { x: 28, opacity: 0, duration: .55, ease: "power3.out", immediateRender: false }) });
 
   // campaign log: stagger cards in
   const chronoCards = $$(".ch-card");
@@ -820,79 +918,6 @@ function konami() {
   }
 }
 
-/* --------------------------------------------------------------- LOADOUT */
-function loadout() {
-  const host = $("[data-kit-groups]");
-  if (!host) return;
-
-  const top = SKILLS.flatMap(([cat, skills]) =>
-    skills.map(([name, lvl]) => ({ name, lvl, cat, c: (KIT_CAT[cat] || {}).c || "#34E1E8", ic: SKILL_ICONS[name] || "chip" }))
-  ).sort((a, b) => b.lvl - a.lvl).slice(0, 8);
-
-  const strip = $("[data-kit-strip]");
-  if (strip) {
-    strip.innerHTML = `
-      <header class="kit__strip-head">
-        <span class="kit__strip-label">Equipped</span>
-        <span class="kit__strip-meta">Top loadout</span>
-      </header>
-      <div class="kit__chips" role="list">
-        ${top.map((s) => {
-          const t = skillTier(s.lvl);
-          return `<span class="kit__chip" style="--c:${s.c}" role="listitem">
-            <span class="kit__chip-ic" data-icon="${s.ic}" aria-hidden="true"></span>
-            <span class="kit__chip-body">
-              <span class="kit__chip-n">${s.name}</span>
-              ${skillMeterSm(t)}
-            </span>
-            <span class="kit__tier ${t.cls}" title="${t.label}">${t.g}</span>
-          </span>`;
-        }).join("")}
-      </div>`;
-  }
-
-  host.innerHTML = SKILLS.map(([label, skills]) => {
-    const cat = KIT_CAT[label] || { c: "#34E1E8", ic: "chip" };
-    const avg = Math.round(skills.reduce((a, [, l]) => a + l, 0) / skills.length);
-    const catTier = skillTier(avg);
-    return `
-    <section class="kit__group panel" data-kit-group style="--c:${cat.c}">
-      <header class="kit__head">
-        <span class="kit__ic" data-icon="${cat.ic}" aria-hidden="true"></span>
-        <h3 class="kit__title">${label}</h3>
-        <span class="kit__head-meta">
-          <span class="kit__count">${skills.length}</span>
-          <span class="kit__tier ${catTier.cls}" title="${catTier.label}">${catTier.g}</span>
-        </span>
-      </header>
-      <ul class="kit__list">
-        ${skills.map(([name, lvl]) => {
-          const tier = skillTier(lvl);
-          const ic = SKILL_ICONS[name] || "chip";
-          return `
-          <li class="kit__item">
-            <div class="kit__skill">
-              <span class="kit__plate" aria-hidden="true">
-                <span class="kit__plate-ic" data-icon="${ic}"></span>
-              </span>
-              <div class="kit__body">
-                <div class="kit__row">
-                  <span class="kit__name">${name}</span>
-                  <span class="kit__meta">
-                    <span class="kit__rank">${tier.label}</span>
-                    <span class="kit__tier ${tier.cls}">${tier.g}</span>
-                  </span>
-                </div>
-                ${skillMeter(tier)}
-              </div>
-            </div>
-          </li>`;
-        }).join("")}
-      </ul>
-    </section>`;
-  }).join("");
-  paintIcons();
-}
 
 /* --------------------------------------------------------------- CHARACTER / ABOUT */
 function buildCharacter() {
@@ -1087,7 +1112,7 @@ function contactForm() {
 function init() {
   resetToIntro();
   inject(); paintIcons();
-  loadout(); shipReveal(); campaignLog();
+  loadout(); kitStage(); shipReveal(); campaignLog();
   flipCard(); chrome(); introEnter(); introAmbience();
   scrollFx(); ticker();
   bugHunt(); memory(); konami(); contactMascot(); contactForm();
