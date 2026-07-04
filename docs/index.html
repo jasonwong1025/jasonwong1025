@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://challenges.cloudflare.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/arcade.css?v=7" />
+    <link rel="stylesheet" href="css/arcade.css?v=8" />
     <script>
       if ("scrollRestoration" in history) history.scrollRestoration = "manual";
       scrollTo(0, 0);
@@ -60,8 +60,8 @@
         <a href="#character" data-nav-link>Character</a>
         <a href="#loadout" data-nav-link>Loadout</a>
         <a href="#shipped" data-nav-link>Shipped</a>
-        <a href="#arcade" data-nav-link>Arcade</a>
         <a href="#campaign" data-nav-link>Campaign</a>
+        <a href="#arcade" data-nav-link>Arcade</a>
         <a href="#contact" data-nav-link>Contact</a>
       </nav>
       <div class="hud">
@@ -209,6 +209,30 @@
         </button>
       </section>
 
+      <!-- ░ CAMPAIGN ░ -->
+      <section class="sec" id="campaign" data-section="Campaign" data-zone="Campaign">
+        <h2 class="sec__title" data-title><span class="sec__lvl">LEVEL 4</span>Campaign log</h2>
+        <p class="sec__sub" data-reveal>Industry roles and academic milestones — each entry is a cleared stage from the run so far.</p>
+        <div class="campaign__tracks" data-reveal>
+          <div class="campaign__track campaign__track--work">
+            <header class="campaign__track-head">
+              <span class="campaign__track-ic" data-icon="sword" aria-hidden="true"></span>
+              <h3 class="campaign__track-title">Work experience</h3>
+            </header>
+            <div class="chrono" data-chrono-work></div>
+          </div>
+          <div class="campaign__track campaign__track--edu">
+            <header class="campaign__track-head">
+              <span class="campaign__track-ic" data-icon="cap" aria-hidden="true"></span>
+              <h3 class="campaign__track-title">Education</h3>
+            </header>
+            <div class="chrono" data-chrono-edu></div>
+          </div>
+        </div>
+        <p class="lbl campaign__ach-lbl" data-reveal><span class="lbl__i" data-icon="trophy"></span>Achievements unlocked</p>
+        <div class="ach" data-achievements></div>
+      </section>
+
       <!-- ░ ARCADE — mini games ░ -->
       <section class="sec arcade" id="arcade" data-section="Arcade" data-zone="Arcade">
         <h2 class="sec__title" data-title><span class="sec__lvl">BONUS</span>Arcade</h2>
@@ -239,15 +263,6 @@
             <p class="cab__how">Flip the chips, match the pairs. Fewer moves = more coins.</p>
           </div>
         </div>
-      </section>
-
-      <!-- ░ CAMPAIGN ░ -->
-      <section class="sec" id="campaign" data-section="Campaign" data-zone="Campaign">
-        <h2 class="sec__title" data-title><span class="sec__lvl">LEVEL 4</span>Campaign log</h2>
-        <p class="sec__sub" data-reveal>Work and study milestones — each entry is a cleared stage from the run so far.</p>
-        <div class="chrono" data-chrono data-reveal></div>
-        <p class="lbl campaign__ach-lbl" data-reveal><span class="lbl__i" data-icon="trophy"></span>Achievements unlocked</p>
-        <div class="ach" data-achievements></div>
       </section>
 
       <!-- ░ CONTACT ░ -->

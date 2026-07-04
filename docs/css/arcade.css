@@ -606,7 +606,30 @@ body.js-intro.is-entered .pin-spacer { pointer-events: none; }
 .mcard.done .mcard__back { border-color: var(--green); color: var(--green); }
 
 /* CAMPAIGN — vertical log */
-.chrono { position: relative; display: flex; flex-direction: column; gap: 1.4rem; margin-bottom: 3rem; padding-left: .25rem; }
+.campaign__tracks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem 2rem;
+  margin-bottom: 3rem;
+}
+@media (max-width: 900px) { .campaign__tracks { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+.campaign__track { min-width: 0; }
+.campaign__track-head {
+  display: flex; align-items: center; gap: .65rem;
+  margin-bottom: 1rem; padding-bottom: .7rem; border-bottom: 2px solid var(--line);
+}
+.campaign__track--work .campaign__track-head { border-color: color-mix(in srgb, var(--magenta) 42%, var(--line)); }
+.campaign__track--edu .campaign__track-head { border-color: color-mix(in srgb, var(--cyan) 42%, var(--line)); }
+.campaign__track-ic { font-size: 1.15rem; flex: none; }
+.campaign__track--work .campaign__track-ic { color: var(--magenta); }
+.campaign__track--edu .campaign__track-ic { color: var(--cyan); }
+.campaign__track-title {
+  font-family: var(--f-pixel); font-size: .52rem; color: var(--text);
+  text-transform: uppercase; letter-spacing: .05em;
+}
+
+.chrono { position: relative; display: flex; flex-direction: column; gap: 1.4rem; padding-left: .25rem; }
 .chrono::before { content: ""; position: absolute; left: 19px; top: 1.2rem; bottom: 1.2rem; width: 3px; background: var(--line); z-index: 0; }
 .ch-card { position: relative; display: grid; grid-template-columns: 40px 1fr; gap: 1rem; align-items: start; }
 .ch-card__rail { position: relative; z-index: 1; display: flex; justify-content: center; padding-top: 1.35rem; }

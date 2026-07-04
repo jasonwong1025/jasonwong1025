@@ -686,7 +686,8 @@ function scrollFx() {
 
   // campaign log: stagger cards in
   const chronoCards = $$(".ch-card");
-  if (chronoCards.length && !REDUCED) ScrollTrigger.create({ trigger: "[data-chrono]", start: "top 82%", once: true,
+  const campaignTracks = $(".campaign__tracks");
+  if (chronoCards.length && campaignTracks && !REDUCED) ScrollTrigger.create({ trigger: campaignTracks, start: "top 82%", once: true,
     onEnter: () => gsap.from(chronoCards, { opacity: 0, y: 18, duration: .45, stagger: .1, ease: "power2.out", immediateRender: false }) });
 
   // shipped: cards stagger in
@@ -962,24 +963,19 @@ function rain(n) {
 }
 
 /* --------------------------------------------------------------- CAMPAIGN LOG */
-const STAGE_LABEL = { edu: "Education", work: "Work" };
 const STAGE_STATUS = { cleared: "✓ Cleared", active: "● Active", "in-progress": "⟳ In progress" };
 
-function campaignLog() {
-  const host = $("[data-chrono]");
-  if (!host) return;
-  host.innerHTML = STAGES.map((s) => {
-    const bar = s.kind === "work" ? "work.log" : "edu.log";
-    const typeLbl = s.kind === "work" ? "Main quest" : "Side quest";
-    return `
-    <article class="ch-card ch-card--${s.kind} ch-card--${s.status}" data-reveal>
-      <div class="ch-card__rail" aria-hidden="true"><span class="ch-card__dot">${s.n}</span></div>
+function renderStageCard(s, i, total) {
+  const n = String(total - i).padStart(2, "0");
+  const bar = s.kind === "work" ? "work.log" : "edu.log";
+  return `
+    <article class="ch-card ch-card--${s.kind} ch-card--${s.status}">
+      <div class="ch-card__rail" aria-hidden="true"><span class="ch-card__dot">${n}</span></div>
       <div class="panel ch-card__body">
         <div class="panel__bar" data-bar="${bar}"></div>
         <div class="panel__pad">
           <header class="ch-card__head">
             <div class="ch-card__meta">
-              <span class="ch-card__type">${typeLbl} · ${STAGE_LABEL[s.kind]}</span>
               <span class="ch-card__status" data-status="${s.status}">${STAGE_STATUS[s.status]}</span>
             </div>
             <time class="ch-card__when" datetime="${s.date}">${s.date}</time>
@@ -992,7 +988,15 @@ function campaignLog() {
         </div>
       </div>
     </article>`;
-  }).join("");
+}
+
+function campaignLog() {
+  const workHost = $("[data-chrono-work]");
+  const eduHost = $("[data-chrono-edu]");
+  const work = STAGES.filter((s) => s.kind === "work");
+  const edu = STAGES.filter((s) => s.kind === "edu");
+  if (workHost) workHost.innerHTML = work.map((s, i) => renderStageCard(s, i, work.length)).join("");
+  if (eduHost) eduHost.innerHTML = edu.map((s, i) => renderStageCard(s, i, edu.length)).join("");
   paintIcons();
 }
 
