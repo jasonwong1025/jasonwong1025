@@ -383,12 +383,16 @@ function introEnter() {
   // back up to the cabinet), but the hero's one-time entrance (titleIntro) only ever plays once
   const enter = () => {
     document.body.classList.add("is-entered");
+    intro.style.pointerEvents = "none";
+    if (intro.parentElement?.classList.contains("pin-spacer")) intro.parentElement.style.pointerEvents = "none";
     if (entered) return;
     entered = true;
     titleIntro();
   };
   const leave = () => {
     document.body.classList.remove("is-entered");
+    intro.style.pointerEvents = "";
+    if (intro.parentElement?.classList.contains("pin-spacer")) intro.parentElement.style.pointerEvents = "";
     if (gsap) gsap.set("#start [data-t-item], #start .title__stage", { clearProps: "opacity,transform" });
   };
 

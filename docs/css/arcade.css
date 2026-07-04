@@ -176,15 +176,18 @@ body.js-intro.is-entered .nav { opacity: 1; visibility: visible; transition: opa
 /* hero stacks under the intro — both share one viewport in document flow so there's no
    dead scroll gap and no layout jump when the cabinet fades out */
 body.js-intro .title { margin-top: -100svh; position: relative; z-index: 0; }
-/* hide the whole hero layer while the cabinet is showing — visibility beats GSAP inline opacity */
+body.js-intro.is-entered .title { z-index: 2; }
 body.js-intro:not(.is-entered) .title { visibility: hidden; }
+/* faded intro still stacks above the hero — stop it from eating clicks */
+body.js-intro.is-entered .intro,
+body.js-intro.is-entered .pin-spacer { pointer-events: none; }
 
 .title { min-height: 100svh; position: relative; display: flex; align-items: center; justify-content: center; padding: clamp(5rem, 10vh, 7rem) var(--pad) 4rem; overflow: hidden; }
 .title__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 .title__bg::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(11,10,26,.25) 0%, rgba(11,10,26,.05) 38%, rgba(11,10,26,.5) 100%); }
-.title__bg-canvas { width: 100%; height: 100%; display: block; }
+.title__bg-canvas { width: 100%; height: 100%; display: block; pointer-events: none; }
 
-.title__stage { position: relative; z-index: 2; text-align: center; max-width: 780px; }
+.title__stage { position: relative; z-index: 2; text-align: center; max-width: 780px; pointer-events: auto; }
 .title__eyebrow { font-family: var(--f-pixel); font-size: .56rem; color: var(--cyan); text-transform: uppercase; letter-spacing: .1em; }
 .title__name { font-family: var(--f-pixel); line-height: 1.04; margin: 1.3rem 0 1rem; display: flex; flex-direction: column; gap: .12em; align-items: center; }
 .title__name-row { font-size: clamp(2rem, 8.5vw, 6rem); color: #C9CDF7; text-shadow: 4px 4px 0 rgba(0,0,0,.6), 0 0 22px rgba(155,123,255,.25); }
@@ -205,7 +208,7 @@ body.js-intro:not(.is-entered) .title { visibility: hidden; }
 .title__hint { font-family: var(--f-term); font-size: 1.05rem; color: var(--purple); margin-top: .7rem; }
 
 /* flip card */
-.pcard { position: absolute; right: clamp(1rem, 5vw, 5rem); bottom: clamp(6rem, 14vh, 10rem); z-index: 3; width: 220px; perspective: 1100px; }
+.pcard { position: absolute; right: clamp(1rem, 5vw, 5rem); bottom: clamp(6rem, 14vh, 10rem); z-index: 3; width: 220px; perspective: 1100px; pointer-events: auto; }
 .pcard__flip { display: block; width: 100%; }
 .pcard__inner { position: relative; transform-style: preserve-3d; transition: transform .7s var(--ease); width: 100%; aspect-ratio: 3 / 4; }
 .pcard.is-flipped .pcard__inner { transform: rotateY(180deg); }
