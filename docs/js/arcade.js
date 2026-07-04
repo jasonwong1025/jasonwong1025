@@ -392,30 +392,41 @@ function introEnter() {
     if (gsap) gsap.set("#start [data-t-item], #start .title__stage", { clearProps: "opacity,transform" });
   };
 
-  // scale the whole cabinet (not just the screen) toward the viewport size, pivoting on the
-  // screen's own center (set via .intro__cab's transform-origin) — the machine walks toward you
-  // and the bezel/joystick scroll off-frame naturally as the screen fills the view.
-  // Title sits underneath (.title margin-top: -100svh) so fading the intro reveals the hero in place.
-  const rect = screen.getBoundingClientRect();
-  const scaleTarget = Math.max(innerWidth / rect.width, innerHeight / rect.height) * 1.15;
+  // Zoom pivots on the CRT center (not the browser window) — origin is synced from .intro__screen each frame.
+  const syncCabPivot = () => {
+    const cabRect = cab.getBoundingClientRect();
+    const screenRect = screen.getBoundingClientRect();
+    if (!cabRect.width || !cabRect.height) return;
+    const ox = ((screenRect.left + screenRect.width / 2 - cabRect.left) / cabRect.width) * 100;
+    const oy = ((screenRect.top + screenRect.height / 2 - cabRect.top) / cabRect.height) * 100;
+    gsap.set(cab, { transformOrigin: `${ox}% ${oy}%` });
+  };
+  const scaleForScreen = () => {
+    syncCabPivot();
+    const rect = screen.getBoundingClientRect();
+    return Math.max(innerWidth / rect.width, innerHeight / rect.height) * 1.15;
+  };
+
+  syncCabPivot();
+  addEventListener("resize", syncCabPivot);
 
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: intro,
       start: "top top",
-      // Scrub distance only — title is stacked under the intro, so we don't need a long pin hold.
       end: () => "+=" + Math.round(innerHeight * (mobile ? .28 : .34)),
       pin: true,
       scrub: 1,
       anticipatePin: 1,
       invalidateOnRefresh: true,
+      onRefresh: syncCabPivot,
       onLeave: enter,
       onEnterBack: leave,
     },
   });
 
   tl.to(".intro__hint", { opacity: 0, y: 14, duration: .12 }, 0)
-    .to(cab, { scale: scaleTarget, duration: .8, ease: "power1.in", force3D: true }, .08)
+    .to(cab, { scale: scaleForScreen, duration: .8, ease: "power1.in", force3D: true }, .08)
     .to(".intro__bg", { scale: 1.3, duration: .8, ease: "power1.in", force3D: true }, .08)
     .to(".intro__preview", { opacity: 0, duration: .15 }, .6)
     .to(intro, { opacity: 0, duration: .2, onStart: enter }, .78);
