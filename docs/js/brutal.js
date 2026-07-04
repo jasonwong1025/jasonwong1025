@@ -47,6 +47,14 @@ const STACK = [
   ["Git", "tools"], ["Docker", "tools"], ["Linux", "tools"], ["VS Code", "tools"],
 ];
 
+const STACK_CATS = [
+  ["languages", "Languages"],
+  ["frontend", "Frontend"],
+  ["backend", "Backend"],
+  ["data", "Data"],
+  ["tools", "Tools"],
+];
+
 const TIMELINE = [
   { kind: "work", year: "Oct 2025 — Now", title: "Software Engineer · Codespace AI Technology", desc: "Part-time software engineer building AI-powered solutions and continuing hands-on development after the internship." },
   { kind: "work", year: "Sep — Oct 2025", title: "SE Intern · Codespace AI Technology", desc: "Internship working on AI features and real-world software development." },
@@ -56,13 +64,18 @@ const TIMELINE = [
 
 /* --------------------------------------------------------------- INJECT */
 function injectStack() {
-  const grid = $("[data-stack-grid]");
-  if (!grid) return;
-  grid.innerHTML = STACK.map(([name, cat]) => `
-    <li class="tech" data-cat="${cat}" data-cursor-hover>
-      <span class="tech__name">${name}</span>
-      <span class="tech__cat">${cat}</span>
-    </li>`).join("");
+  const host = $("[data-stack-rows]");
+  if (!host) return;
+  host.innerHTML = STACK_CATS.map(([cat, label]) => {
+    const items = STACK.filter(([, c]) => c === cat).map(([n]) => n);
+    return `
+    <div class="srow">
+      <span class="srow__cat">${label}</span>
+      <div class="srow__items">
+        ${items.map((it) => `<span class="sitem" data-cursor-hover>${it}</span>`).join("")}
+      </div>
+    </div>`;
+  }).join("");
 }
 
 function injectProjects() {
@@ -308,21 +321,6 @@ function reveals() {
   });
 }
 
-/* ------------------------------------------------------------- STACK FILTER */
-function stackFilter() {
-  const btns = $$("[data-stack-filters] .pill");
-  const items = $$(".tech");
-  btns.forEach((b) => b.addEventListener("click", () => {
-    btns.forEach((x) => x.classList.remove("is-active"));
-    b.classList.add("is-active");
-    const f = b.dataset.filter;
-    items.forEach((it) => {
-      const match = f === "all" || it.dataset.cat === f;
-      it.classList.toggle("is-dim", !match);
-    });
-  }));
-}
-
 /* --------------------------------------------------------- WORK HORIZONTAL */
 function workReel() {
   if (!gsap || !ScrollTrigger) return;
@@ -522,7 +520,6 @@ function init() {
   progress();
   hero();
   reveals();
-  stackFilter();
   workReel();
   counters();
   contactForm();

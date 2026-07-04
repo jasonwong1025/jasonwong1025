@@ -3,391 +3,243 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script>
-      // No-flash theme boot
-      (function () {
-        try {
-          var t = localStorage.getItem("theme");
-          if (t !== "dark" && t !== "light") {
-            t = "light";
-          }
-          document.documentElement.dataset.theme = t;
-        } catch (e) {
-          document.documentElement.dataset.theme = "light";
-        }
-      })();
-    </script>
-    <meta name="theme-color" content="#ECE7D9" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#17140F" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#0B0A1A" />
 
-    <title>Wong Jia Sen · Software Engineer — Kuala Lumpur</title>
-    <meta
-      name="description"
-      content="Wong Jia Sen — software engineer in Kuala Lumpur, Malaysia. Full-stack web, mobile, and AI software, built in public. Software Engineering student at APU."
-    />
+    <title>Wong Jia Sen — Software Engineer · Player One</title>
+    <meta name="description" content="Wong Jia Sen — software engineer in Kuala Lumpur. Full-stack web, mobile, and AI software, presented as a playable retro arcade. Software Engineering at APU." />
     <meta name="author" content="Wong Jia Sen" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://jasonwong.top/" />
-    <meta name="geo.region" content="MY-14" />
-    <meta name="geo.placename" content="Kuala Lumpur, Malaysia" />
-    <meta name="geo.position" content="3.139;101.686" />
-    <meta name="ICBM" content="3.139, 101.686" />
-    <link rel="icon" href="Chibi_programmer_using_laptop_code_202605291548.jpeg" type="image/jpeg" />
-    <link rel="apple-touch-icon" href="Chibi_programmer_using_laptop_code_202605291548.jpeg" />
+    <link rel="icon" href="pic_pixel.jpeg" type="image/jpeg" />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="en_MY" />
-    <meta property="og:site_name" content="Wong Jia Sen" />
-    <meta property="og:url" content="https://jasonwong.top/" />
-    <meta property="og:title" content="Wong Jia Sen · Software Engineer" />
-    <meta
-      property="og:description"
-      content="Portfolio of Wong Jia Sen — software engineer in Kuala Lumpur. Full-stack, mobile, and AI software built in public with TypeScript, React, Laravel, and Flutter."
-    />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Wong Jia Sen · Software Engineer" />
-    <meta name="twitter:description" content="Software engineer in Kuala Lumpur — full-stack web, mobile, and AI software built in public." />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Wong Jia Sen",
-        "url": "https://jasonwong.top",
-        "jobTitle": "Software Engineer",
-        "description": "Software engineer based in Kuala Lumpur, Malaysia.",
-        "email": "mailto:jiasen27826@gmail.com",
-        "sameAs": [
-          "https://github.com/jasonwong1025",
-          "https://www.linkedin.com/in/wong-jia-sen/",
-          "https://www.instagram.com/wjs.1025/"
-        ],
-        "alumniOf": {
-          "@type": "CollegeOrUniversity",
-          "name": "Asia Pacific University",
-          "address": { "@type": "PostalAddress", "addressLocality": "Kuala Lumpur", "addressCountry": "MY" }
-        }
-      }
-    </script>
+    <meta property="og:title" content="Wong Jia Sen — Software Engineer · Player One" />
+    <meta property="og:description" content="Full-stack, mobile, and AI software — a playable retro-arcade portfolio. Kuala Lumpur." />
+    <meta property="og:image" content="pic_pixel.jpeg" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://challenges.cloudflare.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="css/brutal.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/arcade.css" />
   </head>
 
   <body>
-    <!-- ░░ PRELOADER — compile sequence ░░ -->
+    <canvas class="stars" data-stars aria-hidden="true"></canvas>
+    <div class="crt" aria-hidden="true"></div>
+    <div class="scanline" aria-hidden="true"></div>
+    <div class="fx" data-fx aria-hidden="true"></div>
+
+    <!-- ░ BOOT ░ -->
     <div class="boot" data-boot aria-hidden="true">
-      <div class="boot__inner">
-        <div class="boot__row">
-          <span class="boot__key">build</span>
-          <span class="boot__val" data-boot-log>init</span>
-        </div>
-        <div class="boot__bar"><span class="boot__fill" data-boot-fill></span></div>
-        <div class="boot__count"><span data-boot-count>000</span><span class="boot__pct">%</span></div>
+      <div class="boot__box">
+        <p class="boot__brand" data-boot-brand>WJS</p>
+        <p class="boot__log" data-boot-log>booting cartridge…</p>
+        <div class="boot__bar"><span data-boot-fill></span></div>
+        <p class="boot__press" data-boot-press>INSERT COIN</p>
       </div>
     </div>
 
-    <!-- ░░ CURSOR ░░ -->
-    <div class="cursor" data-cursor aria-hidden="true"></div>
-
-    <!-- ░░ SCROLL PROGRESS ░░ -->
-    <div class="progress" data-progress aria-hidden="true"></div>
-
-    <!-- ░░ NAV ░░ -->
+    <!-- ░ NAV ░ -->
     <header class="nav" data-nav>
-      <a class="nav__brand" href="#home" data-cursor-hover>
-        <span class="nav__mark">JS</span>
-        <span class="nav__slash">//</span>
-        <span class="nav__brand-full">WONG JIA SEN</span>
-      </a>
-
-      <nav class="nav__links" data-nav-links aria-label="Sections">
-        <a href="#about" data-cursor-hover><span class="nav__idx">01</span>Who</a>
-        <a href="#stack" data-cursor-hover><span class="nav__idx">02</span>Stack</a>
-        <a href="#work" data-cursor-hover><span class="nav__idx">03</span>Builds</a>
-        <a href="#log" data-cursor-hover><span class="nav__idx">04</span>Log</a>
-        <a href="#contact" data-cursor-hover><span class="nav__idx">05</span>Contact</a>
+      <button class="brand" data-brand type="button" aria-label="Restart — back to top">
+        <span class="brand__txt">WJS</span><span class="brand__caret">▮</span>
+      </button>
+      <nav class="menu" data-menu aria-label="Zones">
+        <a href="#start" data-nav-link>Start</a>
+        <a href="#character" data-nav-link>Character</a>
+        <a href="#loadout" data-nav-link>Loadout</a>
+        <a href="#shipped" data-nav-link>Shipped</a>
+        <a href="#arcade" data-nav-link>Arcade</a>
+        <a href="#campaign" data-nav-link>Campaign</a>
+        <a href="#contact" data-nav-link>Contact</a>
       </nav>
-
-      <div class="nav__tools">
-        <button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle color theme" data-cursor-hover>
-          <span class="theme-toggle__track"><span class="theme-toggle__knob"></span></span>
-          <span class="theme-toggle__label" data-theme-label>LIGHT</span>
-        </button>
-        <button class="nav__burger" data-nav-burger type="button" aria-label="Toggle menu" aria-expanded="false">
-          <span></span><span></span>
-        </button>
+      <div class="hud">
+        <span class="coins" data-coins-wrap aria-live="polite"><span class="coins__icon" data-icon="coin"></span><span class="coins__n" data-coins>0</span></span>
+        <button class="burger" data-burger type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </header>
 
     <main>
-      <!-- ░░ 00 — HERO ░░ -->
-      <section class="hero" id="home" data-section>
-        <div class="hero__grid-lines" aria-hidden="true"></div>
+      <!-- ░ START — TITLE SCREEN ░ -->
+      <section class="title" id="start" data-section="Start" data-zone="Title screen">
+        <div class="parallax" data-sky aria-hidden="true"></div>
+        <div class="ground" data-ground aria-hidden="true"></div>
 
-        <div class="hero__top">
-          <span class="chip chip--live" data-cursor-hover><span class="chip__dot"></span>Available for work</span>
-          <span class="chip chip--mono">Kuala Lumpur · UTC+8</span>
-        </div>
+        <div class="title__stage">
+          <p class="title__eyebrow" data-t-item>Player One · Kuala Lumpur</p>
+          <h1 class="title__name" data-name aria-label="Wong Jia Sen">
+            <span class="title__name-row" data-name-row>WONG</span>
+            <span class="title__name-row title__name-row--gold" data-name-row>JIA SEN</span>
+          </h1>
+          <p class="title__role" data-t-item>SOFTWARE ENGINEER · FULL-STACK DEVELOPER</p>
+          <p class="title__typed" data-t-item>&gt; <span data-typed></span><span class="cur">▮</span></p>
 
-        <h1 class="hero__title" data-hero-title>
-          <span class="hero__word" data-hero-word>WONG</span>
-          <span class="hero__word hero__word--fill" data-hero-word>JIA</span>
-          <span class="hero__word" data-hero-word>SEN</span>
-        </h1>
-
-        <div class="hero__bottom">
-          <p class="hero__lede" data-hero-lede>
-            Software engineer. I build full-stack web, mobile, and AI software —
-            <strong>in public</strong>, versioned and documented. No black boxes.
+          <button class="press" data-press type="button" data-blip>▶ PRESS START</button>
+          <p class="title__meta" data-t-item>
+            <span>HI-SCORE <b data-hiscore>000000</b></span><span class="title__meta-sep">·</span>
+            <span>1UP</span><span class="title__meta-sep">·</span><span>© 2026 WJS</span>
           </p>
-
-          <div class="hero__cta">
-            <a class="btn btn--fill" href="#work" data-cursor-hover data-magnetic>
-              See the work <span class="btn__ico">↓</span>
-            </a>
-            <a class="btn btn--line" href="#contact" data-cursor-hover data-magnetic>Get in touch</a>
-          </div>
+          <p class="title__hint" data-t-item data-hint>tip: try the arrow keys… ↑ ↑ ↓ ↓</p>
         </div>
 
-        <!-- draggable stickers -->
-        <div class="hero__stickers" data-hero-stickers aria-hidden="true">
-          <span class="sticker sticker--a" data-drag data-cursor-drag>SOFTWARE&nbsp;ENGINEER</span>
-          <span class="sticker sticker--b" data-drag data-cursor-drag>APU&nbsp;'26</span>
-          <span class="sticker sticker--c" data-drag data-cursor-drag>FULL-STACK</span>
-          <span class="sticker sticker--d" data-drag data-cursor-drag>★ drag me</span>
-        </div>
-
-        <a class="hero__scroll" href="#about" aria-label="Scroll to content" data-cursor-hover>
-          <span class="hero__scroll-txt">SCROLL</span>
-          <span class="hero__scroll-arw">↓</span>
-        </a>
-      </section>
-
-      <!-- ░░ TICKER ░░ -->
-      <section class="ticker" data-ticker aria-hidden="true">
-        <div class="ticker__track" data-ticker-track>
-          <span class="ticker__item">JavaScript</span><span class="ticker__star">✳</span>
-          <span class="ticker__item">TypeScript</span><span class="ticker__star">✳</span>
-          <span class="ticker__item">React</span><span class="ticker__star">✳</span>
-          <span class="ticker__item">Flutter</span><span class="ticker__star">✳</span>
-          <span class="ticker__item">Laravel</span><span class="ticker__star">✳</span>
-          <span class="ticker__item">Node.js</span><span class="ticker__star">✳</span>
-          <span class="ticker__item">Python</span><span class="ticker__star">✳</span>
-          <span class="ticker__item">PostgreSQL</span><span class="ticker__star">✳</span>
-          <span class="ticker__item">Docker</span><span class="ticker__star">✳</span>
-          <span class="ticker__item">Java</span><span class="ticker__star">✳</span>
-        </div>
-      </section>
-
-      <!-- ░░ 01 — WHO ░░ -->
-      <section class="who" id="about" data-section>
-        <div class="sec-head">
-          <span class="sec-head__idx">01</span>
-          <span class="sec-head__label">Who</span>
-          <span class="sec-head__rule"></span>
-        </div>
-
-        <p class="who__statement" data-reveal-words>
-          I turn ideas into software that reads well and lasts — from polished frontends to solid APIs and data layers.
-        </p>
-
-        <div class="who__body">
-          <div class="who__col">
-            <p data-reveal>
-              I'm <strong>Jia Sen</strong>, a Software Engineering student at <strong>Asia Pacific University (APU)</strong>
-              in Kuala Lumpur, and a part-time software engineer at <strong>Codespace AI Technology</strong>, where I ship
-              AI-powered features on real products.
-            </p>
-            <p data-reveal>
-              I care about clean, maintainable code over clever one-liners, and understanding systems end to end. I'm
-              always exploring new languages, tools, and patterns — student mindset, builder energy.
-            </p>
-            <p data-reveal>
-              Open to <strong>collaboration</strong>, <strong>freelance</strong>, and <strong>open-source</strong>. Let's
-              build something useful.
-            </p>
-          </div>
-
-          <ul class="stats" data-reveal-stagger>
-            <li class="stat"><span class="stat__num" data-count="3.63" data-decimals="2">0.00</span><span class="stat__lbl">Diploma CGPA</span></li>
-            <li class="stat"><span class="stat__num">APU</span><span class="stat__lbl">Kuala Lumpur</span></li>
-            <li class="stat"><span class="stat__num" data-count="3" data-suffix="+">0</span><span class="stat__lbl">Public repos</span></li>
-            <li class="stat"><span class="stat__num" data-count="2023">0000</span><span class="stat__lbl">Building since</span></li>
-          </ul>
-        </div>
-
-        <!-- values as an index list -->
-        <ul class="values" data-reveal-stagger>
-          <li class="value" data-cursor-hover>
-            <span class="value__k">Craft</span>
-            <span class="value__v">Clean, maintainable code over clever one-liners. Software that reads well and lasts.</span>
-          </li>
-          <li class="value" data-cursor-hover>
-            <span class="value__k">Depth</span>
-            <span class="value__v">Understanding systems end to end — from polished UI to solid APIs and data layers.</span>
-          </li>
-          <li class="value" data-cursor-hover>
-            <span class="value__k">Growth</span>
-            <span class="value__v">Always exploring new languages, tools, and patterns. Student mindset, builder energy.</span>
-          </li>
-          <li class="value" data-cursor-hover>
-            <span class="value__k">Open</span>
-            <span class="value__v">Available for collaboration, freelance, and open-source. Let's build something useful.</span>
-          </li>
-        </ul>
-      </section>
-
-      <!-- ░░ 02 — STACK ░░ -->
-      <section class="stack" id="stack" data-section>
-        <div class="sec-head">
-          <span class="sec-head__idx">02</span>
-          <span class="sec-head__label">Stack</span>
-          <span class="sec-head__rule"></span>
-        </div>
-
-        <div class="stack__head">
-          <h2 class="stack__title" data-reveal-words>What I build with</h2>
-          <div class="stack__filters" data-stack-filters>
-            <button class="pill is-active" data-filter="all" data-cursor-hover>All</button>
-            <button class="pill" data-filter="languages" data-cursor-hover>Languages</button>
-            <button class="pill" data-filter="frontend" data-cursor-hover>Frontend</button>
-            <button class="pill" data-filter="backend" data-cursor-hover>Backend</button>
-            <button class="pill" data-filter="data" data-cursor-hover>Data</button>
-            <button class="pill" data-filter="tools" data-cursor-hover>Tools</button>
-          </div>
-        </div>
-
-        <ul class="stack__grid" data-stack-grid data-reveal-stagger></ul>
-      </section>
-
-      <!-- ░░ 03 — BUILDS (horizontal reel) ░░ -->
-      <section class="work" id="work" data-section>
-        <div class="work__pin" data-work-pin>
-          <div class="work__track" data-work-track>
-            <div class="work__intro">
-              <div class="sec-head sec-head--light">
-                <span class="sec-head__idx">03</span>
-                <span class="sec-head__label">Builds</span>
+        <!-- flip character card -->
+        <div class="pcard" data-pcard data-t-item>
+          <button class="pcard__flip" data-pcard-flip type="button" aria-label="Flip character card" data-blip>
+            <div class="pcard__inner">
+              <div class="pcard__face pcard__front">
+                <div class="pcard__screen">
+                  <img src="pic_pixel.jpeg" alt="Pixel-art avatar of Wong Jia Sen coding" class="pcard__img" width="1024" height="1024" />
+                  <span class="pcard__rec"><i></i>REC</span>
+                  <span class="pcard__scan"></span>
+                </div>
+                <div class="pcard__label"><span>PLAYER 1</span><span class="pcard__lv">LV.05</span></div>
+                <p class="pcard__hint">click to flip ⟳</p>
               </div>
-              <h2 class="work__intro-title">Selected<br />work.</h2>
-              <p class="work__intro-desc">
-                Shipped, maintained, and documented in public. Drag or scroll sideways →
-              </p>
-              <a class="btn btn--fill" href="https://github.com/jasonwong1025" target="_blank" rel="noopener noreferrer" data-cursor-hover data-magnetic>
-                GitHub profile <span class="btn__ico">↗</span>
-              </a>
+              <div class="pcard__face pcard__back">
+                <p class="pcard__back-h">STATS</p>
+                <dl class="pcard__stats" data-card-stats></dl>
+                <p class="pcard__hint">click to flip ⟳</p>
+              </div>
             </div>
+          </button>
+        </div>
+      </section>
 
-            <!-- project cards injected by JS -->
-            <div class="work__cards" data-work-cards></div>
+      <!-- status ticker -->
+      <div class="ticker" data-ticker aria-hidden="true">
+        <div class="ticker__track" data-ticker-track></div>
+      </div>
+
+      <!-- ░ CHARACTER ░ -->
+      <section class="sec" id="character" data-section="Character" data-zone="Character">
+        <h2 class="sec__title" data-title><span class="sec__lvl">LEVEL 1</span>Character</h2>
+
+        <div class="char">
+          <div class="panel char__bio">
+            <div class="panel__bar" data-bar="bio.md"></div>
+            <div class="panel__pad">
+              <p>I'm a Software Engineering student at <b>Asia Pacific University</b> and a part-time software engineer at <b>Codespace AI Technology</b>, where I ship AI-powered features on real products.</p>
+              <p>I care about clean, maintainable code over clever one-liners, and understanding systems end to end — from a polished interface down to the API and the data beneath it. Student mindset, builder energy. Open to collaboration, freelance, and open-source.</p>
+            </div>
+          </div>
+
+          <div class="panel char__radar">
+            <div class="panel__bar" data-bar="attributes.sys"></div>
+            <div class="panel__pad">
+              <div class="radar" data-radar></div>
+              <p class="radar__read" data-radar-read></p>
+              <p class="radar__hint">hover a point to inspect an attribute</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel char__lang" data-reveal>
+          <div class="panel__bar" data-bar="languages.lang"></div>
+          <div class="panel__pad"><div class="lang-grid" data-langs></div></div>
+        </div>
+      </section>
+
+      <!-- ░ LOADOUT ░ -->
+      <section class="sec loadout" id="loadout" data-section="Loadout" data-zone="Loadout">
+        <h2 class="sec__title" data-title><span class="sec__lvl">LEVEL 2</span>Loadout</h2>
+        <p class="sec__sub" data-reveal>My equipped kit — hover any cartridge to slot it in. Rarity scales with mastery.</p>
+        <div class="eq" data-reveal>
+          <aside class="eq__featured" data-eq-featured></aside>
+          <div class="eq__deck">
+            <div class="eq__tabs" data-eq-tabs></div>
+            <div class="eq__grid" data-eq-grid></div>
           </div>
         </div>
       </section>
 
-      <!-- ░░ 04 — LOG ░░ -->
-      <section class="log" id="log" data-section>
-        <div class="sec-head">
-          <span class="sec-head__idx">04</span>
-          <span class="sec-head__label">Log</span>
-          <span class="sec-head__rule"></span>
-        </div>
+      <!-- ░ SHIPPED — project builds ░ -->
+      <section class="sec ships" id="shipped" data-section="Shipped" data-zone="Ship log">
+        <h2 class="sec__title" data-title><span class="sec__lvl">LEVEL 3</span>Ship log</h2>
+        <p class="sec__sub" data-reveal>Builds shipped in public — start to finish.</p>
+        <div class="ship-list" data-reveal data-ships></div>
+        <button class="ship-more" type="button" data-ships-toggle aria-expanded="false">
+          <span data-ships-toggle-label>Show more</span><span class="ship-more__chev" aria-hidden="true">▾</span>
+        </button>
+      </section>
 
-        <h2 class="log__title" data-reveal-words>Education &amp; experience, in order.</h2>
+      <!-- ░ ARCADE — mini games ░ -->
+      <section class="sec arcade" id="arcade" data-section="Arcade" data-zone="Arcade">
+        <h2 class="sec__title" data-title><span class="sec__lvl">BONUS</span>Arcade</h2>
+        <p class="sec__sub" data-reveal>Two playable machines. Win coins — they tally up top. No account, just fun.</p>
 
-        <ol class="timeline" data-timeline></ol>
-
-        <div class="cred" data-reveal>
-          <span class="cred__badge">CERT</span>
-          <div class="cred__body">
-            <h3 class="cred__title">Google IT Automation with Python</h3>
-            <p class="cred__meta">Google · Coursera · Specialization · May 2025</p>
-            <p class="cred__desc">
-              Six-course specialization covering Python, Git, GitHub, troubleshooting, and IT automation for systems administration.
-            </p>
+        <div class="cabs">
+          <!-- Bug Hunt -->
+          <div class="cab" data-reveal>
+            <div class="cab__head"><span class="cab__ico" data-icon="bug"></span><h3 class="cab__name">Bug Hunt</h3><span class="cab__best">BEST <b data-best="bughunt">0</b></span></div>
+            <div class="cab__screen" data-bughunt>
+              <div class="bh__hud"><span>SCORE <b data-bh-score>0</b></span><span>TIME <b data-bh-time>30</b></span></div>
+              <div class="bh__grid" data-bh-grid></div>
+              <button class="bh__start btn btn--gold" data-bh-start type="button" data-blip>▶ Start</button>
+              <p class="bh__msg" data-bh-msg></p>
+            </div>
+            <p class="cab__how">Squash bugs before the timer runs out. Each bug = 10 pts &amp; a coin.</p>
           </div>
-          <a class="cred__link" href="https://coursera.org/share/f97cdd6da5f886f4dcfb544ec2e22c84" target="_blank" rel="noopener noreferrer" data-cursor-hover>View ↗</a>
+
+          <!-- Debug Memory -->
+          <div class="cab" data-reveal>
+            <div class="cab__head"><span class="cab__ico" data-icon="chip"></span><h3 class="cab__name">Debug Memory</h3><span class="cab__best">BEST <b data-best="memory">—</b></span></div>
+            <div class="cab__screen" data-memory>
+              <div class="mem__hud"><span>MOVES <b data-mem-moves>0</b></span><span>PAIRS <b data-mem-pairs>0</b>/6</span></div>
+              <div class="mem__grid" data-mem-grid></div>
+              <button class="mem__start btn btn--cyan" data-mem-start type="button" data-blip>▶ New game</button>
+              <p class="mem__msg" data-mem-msg></p>
+            </div>
+            <p class="cab__how">Flip the chips, match the pairs. Fewer moves = more coins.</p>
+          </div>
         </div>
       </section>
 
-      <!-- ░░ 05 — CONTACT ░░ -->
-      <section class="contact" id="contact" data-section>
-        <div class="sec-head sec-head--light">
-          <span class="sec-head__idx">05</span>
-          <span class="sec-head__label">Contact</span>
-          <span class="sec-head__rule"></span>
-        </div>
+      <!-- ░ CAMPAIGN ░ -->
+      <section class="sec" id="campaign" data-section="Campaign" data-zone="Campaign">
+        <h2 class="sec__title" data-title><span class="sec__lvl">LEVEL 4</span>Campaign log</h2>
+        <p class="sec__sub" data-reveal>Work and study milestones — each entry is a cleared stage from the run so far.</p>
+        <div class="chrono" data-chrono data-reveal></div>
+        <p class="lbl campaign__ach-lbl" data-reveal><span class="lbl__i" data-icon="trophy"></span>Achievements unlocked</p>
+        <div class="ach" data-achievements></div>
+      </section>
 
-        <a class="contact__mail" href="mailto:jiasen27826@gmail.com" data-cursor-hover data-magnetic>
-          jiasen27826<span class="contact__at">@</span>gmail.com
-        </a>
+      <!-- ░ CONTACT ░ -->
+      <section class="sec" id="contact" data-section="Contact" data-zone="Insert coin">
+        <h2 class="sec__title" data-title><span class="sec__lvl">FINAL</span>Insert coin</h2>
+        <p class="sec__sub" data-reveal>New quest? Collaboration, freelance, or open-source — send a message.</p>
 
-        <div class="contact__grid">
-          <div class="contact__links">
-            <a class="clink" href="https://github.com/jasonwong1025" target="_blank" rel="noopener noreferrer" data-cursor-hover>
-              <span class="clink__k">GitHub</span><span class="clink__v">@jasonwong1025</span><span class="clink__a">↗</span>
-            </a>
-            <a class="clink" href="https://www.linkedin.com/in/wong-jia-sen/" target="_blank" rel="noopener noreferrer" data-cursor-hover>
-              <span class="clink__k">LinkedIn</span><span class="clink__v">wong-jia-sen</span><span class="clink__a">↗</span>
-            </a>
-            <a class="clink" href="https://www.instagram.com/wjs.1025/" target="_blank" rel="noopener noreferrer" data-cursor-hover>
-              <span class="clink__k">Instagram</span><span class="clink__v">@wjs.1025</span><span class="clink__a">↗</span>
-            </a>
-            <a class="clink" href="https://jasonwong.top" target="_blank" rel="noopener noreferrer" data-cursor-hover>
-              <span class="clink__k">Website</span><span class="clink__v">jasonwong.top</span><span class="clink__a">↗</span>
-            </a>
+        <div class="contact">
+          <div class="panel contact__links">
+            <div class="panel__bar" data-bar="connect.sh"></div>
+            <div class="chan" data-contact-links></div>
           </div>
 
-          <form class="cform" data-contact-form novalidate>
-            <div class="cform__row">
-              <label class="cform__lbl" for="cname">Name</label>
-              <input class="cform__in" id="cname" name="name" type="text" required autocomplete="name" data-cursor-hover />
+          <form class="panel form" data-contact-form novalidate>
+            <div class="panel__bar" data-bar="message.txt"></div>
+            <div class="form__pad">
+              <label class="field"><span>Player name</span><input name="name" type="text" required autocomplete="name" /></label>
+              <label class="field"><span>Email</span><input name="email" type="email" required autocomplete="email" /></label>
+              <label class="field"><span>Message</span><textarea name="message" rows="4" required></textarea></label>
+              <div class="form__turnstile" data-turnstile aria-label="Security verification"></div>
+              <button class="btn btn--gold btn--block" type="submit" data-contact-submit disabled aria-disabled="true" data-blip>▶ Send message</button>
+              <p class="form__note" data-form-status role="status">Protected by Cloudflare Turnstile — clear the check, then send. Lands in my inbox.</p>
             </div>
-            <div class="cform__row">
-              <label class="cform__lbl" for="cemail">Email</label>
-              <input class="cform__in" id="cemail" name="email" type="email" required autocomplete="email" data-cursor-hover />
-            </div>
-            <div class="cform__row">
-              <label class="cform__lbl" for="cmsg">Message</label>
-              <textarea class="cform__in cform__area" id="cmsg" name="message" rows="4" required data-cursor-hover></textarea>
-            </div>
-            <div class="cform__turnstile" data-turnstile aria-label="Security verification"></div>
-            <button class="btn btn--fill btn--block" type="submit" data-contact-submit disabled aria-disabled="true" data-cursor-hover data-magnetic>
-              Send message <span class="btn__ico">→</span>
-            </button>
-            <p class="cform__note" data-form-status role="status">
-              Protected by Cloudflare Turnstile — complete the check, then send. Delivered straight to my inbox.
-            </p>
           </form>
         </div>
       </section>
+
+      <footer class="foot">
+        <p>© 2026 WONG JIA SEN</p>
+        <p class="foot__mid">BUILT IN KUALA LUMPUR — GLAD YOU'RE HERE</p>
+        <button class="foot__top" data-scroll-top type="button" data-blip>▲ RESTART</button>
+      </footer>
     </main>
 
-    <!-- ░░ FOOTER ░░ -->
-    <footer class="foot">
-      <div class="foot__marq" data-footer-marquee aria-hidden="true">
-        <div class="foot__marq-track" data-footer-track>
-          <span>LET'S BUILD SOMETHING USEFUL</span><span class="foot__marq-star">✦</span>
-          <span>LET'S BUILD SOMETHING USEFUL</span><span class="foot__marq-star">✦</span>
-          <span>LET'S BUILD SOMETHING USEFUL</span><span class="foot__marq-star">✦</span>
-        </div>
-      </div>
-      <div class="foot__base">
-        <span class="foot__copy">© 2026 Wong Jia Sen · Kuala Lumpur, MY</span>
-        <span class="foot__tag">No template. Built from scratch.</span>
-        <button class="foot__top" data-scroll-top type="button" data-cursor-hover>Back to top ↑</button>
-      </div>
-    </footer>
+    <!-- zone map (scroll-linked) -->
+    <aside class="zmap" data-zmap aria-hidden="true"></aside>
 
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Draggable.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/InertiaPlugin.min.js"></script>
-    <script type="module" src="js/brutal.js"></script>
+    <script type="module" src="js/arcade.js"></script>
   </body>
 </html>
