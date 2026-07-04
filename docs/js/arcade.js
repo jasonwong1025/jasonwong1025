@@ -251,7 +251,15 @@ function introEnter() {
   document.body.classList.add("js-intro");
   const mobile = matchMedia("(max-width: 700px)").matches;
   let entered = false;
-  const enter = () => { if (entered) return; entered = true; document.body.classList.add("is-entered"); titleIntro(); };
+  // nav shows/hides with the intro's own pinned zone (so it re-hides if the user scrolls
+  // back up to the cabinet), but the hero's one-time entrance (titleIntro) only ever plays once
+  const enter = () => {
+    document.body.classList.add("is-entered");
+    if (entered) return;
+    entered = true;
+    titleIntro();
+  };
+  const leave = () => document.body.classList.remove("is-entered");
 
   // scale the whole cabinet (not just the screen) toward the viewport size, pivoting on the
   // screen's own center (set via .intro__cab's transform-origin) — the machine walks toward you
@@ -263,17 +271,23 @@ function introEnter() {
     scrollTrigger: {
       trigger: intro,
       start: "top top",
-      end: "+=" + (mobile ? "110%" : "170%"),
+      // NOTE: ScrollTrigger's pin spacer reserves (trigger's own natural height) + (end - start),
+      // not just (end - start) — since .intro already costs ~1 viewport on its own (min-height:
+      // 100svh), keep this additional hold short or the two stack into a huge dead scroll gap
+      // before the hero appears
+      end: () => "+=" + Math.round(innerHeight * (mobile ? .35 : .45)),
       pin: true,
       scrub: 1,
       anticipatePin: 1,
       invalidateOnRefresh: true,
       onLeave: enter,
+      onEnterBack: leave,
     },
   });
 
   tl.to(".intro__hint", { opacity: 0, y: 14, duration: .12 }, 0)
     .to(cab, { scale: scaleTarget, duration: .8, ease: "power1.in", force3D: true }, .08)
+    .to(".intro__bg", { scale: 1.3, duration: .8, ease: "power1.in", force3D: true }, .08)
     .to(".intro__preview", { opacity: 0, duration: .15 }, .6)
     .to(intro, { opacity: 0, duration: .2 }, .78);
 
@@ -281,6 +295,36 @@ function introEnter() {
     const st = tl.scrollTrigger;
     if (st) scrollTo({ top: st.end, behavior: REDUCED ? "auto" : "smooth" });
   });
+}
+
+/* drifting light motes + a subtle mouse-tilt on the cabinet, while the intro is still at rest */
+function introAmbience() {
+  const motes = $("[data-intro-motes]");
+  if (motes && !REDUCED) {
+    for (let i = 0; i < 14; i++) {
+      const m = document.createElement("span");
+      m.className = "intro__mote";
+      m.style.left = rand(4, 96) + "%";
+      m.style.setProperty("--dur", rand(70, 150) / 10 + "s");
+      m.style.setProperty("--delay", "-" + rand(0, 120) / 10 + "s");
+      m.style.setProperty("--drift", rand(-40, 40) + "px");
+      motes.appendChild(m);
+    }
+  }
+
+  const cab = $("[data-intro-tilt]");
+  if (!cab || !gsap || REDUCED || TOUCH) return;
+  const rotX = gsap.quickTo(cab, "rotationX", { duration: .6, ease: "power3.out" });
+  const rotY = gsap.quickTo(cab, "rotationY", { duration: .6, ease: "power3.out" });
+  let active = true;
+  const onMove = (e) => {
+    if (!active) return;
+    rotY((e.clientX / innerWidth - .5) * 12);
+    rotX(-(e.clientY / innerHeight - .5) * 10);
+  };
+  const stop = () => { if (!active) return; active = false; removeEventListener("pointermove", onMove); rotX(0); rotY(0); };
+  addEventListener("pointermove", onMove);
+  addEventListener("scroll", function onScroll() { if (scrollY > 4) { stop(); removeEventListener("scroll", onScroll); } }, { passive: true });
 }
 
 /* --------------------------------------------------------------- FLIP CARD */
@@ -355,12 +399,15 @@ function scrollFx() {
 }
 
 /* --------------------------------------------------------------- TICKER */
-function ticker() {
-  const track = $("[data-ticker-track]"); if (!track || !gsap) return;
+function mountTicker(track) {
+  if (!track || !gsap) return;
   track.innerHTML += track.innerHTML;
   const half = track.scrollWidth / 2;
   const tw = gsap.to(track, { x: -half, duration: half / 55, ease: "none", repeat: -1, modifiers: { x: (x) => (parseFloat(x) % half) + "px" } });
   if (REDUCED) tw.pause();
+}
+function ticker() {
+  mountTicker($("[data-ticker-track]"));
 }
 
 /* --------------------------------------------------------------- GAME: BUG HUNT */
@@ -691,7 +738,7 @@ function contactForm() {
 function init() {
   inject(); paintIcons();
   loadout(); shipReveal(); campaignLog(); buildRadar();
-  flipCard(); chrome(); scrollFx(); ticker(); introEnter();
+  flipCard(); chrome(); scrollFx(); ticker(); introEnter(); introAmbience();
   bugHunt(); memory(); konami(); contactForm();
   ScrollTrigger?.refresh();
   addEventListener("load", () => ScrollTrigger?.refresh());

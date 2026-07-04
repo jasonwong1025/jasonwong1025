@@ -126,13 +126,26 @@ body.js-intro.is-entered .nav { opacity: 1; visibility: visible; transition: opa
 /* ========================================================================
    INTRO — arcade cabinet entrance
    ======================================================================== */
-.intro { min-height: 100svh; position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.2rem; padding: 2rem var(--pad); background: var(--bg); overflow: hidden; }
+/* real arcade-hall backdrop (background.png) replaces the old hand-drawn CSS floor grid —
+   a dark vignette keeps focus on our own cabinet dead center over its vanishing point */
+.intro { min-height: 100svh; position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.8rem; padding: 2rem var(--pad); overflow: hidden; perspective: 1000px; }
+
+/* the hall photo scales on its own (see introEnter()'s tl.to) — subtler and slower than the
+   cabinet's zoom, so the room reads as receding behind it rather than moving in lockstep */
+.intro__bg { position: absolute; z-index: 0; inset: 0; background: url('../background.png') center 50% / cover no-repeat; transform-origin: 50% 48%; will-change: transform; }
+.intro__vignette { position: absolute; z-index: 0; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 48%, transparent 0%, rgba(11,10,26,.4) 55%, rgba(11,10,26,.82) 100%); }
+
+/* ambient drifting motes, behind the cabinet (z-index 0) */
+.intro__motes { position: absolute; z-index: 0; inset: 0; pointer-events: none; overflow: hidden; }
+.intro__mote { position: absolute; bottom: -10px; width: 3px; height: 3px; border-radius: 50%; background: var(--cyan); opacity: 0; filter: drop-shadow(0 0 4px rgba(52,225,232,.75)); animation: intro-mote var(--dur, 9s) linear infinite; animation-delay: var(--delay, 0s); }
+@keyframes intro-mote { 0% { transform: translate(0, 0); opacity: 0; } 8% { opacity: .8; } 90% { opacity: .45; } 100% { transform: translate(var(--drift, 0px), -66vh); opacity: 0; } }
 
 /* the cabinet is a single photo; our screen content is an absolutely-positioned
    overlay matched to that photo's screen cutout (~22.5%/25% to 79.5%/48%) */
 /* origin sits at the screen cutout's own center (see .intro__screen position below) so scaling
-   the whole cabinet zooms toward the screen rather than just growing outward from the cab's middle */
-.intro__cab { position: relative; width: min(340px, 78vw); transform-origin: 51% 36.5%; will-change: transform; }
+   the whole cabinet zooms toward the screen rather than just growing outward from the cab's middle;
+   the same element also takes a subtle mouse-tilt while at rest, via introAmbience() in JS */
+.intro__cab { position: relative; z-index: 1; width: min(340px, 78vw); transform-origin: 51% 36.5%; will-change: transform; }
 @media (max-width: 560px) { .intro__cab { width: min(250px, 74vw); } }
 
 .intro__cabimg { width: 100%; height: auto; display: block; filter: drop-shadow(0 16px 28px rgba(0,0,0,.55)); }
@@ -147,7 +160,7 @@ body.js-intro.is-entered .nav { opacity: 1; visibility: visible; transition: opa
 @media (max-width: 560px) { .intro__preview-eyebrow { font-size: .26rem; } .intro__preview-role { font-size: .22rem; } }
 @keyframes intro-pulse { 0%, 100% { opacity: .6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
 
-.intro__hint { display: inline-flex; align-items: center; gap: .5em; font-family: var(--f-term); font-size: 1.2rem; color: var(--muted); background: none; border: none; cursor: pointer; animation: blink 1.4s steps(2) infinite; transition: color .2s; }
+.intro__hint { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: .5em; font-family: var(--f-term); font-size: 1.2rem; color: var(--muted); background: none; border: none; cursor: pointer; animation: blink 1.4s steps(2) infinite; transition: color .2s; }
 .intro__hint:hover, .intro__hint:focus-visible { color: var(--cyan); }
 .intro__chev { display: inline-block; animation: intro-bounce 1.4s ease-in-out infinite; }
 @keyframes intro-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
@@ -474,6 +487,7 @@ body.js-intro.is-entered .nav { opacity: 1; visibility: visible; transition: opa
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
   .js [data-reveal] { opacity: 1 !important; transform: none !important; }
-  .scanline, .brand__caret, .cur, .boot__press, .pcard__rec i, .coins__icon, .press, .eqf__ico, .intro__glow, .intro__hint, .intro__chev { animation: none !important; }
+  .scanline, .brand__caret, .cur, .boot__press, .pcard__rec i, .coins__icon, .press, .eqf__ico, .intro__glow, .intro__hint, .intro__chev, .intro__mote { animation: none !important; }
+  .intro__motes { display: none; }
   html { scroll-behavior: auto; }
 }
