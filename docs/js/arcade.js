@@ -22,7 +22,7 @@ const CHAR_BIO = "Motivated Software Engineering student at <b>Asia Pacific Univ
 const CHAR_SLOTS = [
   { key: "ROLE", val: "Full-Stack Engineer", detail: "Web, mobile &amp; AI — polished UI down to APIs and data.", icon: "braces" },
   { key: "EDUCATION", val: "APU · BSc SE", detail: "BSc Software Engineering (current). Diploma ICT, CGPA <b>3.63</b>.", icon: "cap" },
-  { key: "CURRENT", val: "Part-time @ Codespace", detail: "Shipping AI features on live products alongside degree work.", icon: "bolt" },
+  { key: "CURRENT", val: "Part-time @ Codespace AI Technology", detail: "Shipping AI features on live products alongside degree work.", icon: "bolt" },
   { key: "LOCATION", val: "Kuala Lumpur", detail: "Based in KL — open to remote, freelance &amp; open-source.", icon: "globe" },
   { key: "PROJECTS", val: "3 builds shipped", detail: "Beacon, NextGen Fitness &amp; OODJ APUASC — all on GitHub.", icon: "sword" },
   { key: "EXPERIENCE", val: "Internship @ Codespace AI Technology", detail: "12-week software eng internship @ Codespace AI — continued part-time.", icon: "trophy" },
@@ -200,7 +200,7 @@ const STAGES = [
     detail: "Part-time role alongside degree studies — still shipping production code on AI products.",
     badge: null,
     highlights: ["AI features on live products", "Full-stack implementation", "Production deployments", "Balanced with university workload"] },
-  { n: "02", kind: "work", date: "Sep – Nov 2025", title: "Software Engineering Intern", org: "Codespace AI Technology", status: "cleared",
+  { n: "02", kind: "work", date: "Sep – Oct 2025", title: "Software Engineering Intern", org: "Codespace AI Technology", status: "cleared",
     detail: "12-week industry internship building AI features on live products alongside senior engineers.",
     badge: "12 weeks",
     highlights: ["Shipped AI-powered product features", "Worked across frontend and backend stacks", "Collaborated in a real team workflow", "Continued part-time after internship"] },
