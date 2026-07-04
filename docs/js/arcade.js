@@ -25,7 +25,7 @@ const CHAR_SLOTS = [
   { key: "CURRENT", val: "Part-time @ Codespace", detail: "Shipping AI features on live products alongside degree work.", icon: "bolt" },
   { key: "LOCATION", val: "Kuala Lumpur", detail: "Based in KL — open to remote, freelance &amp; open-source.", icon: "globe" },
   { key: "PROJECTS", val: "3 builds shipped", detail: "Beacon, NextGen Fitness &amp; OODJ APUASC — all on GitHub.", icon: "sword" },
-  { key: "EXPERIENCE", val: "Internship @ Codespace", detail: "12-week software eng internship @ Codespace AI — continued part-time.", icon: "trophy" },
+  { key: "EXPERIENCE", val: "Internship @ Codespace AI Technology", detail: "12-week software eng internship @ Codespace AI — continued part-time.", icon: "trophy" },
 ];
 const CHAR_SOCIAL = new Set(["mail", "github", "linkedin"]);
 const CHAR_TRAITS = [
@@ -41,12 +41,42 @@ const LANGS = [
   ["🇲🇾", "Malay", "Conversational", 3],
 ];
 const SKILLS = [
-  ["Languages", [["JavaScript", 85], ["TypeScript", 82], ["Python", 80], ["Java", 75], ["PHP", 70]]],
-  ["Frontend", [["React", 82], ["Tailwind", 85], ["Flutter", 72], ["HTML / CSS", 90]]],
-  ["Backend", [["Node.js", 78], ["Laravel", 75]]],
+  ["Languages", [["JavaScript", 85], ["TypeScript", 82], ["Python", 80], ["Java", 75], ["Dart", 72], ["PHP", 82]]],
+  ["Frontend", [["React", 82], ["Tailwind CSS", 85], ["Flutter", 72], ["HTML / CSS", 90]]],
+  ["Backend", [["Node.js", 78], ["Laravel", 82]]],
   ["Database", [["MySQL", 82], ["PostgreSQL", 72], ["Redis", 65]]],
   ["Tools", [["Git", 85], ["Docker", 68], ["Linux", 72], ["VS Code", 92]]],
 ];
+const KIT_CAT = {
+  Languages: { c: "#9B7BFF", ic: "bolt" },
+  Frontend:  { c: "#34E1E8", ic: "layout" },
+  Backend:   { c: "#5CE08A", ic: "server" },
+  Database:  { c: "#FFC23C", ic: "database" },
+  Tools:     { c: "#FF4FA3", ic: "terminal" },
+};
+const SKILL_ICONS = {
+  "JavaScript": "braces", "TypeScript": "braces", "Python": "snake", "Java": "coffee",
+  "Dart": "target", "PHP": "hex", "React": "atom", "Tailwind CSS": "wind", "Flutter": "phone",
+  "HTML / CSS": "layout", "Node.js": "server", "Laravel": "branch", "MySQL": "database",
+  "PostgreSQL": "database", "Redis": "chip", "Git": "branch", "Docker": "container",
+  "Linux": "terminal", "VS Code": "editor",
+};
+function skillTier(lvl) {
+  if (lvl >= 90) return { g: "S", cls: "kit__tier--s", label: "Master", pips: 5 };
+  if (lvl >= 80) return { g: "A", cls: "kit__tier--a", label: "Advanced", pips: 4 };
+  if (lvl >= 70) return { g: "B", cls: "kit__tier--b", label: "Proficient", pips: 3 };
+  return { g: "C", cls: "kit__tier--c", label: "Familiar", pips: lvl >= 60 ? 2 : 1 };
+}
+function skillMeter(tier) {
+  return `<div class="kit__meter" data-kit-meter role="img" aria-label="${tier.label} proficiency">
+    ${[1, 2, 3, 4, 5].map((i) => `<span class="kit__pip${i <= tier.pips ? " on" : ""}"></span>`).join("")}
+  </div>`;
+}
+function skillMeterSm(tier) {
+  return `<span class="kit__meter kit__meter--sm" aria-hidden="true">
+    ${[1, 2, 3, 4, 5].map((i) => `<span class="kit__pip${i <= tier.pips ? " on" : ""}"></span>`).join("")}
+  </span>`;
+}
 /** Set `img` on any entry once a real screenshot exists — the label falls back to a pixel-icon plate until then. */
 const PROJECTS = [
   { id: "beacon", name: "Beacon", year: "2026", lang: "TypeScript", ic: "target", c: "#4FA6F0", img: null,
@@ -627,7 +657,13 @@ function scrollFx() {
     onEnter: () => REDUCED ? gsap.set(el, { opacity: 1, y: 0 }) : gsap.to(el, { y: 0, opacity: 1, duration: 0.55, ease: "power3.out", overwrite: "auto" }),
   }));
   // bar fills (skills + attrs)
-  $$("[data-bar-fill]").forEach((bar) => { const pct = bar.dataset.barFill + "%"; ScrollTrigger.create({ trigger: bar, start: "top 94%", once: true, onEnter: () => REDUCED ? (bar.style.width = pct) : gsap.fromTo(bar, { width: 0 }, { width: pct, duration: 1, ease: "steps(20)" }) }); });
+  $$("[data-kit-meter]").forEach((meter) => {
+    ScrollTrigger.create({ trigger: meter, start: "top 94%", once: true, onEnter: () => {
+      const pips = meter.querySelectorAll(".kit__pip.on");
+      if (REDUCED || !pips.length) return;
+      gsap.from(pips, { scaleY: 0, transformOrigin: "bottom center", duration: .22, stagger: .05, ease: "back.out(2)" });
+    } });
+  });
 
   // character — fact rows + edu cards
   if (!REDUCED) {
@@ -640,10 +676,13 @@ function scrollFx() {
       onEnter: () => gsap.from(".about__lang-pip.on", { scale: 0, transformOrigin: "center", duration: .3, stagger: .015, ease: "back.out(2)" }) });
   }
 
-  // loadout cartridges deal-in (immediateRender:false → never leaves cards hidden)
-  const eqGrid = $(".eq__grid");
-  if (eqGrid && !REDUCED) ScrollTrigger.create({ trigger: eqGrid, start: "top 88%", once: true,
-    onEnter: () => gsap.from(".eq__grid .cart", { opacity: 0, y: 24, duration: .5, stagger: .03, ease: "power3.out", immediateRender: false }) });
+  // loadout — strip + category cards stagger in
+  const kitStrip = $("[data-kit-strip]");
+  if (kitStrip && !REDUCED) ScrollTrigger.create({ trigger: kitStrip, start: "top 88%", once: true,
+    onEnter: () => gsap.from(".kit__chip", { opacity: 0, scale: .85, duration: .35, stagger: .04, ease: "back.out(1.6)", immediateRender: false }) });
+  const kitGroups = $(".kit__groups");
+  if (kitGroups && !REDUCED) ScrollTrigger.create({ trigger: kitGroups, start: "top 85%", once: true,
+    onEnter: () => gsap.from(".kit__group", { opacity: 0, y: 18, duration: .45, stagger: .07, ease: "power2.out", immediateRender: false }) });
 
   // campaign log: stagger cards in
   const chronoCards = $$(".ch-card");
@@ -780,94 +819,77 @@ function konami() {
 }
 
 /* --------------------------------------------------------------- LOADOUT */
-const rarity = (p) => p >= 88 ? ["Legendary", "leg"] : p >= 80 ? ["Epic", "epic"] : p >= 72 ? ["Rare", "rare"] : ["Common", "com"];
-
-const KIT = [
-  { n: "JavaScript", slot: "Languages", lvl: 85, ic: "bolt", c: "#F7DF1E", used: ["Beacon", "Web apps"], fl: "My daily language for the web." },
-  { n: "TypeScript", slot: "Languages", lvl: 82, ic: "braces", c: "#4FA6F0", used: ["Beacon ext"], fl: "Types keep big code honest." },
-  { n: "Python", slot: "Languages", lvl: 80, ic: "snake", c: "#FFD343", used: ["Automation"], fl: "Scripts, automation, data." },
-  { n: "Java", slot: "Languages", lvl: 78, ic: "coffee", c: "#F0862E", used: ["OODJ APUASC"], fl: "OOP coursework & structured apps." },
-  { n: "Dart", slot: "Languages", lvl: 74, ic: "target", c: "#40C4FF", used: ["NextGen Fitness"], fl: "Flutter's language of choice." },
-  { n: "PHP", slot: "Languages", lvl: 70, ic: "server", c: "#A9AEE0", used: ["Backends"], fl: "Backends that just work." },
-  { n: "React", slot: "Frameworks", lvl: 82, ic: "atom", c: "#61DAFB", used: ["Beacon UI"], fl: "Component-driven interfaces." },
-  { n: "Flutter", slot: "Frameworks", lvl: 76, ic: "phone", c: "#54C5F8", used: ["NextGen Fitness"], fl: "One codebase, every screen." },
-  { n: "Tailwind", slot: "Frameworks", lvl: 85, ic: "wind", c: "#38BDF8", used: ["This site"], fl: "Style at the speed of thought." },
-  { n: "HTML / CSS", slot: "Frameworks", lvl: 90, ic: "layout", c: "#F0764B", used: ["Every frontend"], fl: "The bones of the web." },
-  { n: "Node.js", slot: "Frameworks", lvl: 78, ic: "hex", c: "#7DC552", used: ["APIs & tooling"], fl: "JavaScript on the server." },
-  { n: "Laravel", slot: "Frameworks", lvl: 75, ic: "server", c: "#FF5A4A", used: ["PHP backends"], fl: "Elegant PHP backends." },
-  { n: "MySQL", slot: "Data", lvl: 82, ic: "database", c: "#5B9BD5", used: ["Coursework"], fl: "Relational data, done right." },
-  { n: "PostgreSQL", slot: "Data", lvl: 74, ic: "database", c: "#7C9BE0", used: ["Relational data"], fl: "The powerful elephant." },
-  { n: "Redis", slot: "Data", lvl: 66, ic: "database", c: "#E05545", used: ["Caching"], fl: "Fast, in-memory speed." },
-  { n: "Git", slot: "Tools", lvl: 88, ic: "branch", c: "#F0623C", used: ["Since 2023"], fl: "Version control, always." },
-  { n: "Docker", slot: "Tools", lvl: 68, ic: "container", c: "#4AA6F0", used: ["Services"], fl: "Ships the same everywhere." },
-  { n: "Linux", slot: "Tools", lvl: 74, ic: "terminal", c: "#FCC624", used: ["Dev & servers"], fl: "Home in the terminal." },
-  { n: "VS Code", slot: "Tools", lvl: 92, ic: "editor", c: "#4A95E0", used: ["Daily driver"], fl: "Where the magic happens." },
-];
-const pips = (lvl) => Array.from({ length: 5 }, (_, i) => `<span class="pip${i < Math.round(lvl / 20) ? " on" : ""}"></span>`).join("");
-
 function loadout() {
-  const featEl = $("[data-eq-featured]"), tabsEl = $("[data-eq-tabs]"), gridEl = $("[data-eq-grid]");
-  if (!gridEl) return;
-  const slots = [...new Set(KIT.map((k) => k.slot))];
+  const host = $("[data-kit-groups]");
+  if (!host) return;
 
-  tabsEl.innerHTML = ["All", ...slots].map((s, i) => `<button class="eq__tab${i === 0 ? " on" : ""}" data-slot="${s}" data-blip>${s}</button>`).join("");
-  gridEl.innerHTML = KIT.map((k, i) => `
-    <button class="cart" data-i="${i}" data-slot="${k.slot}" data-r="${rarity(k.lvl)[1]}" style="--c:${k.c}" data-blip>
-      <span class="cart__ico" style="color:${k.c}">${px(k.ic)}</span>
-      <span class="cart__meta"><span class="cart__name">${k.n}</span><span class="cart__pips">${pips(k.lvl)}</span></span>
-    </button>`).join("");
+  const top = SKILLS.flatMap(([cat, skills]) =>
+    skills.map(([name, lvl]) => ({ name, lvl, cat, c: (KIT_CAT[cat] || {}).c || "#34E1E8", ic: SKILL_ICONS[name] || "chip" }))
+  ).sort((a, b) => b.lvl - a.lvl).slice(0, 8);
 
-  const setFeatured = (k) => {
-    const [rl, rc] = rarity(k.lvl);
-    featEl.style.setProperty("--c", k.c);
-    featEl.innerHTML = `
-      <div class="eqf__screen" style="--c:${k.c}">
-        <span class="eqf__ico" style="color:${k.c}">${px(k.ic)}</span>
-        <span class="eqf__scan"></span>
-        <span class="eqf__tag" data-r="${rc}">${rl}</span>
-      </div>
-      <div class="eqf__body">
-        <p class="eqf__slot">${k.slot} slot</p>
-        <h3 class="eqf__name">${k.n}</h3>
-        <div class="eqf__row">
-          <div class="eqf__meter">
-            <svg viewBox="0 0 90 90"><circle class="ring-bg" cx="45" cy="45" r="38"/><circle class="ring-fg" data-r="${rc}" cx="45" cy="45" r="38"/></svg>
-            <span class="eqf__pct">${k.lvl}<i>%</i></span>
-          </div>
-          <div class="eqf__info">
-            <p class="eqf__used-h">Used in</p>
-            <div class="eqf__used" style="--c:${k.c}">${k.used.map((u) => `<span class="eqf__chip">${u}</span>`).join("")}</div>
-            <p class="eqf__flavor">${k.fl}</p>
-          </div>
-        </div>
+  const strip = $("[data-kit-strip]");
+  if (strip) {
+    strip.innerHTML = `
+      <header class="kit__strip-head">
+        <span class="kit__strip-label">Equipped</span>
+        <span class="kit__strip-meta">Top loadout</span>
+      </header>
+      <div class="kit__chips" role="list">
+        ${top.map((s) => {
+          const t = skillTier(s.lvl);
+          return `<span class="kit__chip" style="--c:${s.c}" role="listitem">
+            <span class="kit__chip-ic" data-icon="${s.ic}" aria-hidden="true"></span>
+            <span class="kit__chip-body">
+              <span class="kit__chip-n">${s.name}</span>
+              ${skillMeterSm(t)}
+            </span>
+            <span class="kit__tier ${t.cls}" title="${t.label}">${t.g}</span>
+          </span>`;
+        }).join("")}
       </div>`;
-    const fg = $(".ring-fg", featEl);
-    if (fg) { const C = 2 * Math.PI * 38; fg.style.strokeDasharray = C;
-      if (gsap && !REDUCED) gsap.fromTo(fg, { strokeDashoffset: C }, { strokeDashoffset: C * (1 - k.lvl / 100), duration: .8, ease: "power2.out" });
-      else fg.style.strokeDashoffset = C * (1 - k.lvl / 100); }
-  };
+  }
 
-  const carts = $$(".cart", gridEl);
-  const select = (c) => { carts.forEach((x) => x.classList.remove("sel")); c.classList.add("sel"); setFeatured(KIT[+c.dataset.i]); };
-  carts.forEach((c) => {
-    ["mouseenter", "focus", "click"].forEach((ev) => c.addEventListener(ev, () => select(c)));
-    if (!REDUCED && !TOUCH && gsap) {
-      const rx = gsap.quickTo(c, "rotationX", { duration: .3 }), ry = gsap.quickTo(c, "rotationY", { duration: .3 });
-      c.addEventListener("mousemove", (e) => { const r = c.getBoundingClientRect(); ry((e.clientX - (r.left + r.width / 2)) / r.width * 16); rx(-(e.clientY - (r.top + r.height / 2)) / r.height * 16); });
-      c.addEventListener("mouseleave", () => { rx(0); ry(0); });
-    }
-  });
-
-  $$(".eq__tab", tabsEl).forEach((tab) => tab.addEventListener("click", () => {
-    $$(".eq__tab", tabsEl).forEach((x) => x.classList.remove("on")); tab.classList.add("on");
-    const s = tab.dataset.slot; let first = null;
-    carts.forEach((c) => { const show = s === "All" || c.dataset.slot === s; c.classList.toggle("dim", !show); c.style.pointerEvents = show ? "" : "none"; if (show && !first) first = c; });
-    if (first) select(first);
-  }));
-
-  let top = carts[0], tv = -1;
-  KIT.forEach((k, i) => { if (k.lvl > tv) { tv = k.lvl; top = carts[i]; } });
-  select(top);
+  host.innerHTML = SKILLS.map(([label, skills]) => {
+    const cat = KIT_CAT[label] || { c: "#34E1E8", ic: "chip" };
+    const avg = Math.round(skills.reduce((a, [, l]) => a + l, 0) / skills.length);
+    const catTier = skillTier(avg);
+    return `
+    <section class="kit__group panel" data-kit-group style="--c:${cat.c}">
+      <header class="kit__head">
+        <span class="kit__ic" data-icon="${cat.ic}" aria-hidden="true"></span>
+        <h3 class="kit__title">${label}</h3>
+        <span class="kit__head-meta">
+          <span class="kit__count">${skills.length}</span>
+          <span class="kit__tier ${catTier.cls}" title="${catTier.label}">${catTier.g}</span>
+        </span>
+      </header>
+      <ul class="kit__list">
+        ${skills.map(([name, lvl]) => {
+          const tier = skillTier(lvl);
+          const ic = SKILL_ICONS[name] || "chip";
+          return `
+          <li class="kit__item">
+            <div class="kit__skill">
+              <span class="kit__plate" aria-hidden="true">
+                <span class="kit__plate-ic" data-icon="${ic}"></span>
+              </span>
+              <div class="kit__body">
+                <div class="kit__row">
+                  <span class="kit__name">${name}</span>
+                  <span class="kit__meta">
+                    <span class="kit__rank">${tier.label}</span>
+                    <span class="kit__tier ${tier.cls}">${tier.g}</span>
+                  </span>
+                </div>
+                ${skillMeter(tier)}
+              </div>
+            </div>
+          </li>`;
+        }).join("")}
+      </ul>
+    </section>`;
+  }).join("");
+  paintIcons();
 }
 
 /* --------------------------------------------------------------- CHARACTER / ABOUT */
