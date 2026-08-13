@@ -43,7 +43,7 @@ Hi, I'm **Jia Sen** — a **Software Engineering** student at **Asia Pacific Uni
 I'm passionate about building clean, maintainable software across the stack — from polished frontends to solid APIs and databases.
 
 - 🎓 Pursuing a **Degree in Software Engineering** at **Asia Pacific University**
-- 🔭 Exploring new skills — languages, tools, techniques, and more
+- 🔭 Exploring new skills — languages, tools, techniques, and many more
 - 🌱 Always learning better patterns, architecture, and best practices
 - 🤝 Open to **collaboration**, **freelance**, and **open-source**
 
