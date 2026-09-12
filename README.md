@@ -94,9 +94,16 @@ $ ls portfolio/
 </tr>
 </table>
 
-<p align="center">
-  <img src="https://streak-stats.demolab.com/?user=jasonwong1025&hide_border=true&hide_current_streak=true&card_width=330&cache_seconds=86400&background=0B0E1C&ring=4CE0FF&fire=F5C518&sideLabels=EAF2FF&sideNums=EAF2FF&dates=8892B0" alt="jasonwong1025's GitHub Streak" />
-</p>
+<table align="center">
+<tr>
+<td valign="top">
+  <img src="https://streak-stats.demolab.com/?user=jasonwong1025&hide_border=true&cache_seconds=86400&background=0B0E1C&ring=4CE0FF&fire=F5C518&currStreakNum=EAF2FF&sideLabels=EAF2FF&sideNums=EAF2FF&dates=8892B0" alt="jasonwong1025's GitHub Streak" />
+</td>
+<td valign="top">
+  <img src="https://readme-jokes.vercel.app/api?bgColor=%230B0E1C&qColor=%234CE0FF&aColor=%23F5C518&hideBorder" alt="A random programming joke, refreshed on load" width="330" />
+</td>
+</tr>
+</table>
 
 ### `$ arcade --launch`
 
