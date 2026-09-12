@@ -94,7 +94,7 @@ I'm passionate about building clean, maintainable software across the stack — 
     <img src="https://github-readme-stats-eight-theta.vercel.app/api?username=jasonwong1025&cache_seconds=7200&layout=compact&theme=gruvbox&border_radius=10" alt="jasonwong1025's GitHub Stats" />
   </a>
   <br/><br/>
-  <img src="https://streak-stats.demolab.com/?user=jasonwong1025&theme=gruvbox&hide_border=true&cache_seconds=86400" alt="jasonwong1025's GitHub Streak" />
+  <img src="https://streak-stats.demolab.com/?user=jasonwong1025&theme=gruvbox&hide_border=true&hide_current_streak=true&cache_seconds=86400" alt="jasonwong1025's GitHub Streak" />
 </td>
 <td valign="middle" align="center">
   <img src="https://github.com/Anmol-Baranwal/Cool-GIFs-For-GitHub/assets/74038190/0db32290-c193-4b32-95dc-413ce9e446a5" width="450" alt="Developer animation" />
