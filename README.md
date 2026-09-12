@@ -1,7 +1,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/assets/banner-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset=".github/assets/banner-light.svg">
-  <img alt="Wong Jia Sen, Software Engineering student at APU, Kuala Lumpur" src=".github/assets/banner-dark.svg" width="100%">
+  <img alt="Wong Jia Sen, Full Stack Developer and Software Engineering student" src=".github/assets/banner-dark.svg" width="100%">
 </picture>
 
 <br/>
@@ -21,14 +21,14 @@
 </td>
 <td align="left" valign="middle" width="75%">
 
-  <img src="https://img.shields.io/badge/Status-Student-1F9D6B?style=flat-square" alt="Student" />
+  <img src="https://img.shields.io/badge/Role-Full%20Stack%20Developer-1F9D6B?style=flat-square" alt="Full Stack Developer" />
   <img src="https://img.shields.io/badge/University-Asia%20Pacific%20University-0E7C99?style=flat-square" alt="Asia Pacific University" />
   <img src="https://img.shields.io/badge/Degree-Software%20Engineering-B01E72?style=flat-square" alt="Software Engineering" />
   <img src="https://img.shields.io/badge/Location-Kuala%20Lumpur%2C%20Malaysia-A87B00?style=flat-square&logo=googlemaps&logoColor=white" alt="Location" />
 
   <br/><br/>
 
-  Full-stack developer focused on clean APIs and well-crafted interfaces. Open to collaboration, freelance work, and open-source contributions.
+  Full Stack Developer building web, mobile, and system solutions end to end. Software Engineering undergraduate at APU. Open to collaboration and freelance work.
 
 </td>
 </tr>
@@ -38,11 +38,12 @@
 
 ```
 $ cat about.txt
-> Software Engineering student at Asia Pacific University, Kuala Lumpur.
-> Building clean, maintainable software across the full stack: frontends, APIs, databases.
+> Full Stack Developer based in Kuala Lumpur, Malaysia.
+> Software Engineering undergraduate at Asia Pacific University (APU), CGPA 3.82.
 
-$ cat status.log
-> Exploring new stacks, shipping side projects, and learning better architecture.
+$ cat experience.log
+> 11+ months building web, mobile, and system solutions across logistics, e-commerce.
+> Acted as system architect for a multi-warehouse production management platform.
 
 $ ls portfolio/
 > jasonwong.top, featuring shipped projects, skills, and experience.
@@ -52,17 +53,33 @@ $ ls portfolio/
 
 <table align="center">
 <tr>
-<td align="center" width="33%"><code>$ languages</code><br/><br/>
-  <img src="https://skillicons.dev/icons?i=js,ts,py,java,php" alt="Languages" />
+<td align="center" width="25%"><code>$ languages</code><br/><br/>
+  <img src="https://skillicons.dev/icons?i=php,ts,js,dart,java,py,cpp,c&perline=4" alt="Languages" />
 </td>
-<td align="center" width="33%"><code>$ frameworks</code><br/><br/>
-  <img src="https://skillicons.dev/icons?i=react,flutter,html,css,tailwind,nodejs,laravel" alt="Frameworks" />
+<td align="center" width="25%"><code>$ web &amp; mobile</code><br/><br/>
+  <img src="https://skillicons.dev/icons?i=laravel,react,nextjs,tailwind,nodejs,html,css,flutter&perline=4" alt="Web and mobile frameworks" />
 </td>
-<td align="center" width="33%"><code>$ tools &amp; db</code><br/><br/>
-  <img src="https://skillicons.dev/icons?i=mysql,postgres,redis,git,docker,linux,vscode" alt="Tools" />
+<td align="center" width="25%"><code>$ database</code><br/><br/>
+  <img src="https://skillicons.dev/icons?i=mysql,postgres,sqlite,firebase&perline=4" alt="Databases" />
+</td>
+<td align="center" width="25%"><code>$ infra &amp; tools</code><br/><br/>
+  <img src="https://skillicons.dev/icons?i=nginx,redis,docker,git,github,linux,wordpress,vscode,pycharm&perline=5" alt="Infrastructure and tools" />
 </td>
 </tr>
 </table>
+
+### `$ shipped --recent`
+
+```
+* GammaShield: option-risk terminal for the Base blockchain
+  2nd Runner-Up, MUBA Hackathon 2026 (Next.js, React, TypeScript)
+
+* Print & Signage Production Operations System (client project)
+  Live across 3 warehouses and 1 office (Laravel, MySQL, React)
+
+* NextGen Fitness: AI-powered fitness app with meal recognition
+  Diploma capstone project (Flutter, Flask, Gemini API)
+```
 
 ### `$ stat --readout`
 
@@ -78,7 +95,7 @@ $ ls portfolio/
 </table>
 
 <p align="center">
-  <img src="https://streak-stats.demolab.com/?user=jasonwong1025&hide_border=true&hide_current_streak=true&cache_seconds=86400&background=0B0E1C&ring=4CE0FF&fire=F5C518&sideLabels=EAF2FF&sideNums=EAF2FF&dates=8892B0" alt="jasonwong1025's GitHub Streak" />
+  <img src="https://streak-stats.demolab.com/?user=jasonwong1025&hide_border=true&hide_current_streak=true&card_width=330&cache_seconds=86400&background=0B0E1C&ring=4CE0FF&fire=F5C518&sideLabels=EAF2FF&sideNums=EAF2FF&dates=8892B0" alt="jasonwong1025's GitHub Streak" />
 </p>
 
 ### `$ continue?`
@@ -86,6 +103,9 @@ $ ls portfolio/
 <p align="center">
   <a href="https://jasonwong.top">
     <img src="https://img.shields.io/badge/Portfolio-jasonwong.top-4CE0FF?style=flat-square" alt="Portfolio" />
+  </a>
+  <a href="https://www.linkedin.com/in/wong-jia-sen/">
+    <img src="https://img.shields.io/badge/LinkedIn-wong--jia--sen-0E7C99?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn" />
   </a>
   <a href="https://jasonwong.top/#contact">
     <img src="https://img.shields.io/badge/Contact-Insert%20Coin-FF2E9A?style=flat-square" alt="Contact" />
