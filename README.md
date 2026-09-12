@@ -98,6 +98,12 @@ $ ls portfolio/
   <img src="https://streak-stats.demolab.com/?user=jasonwong1025&hide_border=true&hide_current_streak=true&card_width=330&cache_seconds=86400&background=0B0E1C&ring=4CE0FF&fire=F5C518&sideLabels=EAF2FF&sideNums=EAF2FF&dates=8892B0" alt="jasonwong1025's GitHub Streak" />
 </p>
 
+### `$ arcade --launch`
+
+<p align="center">
+  <img src=".github/assets/space-shooter.gif" alt="Space shooter game built from Wong Jia Sen's GitHub contribution graph, updated daily" width="100%" />
+</p>
+
 ### `$ continue?`
 
 <p align="center">
