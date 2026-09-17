@@ -72,7 +72,7 @@ $ ls portfolio/
 
 ```
 * GammaShield: option-risk terminal for the Base blockchain
-  2nd Runner-Up, MUBA Hackathon 2026 (Next.js, React, TypeScript)
+>   🥉 2nd Runner-Up, MUBA Hackathon 2026 (Next.js, React, TypeScript)
 
 * Print & Signage Production Operations System (client project)
   Live across 3 warehouses and 1 office (Laravel, MySQL, React)
